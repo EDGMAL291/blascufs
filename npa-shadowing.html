@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>In the Shadow of the Prosecutor – BLASC UFS</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    .npa-hero{position:relative;min-height:56vh;display:flex;align-items:flex-end;overflow:hidden;background:#0b0e13}
+    .npa-hero-bg{position:absolute;inset:0;background:url('assets/images/bec-stairs-serious.jpeg') center/cover no-repeat}
+    .npa-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(92deg,rgba(6,8,11,.94) 0%,rgba(6,8,11,.74) 44%,rgba(6,8,11,.46) 100%),linear-gradient(to top,rgba(6,8,11,.86),rgba(6,8,11,.08))}
+    .npa-hero-content{position:relative;z-index:1;padding:130px clamp(16px,4vw,56px) 64px;width:min(100%,960px)}
+    .npa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .npa-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:20px}
+    .npa-card h3{font-family:'Playfair Display',serif;font-size:1.08rem;color:var(--ink);margin-bottom:8px}
+    .npa-card p,.npa-card li{font-size:.9rem;color:var(--muted);line-height:1.7}
+    .npa-card ul{list-style:disc;padding-left:18px;display:grid;gap:4px}
+    .npa-partners{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .npa-partner{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px}
+    .npa-partner strong{display:block;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:6px}
+    .npa-partner span{font-size:.96rem;color:var(--ink);font-weight:600}
+    .npa-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .npa-step{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:16px}
+    .npa-step strong{display:block;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+    .npa-step span{font-size:.92rem;color:var(--ink);font-weight:600}
+    .npa-modal{position:fixed;inset:0;z-index:1200;display:none}
+    .npa-modal.open{display:block}
+    .npa-modal-backdrop{position:absolute;inset:0;background:rgba(6,9,13,.72);backdrop-filter:blur(4px)}
+    .npa-modal-dialog{position:relative;z-index:1;width:min(980px,calc(100vw - 32px));max-height:calc(100vh - 36px);margin:18px auto;background:#fff;border:1px solid var(--border);border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}
+    .npa-modal-header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:18px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#fafcff 0%,#fff 100%)}
+    .npa-modal-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+    .npa-modal-sub{font-size:.8rem;color:var(--muted)}
+    .npa-close{width:34px;height:34px;border:1px solid var(--border);border-radius:10px;background:#fff;font-size:1.15rem;line-height:1;color:var(--ink)}
+    .npa-modal-body{padding:16px 20px 20px;overflow:auto}
+    .npa-flow{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px}
+    .npa-flow-steps{display:grid;grid-template-columns:repeat(6,minmax(90px,1fr));gap:8px;margin-bottom:20px}
+    .npa-step-dot{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 8px;text-align:center;font-size:.72rem;font-weight:700;color:var(--grey)}
+    .npa-step-dot.active{border-color:var(--blue-mid);background:var(--blue-pale);color:var(--blue)}
+    .npa-step-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:22px}
+    .npa-step-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+    .npa-step-sub{font-size:.9rem;line-height:1.7;color:var(--muted);margin-bottom:18px}
+    .npa-part-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .npa-part-item{border:1px solid var(--border);background:var(--off-white);border-radius:var(--radius-sm);padding:12px}
+    .npa-part-item strong{display:block;font-size:.76rem;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+    .npa-part-item span{font-size:.86rem;color:var(--ink)}
+    .npa-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .npa-actions{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:18px}
+    .npa-note{font-size:.82rem;color:var(--muted);line-height:1.6;margin-top:8px}
+    .npa-warning{background:#fff8e7;border:1px solid #f5d489;border-radius:var(--radius-sm);padding:12px 14px;font-size:.84rem;color:#7a5300;line-height:1.6;margin:12px 0}
+    .npa-declaration{border:1px solid var(--border);border-radius:12px;background:#f9fbff;padding:14px;max-height:280px;overflow:auto}
+    .npa-declaration h4{font-size:.84rem;color:var(--ink);margin:10px 0 6px}
+    .npa-declaration ul{list-style:disc;padding-left:18px;color:var(--muted);font-size:.84rem;line-height:1.55}
+    .npa-full-toggle{margin-top:12px}
+    .week-pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .week-choice{border:1px solid var(--border);background:#fff;border-radius:var(--radius-sm);padding:12px;text-align:left}
+    .week-choice strong{display:block;font-size:.84rem;color:var(--ink)}
+    .week-choice span{display:block;font-size:.76rem;color:var(--muted);margin-top:2px}
+    .week-choice .meta{display:inline-block;margin-top:6px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-radius:999px;padding:2px 7px;background:var(--blue-pale);color:var(--blue)}
+    .week-choice.available:hover{border-color:var(--blue-mid);box-shadow:var(--shadow-sm)}
+    .week-choice.selected{border-color:var(--blue-mid);background:var(--blue-pale)}
+    .week-choice.disabled{opacity:.55;cursor:not-allowed;background:#f8fafc}
+    .npa-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;display:inline-block;background:#0f172a;color:#fff;padding:10px 12px;border-radius:10px;font-size:1rem;letter-spacing:.05em}
+    @media(max-width:960px){.npa-grid,.npa-partners,.npa-steps,.npa-row,.npa-part-grid,.week-pick-grid{grid-template-columns:1fr}.npa-flow-steps{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:540px){.npa-modal-dialog{width:100vw;height:100vh;max-height:100vh;margin:0;border-radius:0}.npa-flow-steps{grid-template-columns:1fr}.npa-modal-header{position:sticky;top:0;z-index:2}}
+  </style>
+</head>
+<body class="inner-page">
+<nav class="nav dark" id="navbar">
+  <a class="nav-brand" href="index.html"><img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC UFS"/><div class="nav-name">BLASC UFS <span>University of the Free State</span></div></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+    <a href="programmes.html" class="active">Programmes</a><a href="leadership.html">Leadership</a>
+    <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+    <a href="membership.html" class="nav-cta">Join Us</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+  <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="membership.html" class="m-cta">Join Us →</a>
+</div>
+
+<header class="npa-hero">
+  <div class="npa-hero-bg"></div>
+  <div class="npa-hero-content">
+    <p class="eyebrow">NPA Partnership</p>
+    <h1 style="color:#fff;font-family:'Playfair Display',serif;font-size:clamp(2.05rem,5vw,3.6rem);line-height:1.08;margin-bottom:14px">In the Shadow of the Prosecutor</h1>
+    <p style="color:rgba(255,255,255,.78);max-width:62ch;font-size:1rem;line-height:1.8">A formal court-shadowing programme connecting UFS law students to the practical world of public prosecution through collaboration between the National Prosecuting Authority, the UFS Faculty of Law, and BLASC UFS.</p>
+    <div id="npa-apply" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
+      <button type="button" class="btn btn-gold" id="npaApplyNowBtn">Apply Now</button>
+      <a href="programmes.html" class="btn btn-outline-white">Back to Programmes</a>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="section-inner" style="display:grid;gap:26px">
+    <div class="npa-grid">
+      <div class="npa-card" style="grid-column:span 2">
+        <h3>Programme Overview</h3>
+        <p>This flagship programme was developed to bridge legal theory and prosecutorial practice. Students gain guided observational exposure to courtroom preparation, case processes, professional ethics, and standards expected in formal criminal justice environments.</p>
+      </div>
+      <div class="npa-card">
+        <h3>Application Details</h3>
+        <ul>
+          <li>Applications open: 1 May 2026</li>
+          <li>Maximum: 15 students per week</li>
+          <li>Submission does not guarantee placement</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="section-title" style="font-size:1.7rem">Institutional Partnership</h2>
+      <div class="npa-partners">
+        <div class="npa-partner"><strong>Partner 1</strong><span>National Prosecuting Authority</span></div>
+        <div class="npa-partner"><strong>Partner 2</strong><span>UFS Faculty of Law</span></div>
+        <div class="npa-partner"><strong>Partner 3</strong><span>BLASC UFS</span></div>
+      </div>
+    </div>
+
+    <div class="npa-grid">
+      <div class="npa-card">
+        <h3>Eligibility and Scheduling</h3>
+        <ul>
+          <li>Final Year (own transport): Weeks 1–3 + Weeks 15–20</li>
+          <li>Final Year (transport needed): Weeks 4–5 + Weeks 15–20</li>
+          <li>3rd Year: Weeks 6–10 + Weeks 15–20</li>
+          <li>2nd Year: Weeks 11–14 + Weeks 15–20</li>
+          <li>1st Year: Weeks 15–20</li>
+          <li>Criminal Procedure = No: Weeks 11–20 only</li>
+        </ul>
+      </div>
+      <div class="npa-card" style="grid-column:span 2">
+        <h3>How the Application Works</h3>
+        <div class="npa-steps">
+          <div class="npa-step"><strong>Step 1</strong><span>Overview</span></div>
+          <div class="npa-step"><strong>Step 2</strong><span>Declaration</span></div>
+          <div class="npa-step"><strong>Step 3</strong><span>Eligibility</span></div>
+          <div class="npa-step"><strong>Step 4</strong><span>Date Selection</span></div>
+          <div class="npa-step"><strong>Step 5</strong><span>Initials</span></div>
+          <div class="npa-step"><strong>Step 6</strong><span>Google Form</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="npa-modal" id="npaModal" aria-hidden="true">
+  <div class="npa-modal-backdrop" id="npaModalBackdrop"></div>
+  <div class="npa-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="npaModalTitle">
+    <div class="npa-modal-header">
+      <div><p class="npa-modal-title" id="npaModalTitle">In the Shadow of the Prosecutor</p><p class="npa-modal-sub">UFS Faculty of Law · National Prosecuting Authority · BLASC UFS</p></div>
+      <button type="button" class="npa-close" id="npaModalClose" aria-label="Close application modal">×</button>
+    </div>
+    <div class="npa-modal-body">
+      <div class="npa-flow" id="npaFlow" data-google-form-url="https://forms.gle/REPLACE_WITH_OFFICIAL_BLASC_FORM">
+        <div class="npa-flow-steps" id="npaStepDots"></div>
+        <div class="npa-step-card" id="npaStepContainer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div><p>The Vanguard of the Legal Profession.</p></div>
+    <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
+    <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Connect</h4><div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
+</footer>
+
+<script src="assets/main.js"></script>
+<script>
+(() => {
+  const modal = document.getElementById('npaModal');
+  const modalCloseBtn = document.getElementById('npaModalClose');
+  const modalBackdrop = document.getElementById('npaModalBackdrop');
+  const flowRoot = document.getElementById('npaFlow');
+  const applyNowBtn = document.getElementById('npaApplyNowBtn');
+  if (!flowRoot || !applyNowBtn || !modal || !modalCloseBtn || !modalBackdrop) return;
+  const GOOGLE_FORM_URL = flowRoot.dataset.googleFormUrl;
+  const SUBMISSION_STORE_KEY = 'blascNpaPreApplications2026';
+  const steps = ['Overview', 'Declaration', 'Eligibility', 'Date Selection', 'Initials', 'Google Form'];
+  const weekDefinitions = [
+    { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026', maxCapacity: 15 }, { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026', maxCapacity: 15 }, { id: 'w3', number: 3, label: 'Week 3', dateRange: '19–23 May 2026', maxCapacity: 15 }, { id: 'w4', number: 4, label: 'Week 4', dateRange: '26–30 May 2026', maxCapacity: 15 }, { id: 'w5', number: 5, label: 'Week 5', dateRange: '2–6 Jun 2026', maxCapacity: 15 }, { id: 'w6', number: 6, label: 'Week 6', dateRange: '9–13 Jun 2026', maxCapacity: 15 }, { id: 'w7', number: 7, label: 'Week 7', dateRange: '16–20 Jun 2026', maxCapacity: 15 }, { id: 'w8', number: 8, label: 'Week 8', dateRange: '23–27 Jun 2026', maxCapacity: 15 }, { id: 'w9', number: 9, label: 'Week 9', dateRange: '30 Jun–4 Jul 2026', maxCapacity: 15 }, { id: 'w10', number: 10, label: 'Week 10', dateRange: '7–11 Jul 2026', maxCapacity: 15 }, { id: 'w11', number: 11, label: 'Week 11', dateRange: '14–18 Jul 2026', maxCapacity: 15 }, { id: 'w12', number: 12, label: 'Week 12', dateRange: '21–25 Jul 2026', maxCapacity: 15 }, { id: 'w13', number: 13, label: 'Week 13', dateRange: '28 Jul–1 Aug 2026', maxCapacity: 15 }, { id: 'w14', number: 14, label: 'Week 14', dateRange: '4–8 Aug 2026', maxCapacity: 15 }, { id: 'w15', number: 15, label: 'Week 15', dateRange: '11–15 Aug 2026', maxCapacity: 15 }, { id: 'w16', number: 16, label: 'Week 16', dateRange: '18–22 Aug 2026', maxCapacity: 15 }, { id: 'w17', number: 17, label: 'Week 17', dateRange: '25–29 Aug 2026', maxCapacity: 15 }, { id: 'w18', number: 18, label: 'Week 18', dateRange: '1–5 Sep 2026', maxCapacity: 15 }, { id: 'w19', number: 19, label: 'Week 19', dateRange: '8–12 Sep 2026', maxCapacity: 15 }, { id: 'w20', number: 20, label: 'Week 20', dateRange: '15–19 Sep 2026', maxCapacity: 15 },
+  ];
+  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, criminalProcedure: '', yearOfStudy: '', transportNeeded: '', selectedWeekId: '', initials: '', referenceCode: '' };
+  const getWeekById = (id) => weekDefinitions.find((w) => w.id === id);
+  const generateReferenceCode = () => `BLASC-NPA-2026-${Array.from({length:6},()=>('ABCDEFGHJKLMNPQRSTUVWXYZ23456789')[Math.floor(Math.random()*32)]).join('')}`;
+  const getSubmissions = () => { try { return JSON.parse(localStorage.getItem(SUBMISSION_STORE_KEY) || '[]'); } catch { return []; } };
+  const saveSubmissions = (records) => localStorage.setItem(SUBMISSION_STORE_KEY, JSON.stringify(records));
+  const getConfirmedWeekCount = (weekId) => getSubmissions().filter((r) => r.selected_week === weekId && r.status === 'confirmed').length;
+  const isWeekClosed = (weekId) => {
+    const week = getWeekById(weekId);
+    return week ? getConfirmedWeekCount(weekId) >= week.maxCapacity : true;
+  };
+  const getEligibleWeeks = ({ yearOfStudy, criminalProcedure, transportNeeded }) => {
+    if (!yearOfStudy || !criminalProcedure || !transportNeeded) return [];
+    if (criminalProcedure === 'no') return weekDefinitions.filter((w) => w.number >= 11 && w.number <= 20);
+    if (yearOfStudy === 'final') return weekDefinitions.filter((w) => (transportNeeded === 'no' ? w.number >= 1 && w.number <= 3 : w.number >= 4 && w.number <= 5) || w.number >= 15);
+    if (yearOfStudy === 'third') return weekDefinitions.filter((w) => (w.number >= 6 && w.number <= 10) || w.number >= 15);
+    if (yearOfStudy === 'second') return weekDefinitions.filter((w) => (w.number >= 11 && w.number <= 14) || w.number >= 15);
+    return weekDefinitions.filter((w) => w.number >= 15);
+  };
+  const saveSubmission = () => {
+    const records = getSubmissions();
+    const week = getWeekById(state.selectedWeekId);
+    records.push({
+      reference_code: state.referenceCode,
+      initials: state.initials.trim().toUpperCase(),
+      year_of_study: state.yearOfStudy,
+      criminal_procedure_status: state.criminalProcedure,
+      transport_needed: state.transportNeeded,
+      selected_week: state.selectedWeekId,
+      selected_week_label: `${week.label} (${week.dateRange})`,
+      created_at: new Date().toISOString(),
+      status: 'pending_google_form',
+      google_form_submitted_at: null,
+      confirmed_at: null,
+      waitlist_reason: null,
+      admin_notes: null
+    });
+    saveSubmissions(records);
+  };
+  const hasProgress = () => state.stepIndex > 0 || state.introConsent || state.declarationConsent || state.criminalProcedure || state.yearOfStudy || state.transportNeeded || state.selectedWeekId || state.initials || state.referenceCode;
+  const closeModal = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); };
+  const attemptCloseModal = () => { if (hasProgress() && !window.confirm('You have unsaved progress in this application window. Close anyway?')) return; closeModal(); };
+  function renderDots() { const d = document.getElementById('npaStepDots'); d.innerHTML = ''; steps.forEach((s, i) => { const el = document.createElement('div'); el.className = `npa-step-dot${i===state.stepIndex?' active':''}`; el.textContent = `${i+1}. ${s}`; d.appendChild(el); }); }
+  function confirmByReferenceCode(referenceCode, submittedAtIso) {
+    const records = getSubmissions();
+    const idx = records.findIndex((r) => r.reference_code === referenceCode);
+    if (idx === -1) return { ok: false, reason: 'reference_not_found' };
+
+    const record = records[idx];
+    if (record.status === 'confirmed') return { ok: true, status: 'confirmed_already' };
+    if (record.status !== 'pending_google_form' && record.status !== 'draft') return { ok: false, reason: 'not_confirmable_status' };
+
+    const weekId = record.selected_week;
+    const week = getWeekById(weekId);
+    if (!week) return { ok: false, reason: 'invalid_week' };
+
+    record.google_form_submitted_at = submittedAtIso || new Date().toISOString();
+    if (isWeekClosed(weekId)) {
+      record.status = 'needs_reassignment';
+      record.waitlist_reason = 'Week full at Google Form confirmation time';
+      saveSubmissions(records);
+      return { ok: false, reason: 'week_full', status: record.status };
+    }
+
+    record.status = 'confirmed';
+    record.confirmed_at = new Date().toISOString();
+    saveSubmissions(records);
+    return { ok: true, status: 'confirmed' };
+  }
+
+  function render() {
+    const c = document.getElementById('npaStepContainer'); if (!c) return; renderDots();
+    if (state.stepIndex === 0) { c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. This is a formal 3-part pre-application process.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Date allocation screening</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private personal-information Google Form</span></div></div><p class="npa-step-sub">This BLASC website step collects limited screening information only. Personal identifying information is completed on a separate Google Form to support privacy and safe handling of student information. Completing this process does not automatically guarantee placement.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the 3-part application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`; c.querySelector('#introConsent').onchange=(e)=>state.introConsent=e.target.checked; c.querySelector('#next0').onclick=()=>{ if(!state.introConsent) return; state.stepIndex=1; render(); }; return; }
+    if (state.stepIndex === 1) { c.innerHTML = `<h3 class="npa-step-title">Student Declaration and Undertaking</h3><p class="npa-step-sub">Please read and confirm before continuing.</p><div class="npa-declaration"><h4>Professional and Confidential Environment</h4><ul><li>Participation is a privilege and not an automatic right.</li><li>The programme is observational, educational, and takes place in a professional prosecutorial setting.</li><li>You may be exposed to sensitive legal processes, witnesses, preparation, and official documents.</li></ul><h4>Conduct and Compliance</h4><ul><li>Strict confidentiality is required during and after participation.</li><li>You must comply with supervision by assigned prosecutors and authorised officials.</li><li>You must adhere to POPIA, the NPA Code of Conduct, and institutional ethical standards.</li><li>Independent consultations with witnesses, complainants, accused persons, or stakeholders are prohibited.</li><li>Personal errands or non-professional tasks are prohibited.</li><li>Carry student ID and follow communicated dress code and working hours when requested.</li></ul><h4>Consequences and Institutional Dignity</h4><ul><li>Non-compliance may lead to immediate termination and may carry disciplinary/legal implications where applicable.</li><li>Participation is voluntary.</li><li>You must uphold the dignity of UFS, BLASC UFS, and the National Prosecuting Authority.</li></ul></div><details class="npa-full-toggle"><summary style="cursor:pointer;color:var(--blue);font-weight:700;font-size:.84rem">View full declaration</summary><p class="npa-note">Full declaration text can be inserted verbatim here from the official uploaded declaration file.</p></details><label class="check-label" style="margin-top:12px"><input type="checkbox" id="decl" ${state.declarationConsent?'checked':''}/> I have read, understood, and agree to the Student Declaration and Undertaking.</label><div class="npa-actions"><button class="btn btn-outline-dark" id="back1">Back</button><button class="btn btn-blue" id="next1">Next</button></div>`; c.querySelector('#decl').onchange=(e)=>state.declarationConsent=e.target.checked; c.querySelector('#back1').onclick=()=>{state.stepIndex=0; render();}; c.querySelector('#next1').onclick=()=>{if(!state.declarationConsent) return; state.stepIndex=2; render();}; return; }
+    if (state.stepIndex === 2) { c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><div class="npa-row"><div class="field"><label>Have you completed or are currently completing Criminal Procedure?</label><select id="cp"><option value="">Select</option><option value="completed" ${state.criminalProcedure==='completed'?'selected':''}>Yes, I have completed Criminal Procedure</option><option value="current" ${state.criminalProcedure==='current'?'selected':''}>Yes, I am currently completing Criminal Procedure</option><option value="no" ${state.criminalProcedure==='no'?'selected':''}>No, I have not yet done Criminal Procedure</option></select></div><div class="field"><label>What year of study are you in?</label><select id="yr"><option value="">Select</option><option value="final" ${state.yearOfStudy==='final'?'selected':''}>Final Year</option><option value="third" ${state.yearOfStudy==='third'?'selected':''}>3rd Year</option><option value="second" ${state.yearOfStudy==='second'?'selected':''}>2nd Year</option><option value="first" ${state.yearOfStudy==='first'?'selected':''}>1st Year</option></select></div></div><div class="field"><label>Will you need transport?</label><select id="tr"><option value="">Select</option><option value="no" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value="yes" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability. If no transport is allocated, accepted students are still expected to attend.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back2">Back</button><button class="btn btn-blue" id="next2">Next</button></div>`; c.querySelector('#cp').onchange=(e)=>{state.criminalProcedure=e.target.value;state.selectedWeekId='';}; c.querySelector('#yr').onchange=(e)=>{state.yearOfStudy=e.target.value;state.selectedWeekId='';}; c.querySelector('#tr').onchange=(e)=>{state.transportNeeded=e.target.value;state.selectedWeekId='';}; c.querySelector('#back2').onclick=()=>{state.stepIndex=1; render();}; c.querySelector('#next2').onclick=()=>{if(!state.criminalProcedure||!state.yearOfStudy||!state.transportNeeded) return; state.stepIndex=3; render();}; return; }
+    if (state.stepIndex === 3) {
+      const eligible = getEligibleWeeks(state);
+      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-note">Available weeks are based on <strong>confirmed</strong> submissions only (maximum 15 per week).</p><p class="npa-warning">Your selected week is a preferred placement and is only confirmed after your Google Form submission is received and matched using your reference code.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Next</button></div>`;
+      const wg = c.querySelector('#wg');
+      eligible.forEach((w) => {
+        const confirmedCount = getConfirmedWeekCount(w.id);
+        const full = confirmedCount >= w.maxCapacity;
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = `week-choice ${full ? 'disabled' : 'available'} ${state.selectedWeekId === w.id ? 'selected' : ''}`;
+        b.disabled = full;
+        b.innerHTML = `<strong>${w.label}</strong><span>${w.dateRange}</span><span>${confirmedCount}/${w.maxCapacity} confirmed</span><span class="meta">${full ? 'Closed' : 'Open'}</span>`;
+        b.onclick = () => { state.selectedWeekId = w.id; render(); };
+        wg.appendChild(b);
+      });
+      c.querySelector('#back3').onclick = () => { state.stepIndex = 2; render(); };
+      c.querySelector('#next3').onclick = () => { if (!state.selectedWeekId) return; state.stepIndex = 4; render(); };
+      return;
+    }
+    if (state.stepIndex === 4) {
+      const w = getWeekById(state.selectedWeekId);
+      c.innerHTML = `<h3 class="npa-step-title">Initials Only</h3><div class="field"><label>Initials</label><input id="i" type="text" value="${state.initials}" maxlength="8" placeholder="e.g. BM"/></div><p class="npa-note">Preferred week: <strong>${w ? `${w.label} (${w.dateRange})` : ''}</strong></p><p class="npa-note">This week is not secured until your Google Form is submitted and matched.</p><div class="npa-actions"><button class="btn btn-outline-dark" id="back4">Back</button><button class="btn btn-blue" id="next4">Generate Reference Code</button></div>`;
+      c.querySelector('#i').oninput = (e) => { state.initials = e.target.value.replace(/[^A-Za-z]/g, '').toUpperCase(); e.target.value = state.initials; };
+      c.querySelector('#back4').onclick = () => { state.stepIndex = 3; render(); };
+      c.querySelector('#next4').onclick = () => {
+        if (!state.initials.trim()) return;
+        state.referenceCode = generateReferenceCode();
+        saveSubmission();
+        state.stepIndex = 5;
+        render();
+      };
+      return;
+    }
+    const w = getWeekById(state.selectedWeekId);
+    c.innerHTML = `<h3 class="npa-step-title">Google Form Handoff</h3><p class="npa-step-sub">Continue to the separate Google Form for private personal information. Use the same reference code to match your submissions.</p><p class="npa-warning">Your selected week will only be confirmed after your Google Form is submitted and matched successfully.</p><p class="npa-note">Reference Code</p><p><span class="npa-code" id="code">${state.referenceCode}</span></p><p class="npa-note">Preferred week: <strong>${w ? `${w.label} (${w.dateRange})` : ''}</strong></p><p class="npa-note">Status: <strong>pending_google_form</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copy">Copy Code</button><button class="btn btn-blue" id="go">Continue to Google Form</button></div>`;
+    c.querySelector('#copy').onclick = async () => { try { await navigator.clipboard.writeText(state.referenceCode); } catch (_) {} };
+    c.querySelector('#go').onclick = () => window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
+  }
+  applyNowBtn.addEventListener('click', () => { modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.classList.add('no-scroll'); render(); });
+  modalCloseBtn.addEventListener('click', attemptCloseModal);
+  modalBackdrop.addEventListener('click', attemptCloseModal);
+  document.addEventListener('keydown', (e) => { if (!modal.classList.contains('open')) return; if (e.key === 'Escape') attemptCloseModal(); });
+
+  // Manual/automation hook for Google Form matching by reference code.
+  // Use this from admin tooling or an integration script:
+  // window.confirmNpaGoogleFormMatch('BLASC-NPA-2026-XXXXXX', new Date().toISOString())
+  window.confirmNpaGoogleFormMatch = confirmByReferenceCode;
+  window.getNpaConfirmedWeekCount = getConfirmedWeekCount;
+  window.isNpaWeekClosed = isWeekClosed;
+})();
+</script>
+</body>
+</html>

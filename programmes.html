@@ -31,31 +31,10 @@
     .calendar-note{background:linear-gradient(135deg,var(--blue) 0%,#0d3d6e 100%);color:#fff;border-radius:var(--radius-md);padding:20px 24px;margin-bottom:24px}
     .calendar-note p{color:rgba(255,255,255,.8);font-size:.9rem;line-height:1.7;margin-top:6px}
     .calendar-note strong{color:#fff}
-    .npa-flow{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px}
-    .npa-flow.is-hidden{display:none}
-    .npa-steps{display:grid;grid-template-columns:repeat(6,minmax(90px,1fr));gap:8px;margin-bottom:20px}
-    .npa-step-dot{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 8px;text-align:center;font-size:.72rem;font-weight:700;color:var(--grey)}
-    .npa-step-dot.active{border-color:var(--blue-mid);background:var(--blue-pale);color:var(--blue)}
-    .npa-step-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:22px}
-    .npa-step-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:6px}
-    .npa-step-sub{font-size:.9rem;line-height:1.7;color:var(--muted);margin-bottom:18px}
-    .npa-part-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-    .npa-part-item{border:1px solid var(--border);background:var(--off-white);border-radius:var(--radius-sm);padding:12px}
-    .npa-part-item strong{display:block;font-size:.76rem;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
-    .npa-part-item span{font-size:.86rem;color:var(--ink)}
-    .npa-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .npa-actions{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:18px}
-    .npa-note{font-size:.82rem;color:var(--muted);line-height:1.6;margin-top:8px}
-    .npa-warning{background:#fff8e7;border:1px solid #f5d489;border-radius:var(--radius-sm);padding:12px 14px;font-size:.84rem;color:#7a5300;line-height:1.6;margin:12px 0}
-    .week-pick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .week-choice{border:1px solid var(--border);background:#fff;border-radius:var(--radius-sm);padding:12px;text-align:left;transition:border-color .2s,box-shadow .2s}
-    .week-choice strong{display:block;font-size:.84rem;color:var(--ink)}
-    .week-choice span{display:block;font-size:.76rem;color:var(--muted);margin-top:2px}
-    .week-choice .meta{display:inline-block;margin-top:6px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-radius:999px;padding:2px 7px;background:var(--blue-pale);color:var(--blue)}
-    .week-choice.available:hover{border-color:var(--blue-mid);box-shadow:var(--shadow-sm)}
-    .week-choice.selected{border-color:var(--blue-mid);background:var(--blue-pale)}
-    .week-choice.disabled{opacity:.55;cursor:not-allowed;background:#f8fafc}
-    .npa-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;display:inline-block;background:#0f172a;color:#fff;padding:10px 12px;border-radius:10px;font-size:1rem;letter-spacing:.05em}
+    .npa-teaser{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px}
+    .npa-teaser-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    .npa-list{display:grid;gap:7px;color:var(--muted);font-size:.9rem;line-height:1.65;padding-left:16px;list-style:disc}
+    .npa-cta-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px}
 
     /* Moot court */
     .moot-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
@@ -68,12 +47,12 @@
     .op-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
     .op-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
     .op-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-light))}
-    .op-icon{font-size:1.6rem;margin-bottom:14px}
+    .op-icon{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:24px;padding:0 8px;font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);background:var(--blue-pale);border-radius:999px;margin-bottom:14px}
     .op-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--ink)}
     .op-card p{color:var(--muted);font-size:.89rem;line-height:1.7}
 
-    @media(max-width:900px){.info-grid,.npa-info-grid{grid-template-columns:1fr 1fr}.moot-grid,.other-prog,.npa-row,.npa-part-grid,.week-pick-grid{grid-template-columns:1fr}.npa-steps{grid-template-columns:repeat(3,1fr)}}
-    @media(max-width:540px){.info-grid,.npa-info-grid,.npa-steps{grid-template-columns:1fr}}
+    @media(max-width:900px){.info-grid,.npa-info-grid{grid-template-columns:1fr 1fr}.moot-grid,.other-prog,.npa-teaser-grid{grid-template-columns:1fr}}
+    @media(max-width:540px){.info-grid,.npa-info-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -107,17 +86,17 @@
   <div class="section-inner">
 
     <div class="prog-tabs">
-      <button class="tab-btn active" onclick="showTab('gearup')">🚗 Gear Up</button>
-      <button class="tab-btn" onclick="showTab('npa')">⚖️ In the Shadow of the Prosecutor</button>
-      <button class="tab-btn" onclick="showTab('moot')">🏛️ Moot Court Training</button>
-      <button class="tab-btn" onclick="showTab('other')">📚 Other Programmes</button>
+      <button class="tab-btn active" onclick="showTab('gearup')">Gear Up</button>
+      <button class="tab-btn" onclick="showTab('npa')">In the Shadow of the Prosecutor</button>
+      <button class="tab-btn" onclick="showTab('moot')">Moot Court Training</button>
+      <button class="tab-btn" onclick="showTab('other')">Other Programmes</button>
     </div>
 
     <!-- ══ GEAR UP ══ -->
     <div id="tab-gearup" class="tab-panel active">
       <div class="prog-header fade-up">
         <div>
-          <span class="prog-badge">🚗 Flagship Programme</span>
+          <span class="prog-badge">Flagship Programme</span>
           <h2 class="section-title" style="margin-top:12px">Gear Up Learner's Licence Programme</h2>
           <p class="section-body">A BLASC UFS flagship initiative co-founded by Chairperson Ndiwanga Madzivhandila and Deputy Chairperson Bonnita Shai, designed to help students obtain their learner's licence — removing a key barrier to independence and career mobility.</p>
         </div>
@@ -140,7 +119,7 @@
       </div>
 
       <div style="background:var(--blue-pale);border:1px solid var(--blue-light);border-radius:var(--radius-md);padding:18px 22px;margin-bottom:28px" class="fade-up">
-        <strong style="color:var(--blue);font-size:.85rem">📹 Study Resource</strong>
+        <strong style="color:var(--blue);font-size:.85rem">Study Resource</strong>
         <p style="color:var(--ink);font-size:.9rem;margin-top:4px">YouTube classes will be shared with approved applicants. Ensure you have a stable internet connection and set aside dedicated study time each week.</p>
       </div>
 
@@ -169,7 +148,7 @@
     <div id="tab-npa" class="tab-panel">
       <div class="prog-header fade-up">
         <div>
-          <span class="prog-badge">⚖️ NPA Partnership</span>
+          <span class="prog-badge">NPA Partnership</span>
           <h2 class="section-title" style="margin-top:12px">In the Shadow of the Prosecutor</h2>
           <p class="section-body">A court shadowing programme developed by Deputy Chairperson Bonnita Shai, giving UFS law students direct access to the world of public prosecution through a formal contract between the NPA, the UFS Law Faculty, and BLASC UFS.</p>
         </div>
@@ -183,42 +162,54 @@
       </div>
 
       <div class="calendar-note fade-up">
-        <strong>📅 Applications Open 1 May 2026</strong>
+        <strong>Applications Open 1 May 2026</strong>
         <p>This pre-application flow collects only limited screening information on the BLASC website. Personal identifying information is collected privately on a separate Google Form.</p>
       </div>
 
-      <div style="margin:18px 0 16px" class="fade-up">
-        <button type="button" class="btn btn-blue" id="npaApplyNowBtn">Apply Now</button>
+      <div class="npa-teaser fade-up">
+        <div class="npa-teaser-grid">
+          <div>
+            <h3 style="font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--ink);margin-bottom:10px">Flagship Programme Page</h3>
+            <p style="color:var(--muted);font-size:.92rem;line-height:1.75;margin-bottom:10px">This programme now has a dedicated standalone page with full partnership context, eligibility and scheduling guidance, and the formal multi-step pre-application modal.</p>
+            <ul class="npa-list">
+              <li>Applications open on 1 May 2026.</li>
+              <li>15-student cap per week with live availability handling.</li>
+              <li>Privacy-aware screening on BLASC site, private details on Google Form.</li>
+            </ul>
+          </div>
+          <div class="npa-cta-card">
+            <p style="font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);font-weight:700;margin-bottom:8px">Open Programme</p>
+            <p style="font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:14px">Visit the dedicated page to review full details and start the formal NPA application process.</p>
+            <div style="display:grid;gap:10px">
+              <a class="btn btn-blue" href="npa-shadowing.html" style="width:100%;justify-content:center">View Programme</a>
+              <a class="btn btn-outline-dark" href="npa-shadowing.html#npa-apply" style="width:100%;justify-content:center">Apply Now</a>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="npa-flow fade-up is-hidden" id="npaFlow" data-google-form-url="https://forms.gle/REPLACE_WITH_OFFICIAL_BLASC_FORM">
-        <div class="npa-steps" id="npaStepDots"></div>
-        <div class="npa-step-card" id="npaStepContainer"></div>
-      </div>
-    </div>
 
     <!-- ══ MOOT COURT ══ -->
     <div id="tab-moot" class="tab-panel">
       <div class="fade-up">
-        <span class="prog-badge">🏛️ Skills Training</span>
+        <span class="prog-badge">Skills Training</span>
         <h2 class="section-title" style="margin-top:12px">Moot Court Training Programme</h2>
         <p class="section-body">The BLASC UFS Moot Court Programme provides law students with simulated courtroom experiences. Real legal practitioners are invited to judge proceedings, making the sessions as authentic as possible. The programme is designed to sharpen skills across multiple legal disciplines through structured training sessions.</p>
       </div>
       <div class="moot-grid">
         <div class="moot-card fade-up">
-          <h4>⚖️ Oral Advocacy</h4>
+          <h4>Oral Advocacy</h4>
           <p>Develop the ability to argue your case persuasively before a bench. Sessions focus on structure, tone, pace, legal citation, and responding to judicial questions under pressure.</p>
         </div>
         <div class="moot-card fade-up">
-          <h4>📝 Research & Drafting</h4>
+          <h4>Research & Drafting</h4>
           <p>Learn to construct watertight written arguments. Covers legal research methodology, headnote drafting, pleadings, and argument memoranda — skills essential for every area of legal practice.</p>
         </div>
         <div class="moot-card fade-up">
-          <h4>👨‍⚖️ Practitioner Judges</h4>
+          <h4>Practitioner Judges</h4>
           <p>Real advocates, attorneys, and prosecutors serve as judges during moot sessions — giving participants direct exposure to professional feedback and real courtroom standards.</p>
         </div>
         <div class="moot-card fade-up">
-          <h4>📅 Session Structure</h4>
+          <h4>Session Structure</h4>
           <p>Training runs in multiple sessions covering various fields of law. Each session is facilitated by a different legal professional, ensuring broad exposure across criminal, civil, constitutional, and commercial law.</p>
         </div>
       </div>
@@ -231,17 +222,17 @@
     <!-- ══ OTHER PROGRAMMES ══ -->
     <div id="tab-other" class="tab-panel">
       <div class="fade-up">
-        <span class="prog-badge">📚 Additional Programmes</span>
+        <span class="prog-badge">Additional Programmes</span>
         <h2 class="section-title" style="margin-top:12px">More from BLASC UFS</h2>
         <p class="section-body">Beyond our flagship programmes, BLASC UFS runs a range of development, mentorship, and community initiatives throughout the academic year.</p>
       </div>
       <div class="other-prog">
-        <div class="op-card fade-up"><div class="op-icon">🤝</div><h3>Peer & Professional Mentorship</h3><p>Guided mentorship linking students with experienced legal practitioners, senior law students, and BLA members. Sessions cover career planning, professional conduct, and legal practice insights.</p></div>
-        <div class="op-card fade-up"><div class="op-icon">🌍</div><h3>Social Justice Outreach</h3><p>Community-based programmes supporting legal awareness, civic registration, and constitutional engagement in underserved communities around Bloemfontein and the Free State.</p></div>
-        <div class="op-card fade-up"><div class="op-icon">💼</div><h3>Career Events</h3><p>Events designed to help young legal minds navigate the world of work — career exposure sessions, CV workshops, career readiness training, and networking with legal professionals.</p></div>
-        <div class="op-card fade-up"><div class="op-icon">✊</div><h3>Social Justice & Transformation</h3><p>Annual commemorative events including Women's Day, Youth Day, and Freedom Day activities that reflect on transformation, equality, and the responsibilities of the next generation of lawyers.</p></div>
-        <div class="op-card fade-up"><div class="op-icon">📖</div><h3>Legal Research Programme</h3><p>Academic research initiatives keeping members informed on bills before Parliament, Constitutional Court judgments, and emerging legal issues relevant to the profession.</p></div>
-        <div class="op-card fade-up"><div class="op-icon">🌐</div><h3>International Moot Court</h3><p>BLASC UFS is actively exploring international moot court opportunities including prospects in Zambia, giving members exposure to cross-border legal advocacy.</p></div>
+        <div class="op-card fade-up"><div class="op-icon">PM</div><h3>Peer & Professional Mentorship</h3><p>Guided mentorship linking students with experienced legal practitioners, senior law students, and BLA members. Sessions cover career planning, professional conduct, and legal practice insights.</p></div>
+        <div class="op-card fade-up"><div class="op-icon">SJ</div><h3>Social Justice Outreach</h3><p>Community-based programmes supporting legal awareness, civic registration, and constitutional engagement in underserved communities around Bloemfontein and the Free State.</p></div>
+        <div class="op-card fade-up"><div class="op-icon">CE</div><h3>Career Events</h3><p>Events designed to help young legal minds navigate the world of work — career exposure sessions, CV workshops, career readiness training, and networking with legal professionals.</p></div>
+        <div class="op-card fade-up"><div class="op-icon">ST</div><h3>Social Justice & Transformation</h3><p>Annual commemorative events including Women's Day, Youth Day, and Freedom Day activities that reflect on transformation, equality, and the responsibilities of the next generation of lawyers.</p></div>
+        <div class="op-card fade-up"><div class="op-icon">LR</div><h3>Legal Research Programme</h3><p>Academic research initiatives keeping members informed on bills before Parliament, Constitutional Court judgments, and emerging legal issues relevant to the profession.</p></div>
+        <div class="op-card fade-up"><div class="op-icon">IM</div><h3>International Moot Court</h3><p>BLASC UFS is actively exploring international moot court opportunities including prospects in Zambia, giving members exposure to cross-border legal advocacy.</p></div>
       </div>
     </div>
 
@@ -267,388 +258,6 @@ function showTab(id) {
   event.target.classList.add('active');
 }
 
-(() => {
-  const flowRoot = document.getElementById('npaFlow');
-  const applyNowBtn = document.getElementById('npaApplyNowBtn');
-  if (!flowRoot || !applyNowBtn) return;
-
-  const GOOGLE_FORM_URL = flowRoot.dataset.googleFormUrl;
-  const RESERVATION_STORE_KEY = 'blascNpaWeekReservations2026';
-  const SUBMISSION_STORE_KEY = 'blascNpaPreApplications2026';
-
-  const steps = [
-    'Overview',
-    'Declaration',
-    'Eligibility',
-    'Date Selection',
-    'Initials',
-    'Google Form',
-  ];
-
-  const weekDefinitions = [
-    { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026', allowedYears: ['final'], transportRule: 'own', tier: 'final_own', maxCapacity: 15 },
-    { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026', allowedYears: ['final'], transportRule: 'own', tier: 'final_own', maxCapacity: 15 },
-    { id: 'w3', number: 3, label: 'Week 3', dateRange: '19–23 May 2026', allowedYears: ['final'], transportRule: 'own', tier: 'final_own', maxCapacity: 15 },
-    { id: 'w4', number: 4, label: 'Week 4', dateRange: '26–30 May 2026', allowedYears: ['final'], transportRule: 'need', tier: 'final_transport', maxCapacity: 15 },
-    { id: 'w5', number: 5, label: 'Week 5', dateRange: '2–6 Jun 2026', allowedYears: ['final'], transportRule: 'need', tier: 'final_transport', maxCapacity: 15 },
-    { id: 'w6', number: 6, label: 'Week 6', dateRange: '9–13 Jun 2026', allowedYears: ['third'], transportRule: 'any', tier: 'third', maxCapacity: 15 },
-    { id: 'w7', number: 7, label: 'Week 7', dateRange: '16–20 Jun 2026', allowedYears: ['third'], transportRule: 'any', tier: 'third', maxCapacity: 15 },
-    { id: 'w8', number: 8, label: 'Week 8', dateRange: '23–27 Jun 2026', allowedYears: ['third'], transportRule: 'any', tier: 'third', maxCapacity: 15 },
-    { id: 'w9', number: 9, label: 'Week 9', dateRange: '30 Jun–4 Jul 2026', allowedYears: ['third'], transportRule: 'any', tier: 'third', maxCapacity: 15 },
-    { id: 'w10', number: 10, label: 'Week 10', dateRange: '7–11 Jul 2026', allowedYears: ['third'], transportRule: 'any', tier: 'third', maxCapacity: 15 },
-    { id: 'w11', number: 11, label: 'Week 11', dateRange: '14–18 Jul 2026', allowedYears: ['second'], transportRule: 'any', tier: 'second', maxCapacity: 15 },
-    { id: 'w12', number: 12, label: 'Week 12', dateRange: '21–25 Jul 2026', allowedYears: ['second'], transportRule: 'any', tier: 'second', maxCapacity: 15 },
-    { id: 'w13', number: 13, label: 'Week 13', dateRange: '28 Jul–1 Aug 2026', allowedYears: ['second'], transportRule: 'any', tier: 'second', maxCapacity: 15 },
-    { id: 'w14', number: 14, label: 'Week 14', dateRange: '4–8 Aug 2026', allowedYears: ['second'], transportRule: 'any', tier: 'second', maxCapacity: 15 },
-    { id: 'w15', number: 15, label: 'Week 15', dateRange: '11–15 Aug 2026', allowedYears: ['first', 'second', 'third', 'final'], transportRule: 'any', tier: 'all_years', maxCapacity: 15 },
-    { id: 'w16', number: 16, label: 'Week 16', dateRange: '18–22 Aug 2026', allowedYears: ['first', 'second', 'third', 'final'], transportRule: 'any', tier: 'all_years', maxCapacity: 15 },
-    { id: 'w17', number: 17, label: 'Week 17', dateRange: '25–29 Aug 2026', allowedYears: ['first', 'second', 'third', 'final'], transportRule: 'any', tier: 'all_years', maxCapacity: 15 },
-    { id: 'w18', number: 18, label: 'Week 18', dateRange: '1–5 Sep 2026', allowedYears: ['first', 'second', 'third', 'final'], transportRule: 'any', tier: 'all_years', maxCapacity: 15 },
-    { id: 'w19', number: 19, label: 'Week 19', dateRange: '8–12 Sep 2026', allowedYears: ['first', 'second', 'third', 'final'], transportRule: 'any', tier: 'all_years', maxCapacity: 15 },
-    { id: 'w20', number: 20, label: 'Week 20', dateRange: '15–19 Sep 2026', allowedYears: ['first', 'second', 'third', 'final'], transportRule: 'any', tier: 'all_years', maxCapacity: 15 },
-  ];
-
-  const state = {
-    stepIndex: 0,
-    introConsent: false,
-    declarationConsent: false,
-    criminalProcedure: '',
-    yearOfStudy: '',
-    transportNeeded: '',
-    selectedWeekId: '',
-    initials: '',
-    referenceCode: '',
-  };
-
-  function getReservations() {
-    try { return JSON.parse(localStorage.getItem(RESERVATION_STORE_KEY) || '{}'); }
-    catch { return {}; }
-  }
-
-  function saveReservations(reservations) {
-    localStorage.setItem(RESERVATION_STORE_KEY, JSON.stringify(reservations));
-  }
-
-  function getWeekById(weekId) {
-    return weekDefinitions.find(w => w.id === weekId);
-  }
-
-  function getWeekMetaTag(week) {
-    if (week.tier === 'final_own') return 'Final Year · Own Transport';
-    if (week.tier === 'final_transport') return 'Final Year · Transport Needed';
-    if (week.tier === 'third') return '3rd Year Priority';
-    if (week.tier === 'second') return '2nd Year Priority';
-    return 'All Years';
-  }
-
-  function getEligibleWeeks({ yearOfStudy, criminalProcedure, transportNeeded }) {
-    if (!yearOfStudy || !criminalProcedure || !transportNeeded) return [];
-
-    if (criminalProcedure === 'no') {
-      return weekDefinitions.filter(week => (week.number >= 11 && week.number <= 20));
-    }
-
-    if (yearOfStudy === 'final') {
-      const finalPriority = weekDefinitions.filter(week => {
-        if (transportNeeded === 'no') return week.number >= 1 && week.number <= 3;
-        return week.number >= 4 && week.number <= 5;
-      });
-      const openWeeks = weekDefinitions.filter(week => week.number >= 15 && week.number <= 20);
-      return [...finalPriority, ...openWeeks];
-    }
-
-    if (yearOfStudy === 'third') {
-      return weekDefinitions.filter(week => (week.number >= 6 && week.number <= 10) || (week.number >= 15 && week.number <= 20));
-    }
-
-    if (yearOfStudy === 'second') {
-      return weekDefinitions.filter(week => (week.number >= 11 && week.number <= 14) || (week.number >= 15 && week.number <= 20));
-    }
-
-    return weekDefinitions.filter(week => week.number >= 15 && week.number <= 20);
-  }
-
-  function generateReferenceCode() {
-    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let suffix = '';
-    for (let i = 0; i < 6; i += 1) {
-      suffix += alphabet[Math.floor(Math.random() * alphabet.length)];
-    }
-    return `BLASC-NPA-2026-${suffix}`;
-  }
-
-  function saveSubmission() {
-    const submissions = JSON.parse(localStorage.getItem(SUBMISSION_STORE_KEY) || '[]');
-    const week = getWeekById(state.selectedWeekId);
-    submissions.push({
-      referenceCode: state.referenceCode,
-      initials: state.initials.trim().toUpperCase(),
-      criminalProcedure: state.criminalProcedure,
-      yearOfStudy: state.yearOfStudy,
-      transportNeeded: state.transportNeeded,
-      selectedWeek: state.selectedWeekId,
-      selectedWeekLabel: week ? `${week.label} (${week.dateRange})` : state.selectedWeekId,
-      timestamp: new Date().toISOString(),
-      status: 'pending_google_form',
-    });
-    localStorage.setItem(SUBMISSION_STORE_KEY, JSON.stringify(submissions));
-  }
-
-  function reserveWeek(weekId) {
-    const reservations = getReservations();
-    const current = reservations[weekId] || 0;
-    const week = getWeekById(weekId);
-    if (!week || current >= week.maxCapacity) return false;
-    reservations[weekId] = current + 1;
-    saveReservations(reservations);
-    return true;
-  }
-
-  function renderStepDots() {
-    const stepDots = document.getElementById('npaStepDots');
-    stepDots.innerHTML = '';
-    steps.forEach((step, idx) => {
-      const dot = document.createElement('div');
-      dot.className = `npa-step-dot${idx === state.stepIndex ? ' active' : ''}`;
-      dot.textContent = `${idx + 1}. ${step}`;
-      stepDots.appendChild(dot);
-    });
-  }
-
-  function renderWeekChoices() {
-    const weekChoices = document.getElementById('weekChoices');
-    const note = document.getElementById('weekEligibilityNote');
-    if (!weekChoices || !note) return;
-
-    const reservations = getReservations();
-    const eligible = getEligibleWeeks(state);
-    if (!eligible.length) {
-      weekChoices.innerHTML = '<p class="npa-note">Complete the eligibility answers first to load available weeks.</p>';
-      note.textContent = '';
-      return;
-    }
-
-    note.textContent = state.criminalProcedure === 'no'
-      ? 'Criminal Procedure = No: only 1st/2nd-year-level windows are available (Weeks 11–20).'
-      : 'Available weeks are filtered by year, transport requirement, and live capacity (15 max per week).';
-
-    weekChoices.innerHTML = '';
-    eligible.forEach((week) => {
-      const reservedCount = reservations[week.id] || 0;
-      const isFull = reservedCount >= week.maxCapacity;
-      const isSelected = state.selectedWeekId === week.id;
-
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = `week-choice ${isFull ? 'disabled' : 'available'} ${isSelected ? 'selected' : ''}`;
-      button.disabled = isFull;
-      button.innerHTML = `
-        <strong>${week.label}</strong>
-        <span>${week.dateRange}</span>
-        <span>${reservedCount}/${week.maxCapacity} reserved</span>
-        <span class="meta">${isFull ? 'Closed' : getWeekMetaTag(week)}</span>
-      `;
-      button.addEventListener('click', () => {
-        state.selectedWeekId = week.id;
-        render();
-      });
-      weekChoices.appendChild(button);
-    });
-  }
-
-  function renderStep() {
-    const container = document.getElementById('npaStepContainer');
-    if (!container) return;
-
-    if (state.stepIndex === 0) {
-      container.innerHTML = `
-        <h3 class="npa-step-title">Apply Now: 3-Part Pre-Application</h3>
-        <p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. Before starting, review the 3-part process below.</p>
-        <div class="npa-part-grid">
-          <div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div>
-          <div class="npa-part-item"><strong>Part 2</strong><span>Date allocation screening</span></div>
-          <div class="npa-part-item"><strong>Part 3</strong><span>Private personal-information Google Form</span></div>
-        </div>
-        <p class="npa-step-sub">The external form is used to protect student privacy and personal information. Providing personal information is voluntary and used solely for this programme. You must agree before you can continue.</p>
-        <label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent ? 'checked' : ''}/> Yes, I agree and want to continue with the pre-application process.</label>
-        <div class="npa-actions">
-          <span></span>
-          <button type="button" class="btn btn-blue" id="step0Next">Continue</button>
-        </div>
-      `;
-      document.getElementById('introConsent').addEventListener('change', (e) => { state.introConsent = e.target.checked; });
-      document.getElementById('step0Next').addEventListener('click', () => {
-        if (!state.introConsent) return;
-        state.stepIndex = 1;
-        render();
-      });
-      return;
-    }
-
-    if (state.stepIndex === 1) {
-      container.innerHTML = `
-        <h3 class="npa-step-title">Declaration</h3>
-        <p class="npa-step-sub">You must confirm this declaration before proceeding to eligibility and date allocation.</p>
-        <label class="check-label"><input type="checkbox" id="declarationConsent" ${state.declarationConsent ? 'checked' : ''}/> I confirm I understand this is a pre-application screening step and I consent to continue.</label>
-        <div class="npa-actions">
-          <button type="button" class="btn btn-outline-dark" id="step1Back">Back</button>
-          <button type="button" class="btn btn-blue" id="step1Next">Continue</button>
-        </div>
-      `;
-      document.getElementById('declarationConsent').addEventListener('change', (e) => { state.declarationConsent = e.target.checked; });
-      document.getElementById('step1Back').addEventListener('click', () => { state.stepIndex = 0; render(); });
-      document.getElementById('step1Next').addEventListener('click', () => {
-        if (!state.declarationConsent) return;
-        state.stepIndex = 2;
-        render();
-      });
-      return;
-    }
-
-    if (state.stepIndex === 2) {
-      container.innerHTML = `
-        <h3 class="npa-step-title">Eligibility Questions</h3>
-        <p class="npa-step-sub">Complete the screening questions below. This BLASC step does not request full personal identifying information.</p>
-        <div class="npa-row">
-          <div class="field">
-            <label>Have you completed or are currently completing Criminal Procedure?</label>
-            <select id="criminalProcedure">
-              <option value="">Select</option>
-              <option value="completed" ${state.criminalProcedure === 'completed' ? 'selected' : ''}>Yes, I have completed Criminal Procedure</option>
-              <option value="current" ${state.criminalProcedure === 'current' ? 'selected' : ''}>Yes, I am currently completing Criminal Procedure</option>
-              <option value="no" ${state.criminalProcedure === 'no' ? 'selected' : ''}>No, I have not yet done Criminal Procedure</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>What year of study are you in?</label>
-            <select id="yearOfStudy">
-              <option value="">Select</option>
-              <option value="final" ${state.yearOfStudy === 'final' ? 'selected' : ''}>Final Year</option>
-              <option value="third" ${state.yearOfStudy === 'third' ? 'selected' : ''}>3rd Year</option>
-              <option value="second" ${state.yearOfStudy === 'second' ? 'selected' : ''}>2nd Year</option>
-              <option value="first" ${state.yearOfStudy === 'first' ? 'selected' : ''}>1st Year</option>
-            </select>
-          </div>
-        </div>
-        <div class="field" style="margin-top:12px">
-          <label>Will you need transport?</label>
-          <select id="transportNeeded">
-            <option value="">Select</option>
-            <option value="no" ${state.transportNeeded === 'no' ? 'selected' : ''}>No, I have my own transport</option>
-            <option value="yes" ${state.transportNeeded === 'yes' ? 'selected' : ''}>Yes, I will need transport (subject to BLASC confirmation)</option>
-          </select>
-          <p class="npa-note">Transport is subject to availability. If no transport is allocated, accepted students are still expected to attend.</p>
-        </div>
-        <div class="npa-actions">
-          <button type="button" class="btn btn-outline-dark" id="step2Back">Back</button>
-          <button type="button" class="btn btn-blue" id="step2Next">Continue to Date Allocation</button>
-        </div>
-      `;
-
-      document.getElementById('criminalProcedure').addEventListener('change', (e) => { state.criminalProcedure = e.target.value; state.selectedWeekId = ''; });
-      document.getElementById('yearOfStudy').addEventListener('change', (e) => { state.yearOfStudy = e.target.value; state.selectedWeekId = ''; });
-      document.getElementById('transportNeeded').addEventListener('change', (e) => { state.transportNeeded = e.target.value; state.selectedWeekId = ''; });
-      document.getElementById('step2Back').addEventListener('click', () => { state.stepIndex = 1; render(); });
-      document.getElementById('step2Next').addEventListener('click', () => {
-        if (!state.criminalProcedure || !state.yearOfStudy || !state.transportNeeded) return;
-        state.stepIndex = 3;
-        render();
-      });
-      return;
-    }
-
-    if (state.stepIndex === 3) {
-      container.innerHTML = `
-        <h3 class="npa-step-title">Date Allocation</h3>
-        <p class="npa-step-sub">Each week has a hard cap of 15 students. Closed weeks are disabled automatically.</p>
-        <div class="npa-warning">Do not refresh or open another tab while choosing a week. Reservation is done when you confirm initials in the next step.</div>
-        <p class="npa-note" id="weekEligibilityNote"></p>
-        <div class="week-pick-grid" id="weekChoices"></div>
-        <div class="npa-actions">
-          <button type="button" class="btn btn-outline-dark" id="step3Back">Back</button>
-          <button type="button" class="btn btn-blue" id="step3Next">Continue</button>
-        </div>
-      `;
-      renderWeekChoices();
-      document.getElementById('step3Back').addEventListener('click', () => { state.stepIndex = 2; render(); });
-      document.getElementById('step3Next').addEventListener('click', () => {
-        if (!state.selectedWeekId) return;
-        state.stepIndex = 4;
-        render();
-      });
-      return;
-    }
-
-    if (state.stepIndex === 4) {
-      const selectedWeek = getWeekById(state.selectedWeekId);
-      container.innerHTML = `
-        <h3 class="npa-step-title">Initials Only</h3>
-        <p class="npa-step-sub">Enter initials only. Do not enter full names at this stage.</p>
-        <div class="field">
-          <label>Initials</label>
-          <input id="initialsInput" type="text" value="${state.initials}" maxlength="8" placeholder="e.g. BM"/>
-        </div>
-        <p class="npa-note">Selected slot: <strong>${selectedWeek ? `${selectedWeek.label} (${selectedWeek.dateRange})` : ''}</strong></p>
-        <div class="npa-actions">
-          <button type="button" class="btn btn-outline-dark" id="step4Back">Back</button>
-          <button type="button" class="btn btn-blue" id="step4Next">Generate Reference Code</button>
-        </div>
-      `;
-      document.getElementById('initialsInput').addEventListener('input', (e) => {
-        state.initials = e.target.value.replace(/[^A-Za-z]/g, '').toUpperCase();
-        e.target.value = state.initials;
-      });
-      document.getElementById('step4Back').addEventListener('click', () => { state.stepIndex = 3; render(); });
-      document.getElementById('step4Next').addEventListener('click', () => {
-        if (!state.initials.trim()) return;
-        const reserved = reserveWeek(state.selectedWeekId);
-        if (!reserved) {
-          state.selectedWeekId = '';
-          state.stepIndex = 3;
-          render();
-          return;
-        }
-        state.referenceCode = generateReferenceCode();
-        saveSubmission();
-        state.stepIndex = 5;
-        render();
-      });
-      return;
-    }
-
-    const selectedWeek = getWeekById(state.selectedWeekId);
-    container.innerHTML = `
-      <h3 class="npa-step-title">Continue to Private Google Form</h3>
-      <p class="npa-step-sub">Your BLASC pre-application screening is saved. Continue to the private Google Form to provide personal information securely.</p>
-      <div class="npa-warning">Copy this reference code and enter it in the Google Form field named <strong>BLASC Reference Code</strong>.</div>
-      <p class="npa-note">Reference Code</p>
-      <p><span class="npa-code" id="npaReferenceCode">${state.referenceCode}</span></p>
-      <p class="npa-note">Week reserved: <strong>${selectedWeek ? `${selectedWeek.label} (${selectedWeek.dateRange})` : ''}</strong></p>
-      <p class="npa-note">Status: <strong>pending_google_form</strong></p>
-      <div class="npa-actions">
-        <button type="button" class="btn btn-outline-dark" id="copyCodeBtn">Copy Code</button>
-        <button type="button" class="btn btn-blue" id="openGoogleFormBtn">Continue to Google Form</button>
-      </div>
-    `;
-    document.getElementById('copyCodeBtn').addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(state.referenceCode); } catch (_) {}
-    });
-    document.getElementById('openGoogleFormBtn').addEventListener('click', () => {
-      window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
-    });
-  }
-
-  function render() {
-    renderStepDots();
-    renderStep();
-  }
-
-  applyNowBtn.addEventListener('click', () => {
-    applyNowBtn.style.display = 'none';
-    flowRoot.classList.remove('is-hidden');
-    render();
-  });
-})();
 </script>
 </body>
 </html>
