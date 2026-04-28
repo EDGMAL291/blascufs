@@ -18,6 +18,7 @@
     .prog-header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:32px}
     .prog-badge{display:inline-flex;align-items:center;gap:6px;background:var(--blue-pale);color:var(--blue);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
     .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px}
+    .npa-info-grid{grid-template-columns:repeat(4,1fr)}
     .info-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px}
     .info-card strong{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:4px}
     .info-card span{font-size:.95rem;color:var(--ink);font-weight:500}
@@ -59,7 +60,7 @@
     .op-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--ink)}
     .op-card p{color:var(--muted);font-size:.89rem;line-height:1.7}
 
-    @media(max-width:900px){.info-grid{grid-template-columns:1fr 1fr}.weeks-grid{grid-template-columns:repeat(2,1fr)}.moot-grid,.other-prog{grid-template-columns:1fr}}
+    @media(max-width:900px){.info-grid,.npa-info-grid{grid-template-columns:1fr 1fr}.weeks-grid{grid-template-columns:repeat(2,1fr)}.moot-grid,.other-prog{grid-template-columns:1fr}}
     @media(max-width:540px){.info-grid{grid-template-columns:1fr}.weeks-grid{grid-template-columns:repeat(2,1fr)}}
   </style>
 </head>
@@ -119,8 +120,7 @@
       <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:24px;margin-bottom:24px" class="fade-up">
         <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:12px">How It Works</h3>
         <ol style="padding-left:20px;display:grid;gap:8px;color:var(--muted);font-size:.93rem;line-height:1.7">
-          <li>Apply using the form below — submit name, surname, and required documents.</li>
-          <li>Upload your <strong>Proof of Residence</strong> and <strong>Copy of ID</strong> — subject to BEC approval.</li>
+          <li>Apply using the form below — submit your student and contact details for BEC review.</li>
           <li>First week (1–9 May): attend eye test appointment as scheduled.</li>
           <li>Access YouTube study classes via the link provided after approval.</li>
           <li>Complete your learner's licence test by 29 May 2026.</li>
@@ -145,10 +145,6 @@
             <div class="field"><label>Email Address *</label><input type="email" required placeholder="your@email.com"/></div>
           </div>
           <div class="field"><label>Phone Number *</label><input type="tel" required placeholder="+27 00 000 0000"/></div>
-          <div class="form-grid">
-            <div class="field"><label>Upload Proof of Residence *</label><input type="file" accept=".pdf,.jpg,.jpeg,.png" required/></div>
-            <div class="field"><label>Upload Copy of ID *</label><input type="file" accept=".pdf,.jpg,.jpeg,.png" required/></div>
-          </div>
           <div class="fieldset-block" style="margin-top:4px">
             <label class="check-label"><input type="checkbox" required/> I confirm all information is accurate and I understand my application is subject to BEC approval.</label>
           </div>
@@ -167,7 +163,7 @@
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px" class="fade-up">
+      <div class="info-grid npa-info-grid fade-up">
         <div class="info-card"><strong>Programme History</strong><span>Developed by Bonnita Shai, Deputy Chairperson 2025</span></div>
         <div class="info-card"><strong>Applications Open</strong><span>1 May 2026</span></div>
         <div class="info-card"><strong>Max Per Week</strong><span>15 students</span></div>
