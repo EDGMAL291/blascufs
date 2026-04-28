@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BLASC UFS – Black Lawyers Association Student Chapter</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    .hero{position:relative;height:100vh;min-height:620px;display:flex;align-items:flex-end;overflow:hidden}
+    .hero-bg{position:absolute;inset:0}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+    .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,12,15,.93) 0%,rgba(10,12,15,.5) 45%,rgba(10,12,15,.15) 100%)}
+    .hero-content{position:relative;z-index:1;padding:clamp(40px,6vw,88px) clamp(16px,4vw,56px);max-width:960px}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:22px}
+    .hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--gold)}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,7vw,5.5rem);line-height:1.03;color:#fff;font-weight:900;margin-bottom:22px}
+    .hero h1 em{color:var(--gold-light);font-style:normal}
+    .hero-desc{color:rgba(255,255,255,.68);font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1.78;max-width:54ch;margin-bottom:36px}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+    .hero-scroll{position:absolute;bottom:30px;right:clamp(16px,4vw,56px);z-index:1;color:rgba(255,255,255,.35);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;writing-mode:vertical-rl;display:flex;align-items:center;gap:10px}
+    .hero-scroll::after{content:'';width:1px;height:50px;background:rgba(255,255,255,.2)}
+    .about-split{display:grid;grid-template-columns:1fr 1fr;min-height:540px}
+    .about-text{background:var(--off-black);padding:clamp(48px,6vw,88px) clamp(32px,5vw,72px);display:flex;flex-direction:column;justify-content:center}
+    .about-text .bp{color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:16px;max-width:50ch}
+    .about-stats{display:flex;gap:36px;flex-wrap:wrap;margin-top:24px}
+    .stat{border-left:2px solid var(--gold);padding-left:16px}
+    .stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--gold-light);line-height:1}
+    .stat-label{font-size:.73rem;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+    .about-img{overflow:hidden}
+    .about-img img{width:100%;height:100%;object-fit:cover}
+    .pillars{background:var(--off-white)}
+    .pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+    .pillar{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:30px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+    .pillar:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(21,101,168,.1)}
+    .pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-light))}
+    .pillar-icon{width:46px;height:46px;background:var(--blue-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:18px}
+    .pillar h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:8px;color:var(--ink)}
+    .pillar p{color:var(--muted);font-size:.91rem;line-height:1.7}
+    .cta-band{background:linear-gradient(135deg,var(--blue) 0%,#0d3d6e 100%);padding:clamp(56px,6vw,80px) clamp(16px,4vw,56px);text-align:center}
+    .cta-band h2{color:#fff;margin-bottom:16px}
+    .cta-band p{color:rgba(255,255,255,.65);max-width:52ch;margin:0 auto 32px;line-height:1.75}
+    .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    @media(max-width:900px){.about-split{grid-template-columns:1fr}.about-img{height:360px}.pillars-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:600px){.pillars-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav class="nav" id="navbar">
+  <a class="nav-brand" href="index.html">
+    <img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC UFS"/>
+    <div class="nav-name">BLASC UFS <span>University of the Free State</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="events.html">Events</a>
+    <a href="programmes.html">Programmes</a>
+    <a href="leadership.html">Leadership</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="membership.html" class="nav-cta">Join Us</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+  <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="membership.html" class="m-cta">Join Us →</a>
+</div>
+
+<section class="hero">
+  <div class="hero-bg"><img src="assets/images/homepage-hero.jpeg" alt="BLASC UFS at Department of Justice"/></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Black Lawyers Association Student Chapter · UFS · Bloemfontein</p>
+    <h1>Building <em>Africa's</em> future<br/>through law &amp; justice.</h1>
+    <p class="hero-desc">BLASC UFS at the University of the Free State is committed to advancing social justice, protecting member rights, and building a non-racial, non-sexist legal profession for all South Africans.</p>
+    <div class="hero-btns">
+      <a href="membership.html" class="btn btn-gold">Join the Chapter</a>
+      <a href="about.html" class="btn btn-outline-white">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<div class="about-split">
+  <div class="about-text">
+    <p class="section-label gold fade-up">Who We Are</p>
+    <h2 class="section-title light fade-up">BLASC UFS —<br/>Rooted in purpose.</h2>
+    <p class="bp fade-up">The Black Lawyers Association Student Chapter at the University of the Free State is committed to social transformation, upholding human rights, civil liberties, and the Rule of Law.</p>
+    <p class="bp fade-up">We fight discriminatory practices and advocate for a democratic, inclusive legal system — grounded in the ideals of democracy, freedom, and peace as an autonomous body within the BLA.</p>
+    <div class="about-stats fade-up">
+      <div class="stat"><div class="stat-num">UFS</div><div class="stat-label">Free State Branch</div></div>
+      <div class="stat"><div class="stat-num">2010</div><div class="stat-label">Constitution Adopted</div></div>
+      <div class="stat"><div class="stat-num">BLA</div><div class="stat-label">Mother Body</div></div>
+    </div>
+  </div>
+  <div class="about-img">
+    <img src="assets/images/bec-outside-smile.jpeg" alt="BLASC UFS Branch Executive Committee"/>
+  </div>
+</div>
+
+<section class="pillars section">
+  <div class="section-inner">
+    <p class="section-label fade-up">What We Stand For</p>
+    <h2 class="section-title fade-up">Our pillars of action</h2>
+    <div class="pillars-grid">
+      <div class="pillar fade-up"><div class="pillar-icon">⚖️</div><h3>Social Justice</h3><p>Championing the rights of historically disadvantaged communities, women, and persons with disabilities through legal advocacy and awareness.</p></div>
+      <div class="pillar fade-up"><div class="pillar-icon">🎓</div><h3>Legal Education</h3><p>Moot court training, advocacy workshops, NPA placements, and academic programmes preparing members for professional legal practice.</p></div>
+      <div class="pillar fade-up"><div class="pillar-icon">🤝</div><h3>Mentorship</h3><p>Guided mentorship linking law students with experienced practitioners, alumni, and partner institutions locally and internationally.</p></div>
+      <div class="pillar fade-up"><div class="pillar-icon">📣</div><h3>Advocacy</h3><p>We are the voice of UFS law students — engaging institutions, responding to legislation, and participating in constitutional discourse.</p></div>
+      <div class="pillar fade-up"><div class="pillar-icon">🌍</div><h3>Community Outreach</h3><p>Freedom Day marches, civic registration drives, and legal awareness campaigns connecting the chapter to the communities we serve.</p></div>
+      <div class="pillar fade-up"><div class="pillar-icon">🏛️</div><h3>Good Governance</h3><p>Transparent, accountable leadership guided by our constitution ensures every member is represented and every voice matters.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="section-inner">
+    <p class="section-label gold text-center fade-up" style="justify-content:center">Be Part of the Movement</p>
+    <h2 class="section-title light text-center fade-up">Ready to make a difference?</h2>
+    <p class="fade-up">Membership is open to all registered UFS law students who share the values, principles, and constitutional ideals of BLASC UFS. Join for R50 annually.</p>
+    <div class="cta-btns fade-up">
+      <a href="membership.html" class="btn btn-gold">Apply for Membership</a>
+      <a href="contact.html" class="btn btn-outline-white">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div>
+      <p>The Vanguard of the Legal Profession. Building Africa's future through law, leadership, and justice.</p>
+    </div>
+    <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
+    <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div>
+      <h4 style="margin-top:20px">Email</h4>
+      <a href="mailto:UFSBlascu@gmail.com">UFSBlascu@gmail.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Black Lawyers Association Student Chapter, UFS. All rights reserved.</span>
+    <span>University of the Free State · Bloemfontein</span>
+  </div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

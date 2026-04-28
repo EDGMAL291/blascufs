@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events – BLASC UFS</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    .events-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px;border-bottom:2px solid var(--border);padding-bottom:0}
+    .etab{background:none;border:none;padding:12px 20px;font-size:.9rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;border-radius:0}
+    .etab.active{color:var(--blue);border-bottom-color:var(--blue)}
+    .etab:hover{color:var(--ink)}
+    .etab-panel{display:none}
+    .etab-panel.active{display:block}
+    .event-detail{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;align-items:start}
+    .event-img-wrap{border-radius:var(--radius-lg);overflow:hidden;height:380px}
+    .event-img-wrap img{width:100%;height:100%;object-fit:cover}
+    .event-meta-tag{display:inline-flex;align-items:center;gap:6px;background:var(--blue-pale);color:var(--blue);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:16px}
+    .event-body h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--ink);margin-bottom:14px}
+    .event-body p{color:var(--muted);line-height:1.78;margin-bottom:12px}
+    .event-info-row{display:flex;gap:20px;flex-wrap:wrap;margin:20px 0}
+    .einfo{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px}
+    .einfo strong{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:2px}
+    .einfo span{font-size:.9rem;color:var(--ink);font-weight:500}
+    @media(max-width:900px){.event-detail{grid-template-columns:1fr}.event-img-wrap{height:260px}}
+  </style>
+</head>
+<body>
+<nav class="nav dark" id="navbar">
+  <a class="nav-brand" href="index.html"><img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC UFS"/><div class="nav-name">BLASC UFS <span>University of the Free State</span></div></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html" class="active">Events</a>
+    <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+    <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+    <a href="membership.html" class="nav-cta">Join Us</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+  <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="membership.html" class="m-cta">Join Us →</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg"><img src="assets/images/image-01.jpg" alt=""/></div>
+  <div class="page-hero-content">
+    <p class="eyebrow">Engagement</p>
+    <h1>Events</h1>
+    <p>Chapter events, dialogues, outreach engagements, and commemorative activities that drive the BLASC UFS mission forward.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="events-tabs">
+      <button class="etab active" onclick="showEtab('moot')">🏛️ Moot Court Competition</button>
+      <button class="etab" onclick="showEtab('freedom')">✊ Freedom Day March</button>
+      <button class="etab" onclick="showEtab('career')">💼 Career Events</button>
+      <button class="etab" onclick="showEtab('justice')">🌍 Social Justice</button>
+    </div>
+
+    <!-- MOOT COURT -->
+    <div id="etab-moot" class="etab-panel active">
+      <div class="event-detail">
+        <div class="event-img-wrap fade-up"><img src="assets/images/image-02.jpg" alt="BLASC UFS Moot Court"/></div>
+        <div class="event-body fade-up">
+          <span class="event-meta-tag">🏛️ Training & Competition</span>
+          <h2>Moot Court Competition</h2>
+          <p>The BLASC UFS Moot Court Competition simulates real court proceedings — inviting practising legal professionals to sit as judges while students argue their cases. It is one of the most important skill-building events the chapter runs.</p>
+          <p>Participants engage in authentic courtroom scenarios across different areas of law, developing critical competencies under real pressure from experienced practitioners.</p>
+          <div class="event-info-row">
+            <div class="einfo"><strong>Skills Developed</strong><span>Oral Advocacy</span></div>
+            <div class="einfo"><strong>Skills Developed</strong><span>Research & Drafting</span></div>
+            <div class="einfo"><strong>Judges</strong><span>Practising Legal Professionals</span></div>
+          </div>
+          <p>The competition sharpens oral advocacy — the ability to argue clearly and confidently before a bench. It also develops research and drafting skills, requiring participants to build legally sound written arguments from scratch before presenting them in court. The combination of written and oral components mirrors real legal practice.</p>
+          <a href="contact.html" class="btn btn-blue" style="margin-top:8px">Enquire About Participation</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FREEDOM DAY -->
+    <div id="etab-freedom" class="etab-panel">
+      <div class="event-detail">
+        <div class="event-img-wrap fade-up"><img src="assets/images/image-10.jpg" alt="Freedom Day March 2025"/></div>
+        <div class="event-body fade-up">
+          <span class="event-meta-tag">✊ Annual Commemoration</span>
+          <h2>Freedom Day March — 27 April</h2>
+          <p>Every year on 27 April, BLASC UFS takes to the streets to commemorate Freedom Day. The march is not merely symbolic — it is a deliberate act of reflection on the cost of freedom, what it took to get here, and why transformation must continue.</p>
+          <p>The 2025 march carried the theme <strong>"Purpose"</strong> — reflecting on what drives BLASC UFS members forward as future legal professionals in a society still working toward full transformation.</p>
+          <div class="event-info-row">
+            <div class="einfo"><strong>Date</strong><span>27 April (Annual)</span></div>
+            <div class="einfo"><strong>Type</strong><span>March & Outreach</span></div>
+            <div class="einfo"><strong>Last March</strong><span>27 April 2025</span></div>
+          </div>
+          <p>The Freedom Day March is also a community service activity — members engage with residents, distribute information about legal rights, and remind communities that the constitution belongs to all of us. It is one of the most unifying events in the BLASC UFS calendar.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAREER EVENTS -->
+    <div id="etab-career" class="etab-panel">
+      <div class="event-detail">
+        <div class="event-img-wrap fade-up"><img src="assets/images/pps-visit.jpeg" alt="BLASC Career Event"/></div>
+        <div class="event-body fade-up">
+          <span class="event-meta-tag">💼 Professional Development</span>
+          <h2>Career Events</h2>
+          <p>BLASC UFS runs career events designed to help young legal minds navigate the world of work. These events are practical, industry-relevant, and tailored to the realities facing law graduates in South Africa.</p>
+          <div class="event-info-row">
+            <div class="einfo"><strong>Focus Areas</strong><span>Career Exposure</span></div>
+            <div class="einfo"><strong>Focus Areas</strong><span>CV & Interview Prep</span></div>
+            <div class="einfo"><strong>Focus Areas</strong><span>Industry Networking</span></div>
+          </div>
+          <p>Sessions include career readiness workshops, CV writing clinics, mock interview sessions, and panels featuring practising attorneys, advocates, prosecutors, and corporate lawyers. Events like the PPS partnership expose members to financial planning for young professionals.</p>
+          <p>The goal is simple: by the time a BLASC UFS member graduates, they should know exactly how to enter the profession and thrive in it.</p>
+          <a href="membership.html" class="btn btn-blue" style="margin-top:8px">Become a Member to Attend</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOCIAL JUSTICE -->
+    <div id="etab-justice" class="etab-panel">
+      <div class="event-detail">
+        <div class="event-img-wrap fade-up"><img src="assets/images/image-09.jpg" alt="BLASC Social Justice"/></div>
+        <div class="event-body fade-up">
+          <span class="event-meta-tag">🌍 Social Justice & Transformation</span>
+          <h2>Social Justice & Transformation Events</h2>
+          <p>BLASC UFS marks key days in the South African calendar with events that go beyond celebration — they are spaces for reflection, education, and action. These events connect our legal education to the lived realities of the people we will serve.</p>
+          <div class="event-info-row">
+            <div class="einfo"><strong>Women's Day</strong><span>9 August</span></div>
+            <div class="einfo"><strong>Youth Day</strong><span>16 June</span></div>
+            <div class="einfo"><strong>Freedom Day</strong><span>27 April</span></div>
+          </div>
+          <p><strong>Women's Day events</strong> centre on the empowerment of women in the legal profession — celebrating how far we've come and addressing how much further we must go toward gender equality in law.</p>
+          <p><strong>Youth Day events</strong> honour June 16 by engaging students on the history of youth activism in South Africa and challenging members to carry that torch forward through legal advocacy and civic engagement.</p>
+          <a href="contact.html" class="btn btn-blue" style="margin-top:8px">Partner with Us</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div><p>The Vanguard of the Legal Profession.</p></div>
+    <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
+    <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Connect</h4><div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
+</footer>
+<script src="assets/main.js"></script>
+<script>
+function showEtab(id) {
+  document.querySelectorAll('.etab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.etab').forEach(b => b.classList.remove('active'));
+  document.getElementById('etab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About – BLASC UFS</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px}
+    .about-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px}
+    .about-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:12px;color:var(--ink)}
+    .about-card p{color:var(--muted);line-height:1.78}
+    .about-card.full{grid-column:1/-1}
+    .aims-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+    .aim-item{display:flex;align-items:flex-start;gap:10px;background:var(--off-white);border-radius:var(--radius-sm);padding:14px}
+    .aim-num{width:28px;height:28px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+    .aim-item p{color:var(--muted);font-size:.88rem;line-height:1.65;margin:0}
+    .media-duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:52px}
+    .media-duo img{width:100%;height:340px;object-fit:cover;border-radius:var(--radius-lg);border:1px solid var(--border)}
+    .values-strip{background:var(--off-black);padding:clamp(56px,6vw,80px) clamp(16px,4vw,56px)}
+    .values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+    .value-item{border:1px solid rgba(255,255,255,.09);border-radius:var(--radius-md);padding:24px;background:rgba(255,255,255,.03)}
+    .value-item .num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--gold-light);line-height:1;margin-bottom:8px}
+    .value-item h4{color:#fff;font-size:.97rem;font-weight:600;margin-bottom:6px}
+    .value-item p{color:rgba(255,255,255,.45);font-size:.86rem;line-height:1.65}
+    @media(max-width:900px){.about-grid,.media-duo,.aims-grid{grid-template-columns:1fr}.about-card.full{grid-column:auto}.values-grid{grid-template-columns:1fr 1fr}.media-duo img{height:auto;max-height:300px;object-fit:contain;background:#f3f5f8}}
+    @media(max-width:540px){.values-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav class="nav dark" id="navbar">
+  <a class="nav-brand" href="index.html"><img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC UFS"/><div class="nav-name">BLASC UFS <span>University of the Free State</span></div></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="about.html" class="active">About</a><a href="events.html">Events</a>
+    <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+    <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+    <a href="membership.html" class="nav-cta">Join Us</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+  <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="membership.html" class="m-cta">Join Us →</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg"><img src="assets/images/homepage-hero.jpeg" alt=""/></div>
+  <div class="page-hero-content">
+    <p class="eyebrow">Who We Are</p>
+    <h1>About BLASC UFS</h1>
+    <p>The Black Lawyers Association Student Chapter at UFS advances justice, equity, and professional transformation through student-led action, mentorship, and advocacy.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label fade-up">Our Foundation</p>
+    <h2 class="section-title fade-up">Mission, Vision & Commitment</h2>
+    <div class="about-grid">
+      <div class="about-card fade-up">
+        <h3>Our Mission</h3>
+        <p>BLASC UFS is committed to promoting a fair and inclusive legal system, protecting the rights of members, and cultivating responsible legal leadership rooted in constitutional values and democratic principles.</p>
+      </div>
+      <div class="about-card fade-up">
+        <h3>Our Vision</h3>
+        <p>We work toward a non-racial, non-sexist legal profession where legal education and justice institutions are representative, accessible, and responsive to the needs of all South Africans.</p>
+      </div>
+      <div class="about-card full fade-up">
+        <h3>Our Commitment</h3>
+        <p>Through advocacy, collaboration, and service, BLASC UFS empowers women, historically disadvantaged communities, and persons with disabilities while strengthening the collective voice of law students and young legal professionals. We are committed to an independent judiciary and a legal fraternity that is transparent, accountable, non-sexist, non-racial, and dedicated to academic excellence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--off-white);padding-top:0">
+  <div class="section-inner">
+    <p class="section-label fade-up">Aims & Objectives</p>
+    <h2 class="section-title fade-up">What we are committed to</h2>
+    <p class="section-body fade-up">As set out in the BLASC Constitution adopted on 11 September 2010, the chapter shall:</p>
+    <div class="aims-grid">
+      <div class="aim-item fade-up"><div class="aim-num">1</div><p>Be committed to social transformation, foster, protect and uphold the rights and interests of its members.</p></div>
+      <div class="aim-item fade-up"><div class="aim-num">2</div><p>Uphold, protect and advance human rights, civil liberties and the Rule of Law in South Africa and beyond.</p></div>
+      <div class="aim-item fade-up"><div class="aim-num">3</div><p>Co-operate with bodies that have similar objectives, fostering partnerships and collaborative legal development.</p></div>
+      <div class="aim-item fade-up"><div class="aim-num">4</div><p>Fight and challenge all discriminatory practices in the legal profession and in broader society.</p></div>
+      <div class="aim-item fade-up"><div class="aim-num">5</div><p>Actively develop programmes to create a non-racial, non-sexist judicial and legal education system.</p></div>
+      <div class="aim-item fade-up"><div class="aim-num">6</div><p>Be the national and international voice for its members in legal, academic, and policy spaces.</p></div>
+      <div class="aim-item fade-up"><div class="aim-num">7</div><p>Strive for the empowerment of women in the legal profession at all levels.</p></div>
+      <div class="aim-item fade-up"><div class="aim-num">8</div><p>Strive for the empowerment of historically disadvantaged persons, communities, and disabled persons.</p></div>
+    </div>
+    <div class="media-duo">
+      <img src="assets/images/bec-outside-smile.jpeg" alt="BLASC UFS BEC" class="fade-up"/>
+      <img src="assets/images/image-09.jpg" alt="BLASC UFS chapter outreach" class="fade-up"/>
+    </div>
+  </div>
+</section>
+
+<section class="values-strip">
+  <div class="section-inner">
+    <p class="section-label gold fade-up">Core Values</p>
+    <h2 class="section-title light fade-up">What guides us</h2>
+    <div class="values-grid">
+      <div class="value-item fade-up"><div class="num">01</div><h4>Democracy</h4><p>Committed to democratic processes in governance, elections, and member engagement at all levels of the chapter.</p></div>
+      <div class="value-item fade-up"><div class="num">02</div><h4>Non-Racialism</h4><p>We reject all forms of racial discrimination and work actively toward a legal profession free of racial inequality.</p></div>
+      <div class="value-item fade-up"><div class="num">03</div><h4>Accountability</h4><p>Leadership is answerable to members, finances are transparent, and every decision aligns with our constitution.</p></div>
+      <div class="value-item fade-up"><div class="num">04</div><h4>Transformation</h4><p>Driving fundamental social change for the benefit of young people, women, previously disadvantaged persons, and persons with disabilities.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner" style="display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+    <div>
+      <p class="section-label fade-up">Governance</p>
+      <h2 class="section-title fade-up">Read our Constitution</h2>
+      <p class="section-body fade-up">The BLASC Constitution adopted on 11 September 2010 governs all chapter operations, structures, membership, elections, and disciplinary procedures.</p>
+    </div>
+    <a href="constitution.html" class="btn btn-blue fade-up">View Constitution →</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div><p>The Vanguard of the Legal Profession.</p></div>
+    <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
+    <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Connect</h4><div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact – BLASC UFS</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    .contact-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start}
+    .contact-details{display:grid;gap:14px;margin-top:32px}
+    .detail-card{display:flex;align-items:flex-start;gap:14px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 20px}
+    .detail-icon{width:42px;height:42px;flex-shrink:0;background:var(--blue-pale);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+    .detail-body strong{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:3px}
+    .detail-body span{font-size:.93rem;color:var(--ink);line-height:1.55}
+    .form-panel{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px}
+    .form-panel h2{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:4px}
+    .form-panel .sub{color:var(--muted);font-size:.88rem;margin-bottom:28px}
+    @media(max-width:900px){.contact-layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav class="nav dark" id="navbar">
+  <a class="nav-brand" href="index.html"><img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC UFS"/><div class="nav-name">BLASC UFS <span>University of the Free State</span></div></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+    <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+    <a href="gallery.html">Gallery</a><a href="contact.html" class="active">Contact</a>
+    <a href="membership.html" class="nav-cta">Join Us</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+  <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="membership.html" class="m-cta">Join Us →</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg" style="background:var(--off-black)"></div>
+  <div class="page-hero-content">
+    <p class="eyebrow">Get in Touch</p>
+    <h1>Contact Us</h1>
+    <p>Reach BLASC UFS for membership support, programme enquiries, collaborations, and official correspondence.</p>
+  </div>
+</div>
+
+<section class="section" style="background:var(--off-white)">
+  <div class="section-inner">
+    <div class="contact-layout">
+      <div>
+        <p class="section-label fade-up">Chapter Contact Details</p>
+        <h2 class="section-title fade-up">How to reach us</h2>
+        <p class="section-body fade-up">For membership queries, event enquiries, programme applications, or general correspondence — use the details below or send a message using the form.</p>
+        <div class="contact-details">
+          <div class="detail-card fade-up">
+            <div class="detail-icon">👤</div>
+            <div class="detail-body"><strong>Secretary</strong><span>Muzi Lekhuwane</span></div>
+          </div>
+          <div class="detail-card fade-up">
+            <div class="detail-icon">✉️</div>
+            <div class="detail-body"><strong>Email</strong><span><a href="mailto:UFSBlascu@gmail.com" style="color:var(--blue-mid)">UFSBlascu@gmail.com</a></span></div>
+          </div>
+          <div class="detail-card fade-up">
+            <div class="detail-icon">📸</div>
+            <div class="detail-body"><strong>Instagram</strong><span><a href="https://instagram.com/ufs_blasc" target="_blank" style="color:var(--blue-mid)">@ufs_blasc</a></span></div>
+          </div>
+          <div class="detail-card fade-up">
+            <div class="detail-icon">🏫</div>
+            <div class="detail-body"><strong>Campus</strong><span>University of the Free State<br/>Bloemfontein, Free State</span></div>
+          </div>
+          <div class="detail-card fade-up">
+            <div class="detail-icon">🕐</div>
+            <div class="detail-body"><strong>Response Time</strong><span>We aim to respond within 2–3 working days.</span></div>
+          </div>
+        </div>
+        <div style="margin-top:32px" class="fade-up">
+          <p class="section-label">Follow Us</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <a href="https://instagram.com/ufs_blasc" target="_blank" class="btn btn-outline-dark" style="border-radius:10px;padding:10px 16px;font-size:.84rem">Instagram @ufs_blasc</a>
+            <a href="#" class="btn btn-outline-dark" style="border-radius:10px;padding:10px 16px;font-size:.84rem">Facebook</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-panel fade-up">
+        <h2>Send an Inquiry</h2>
+        <p class="sub">All fields marked * are required.</p>
+        <form>
+          <div class="form-grid">
+            <div class="field"><label>Full Name *</label><input type="text" required placeholder="Your full name"/></div>
+            <div class="field"><label>Email Address *</label><input type="email" required placeholder="your@email.com"/></div>
+          </div>
+          <div class="field">
+            <label>Subject</label>
+            <select>
+              <option value="">Select a subject</option>
+              <option>Membership Enquiry</option>
+              <option>Gear Up Programme</option>
+              <option>NPA Shadowing Programme</option>
+              <option>Moot Court</option>
+              <option>Events & Programmes</option>
+              <option>Partnership / Collaboration</option>
+              <option>Leadership Application</option>
+              <option>Media & Press</option>
+              <option>General Enquiry</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Message *</label>
+            <textarea required placeholder="Tell us how we can help…" style="min-height:150px"></textarea>
+          </div>
+          <button type="submit" class="btn btn-blue" style="width:100%;border-radius:12px;justify-content:center">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div><p>The Vanguard of the Legal Profession.</p></div>
+    <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
+    <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Connect</h4><div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div><h4 style="margin-top:20px">Email</h4><a href="mailto:UFSBlascu@gmail.com">UFSBlascu@gmail.com</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span><span>University of the Free State · Bloemfontein</span></div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

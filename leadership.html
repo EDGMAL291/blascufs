@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leadership – BLASC UFS</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    .leaders-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px}
+    .leader-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:transform .3s,box-shadow .3s}
+    .leader-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+    .leader-photo{height:300px;overflow:hidden;background:#f0f2f5;padding:8px}
+    .leader-photo img{width:100%;height:100%;object-fit:contain;object-position:center top;transition:transform .5s}
+    .leader-card:hover .leader-photo img{transform:scale(1.01)}
+    .leader-photo.placeholder{display:flex;align-items:center;justify-content:center;font-size:3rem;color:#ccc}
+    .leader-info{padding:18px 20px 22px}
+    .leader-role{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--blue-mid);margin-bottom:4px}
+    .leader-info h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+    .leader-info p{color:var(--muted);font-size:.85rem;line-height:1.65}
+    .subcom-section{margin-top:80px}
+    .subcom-intro{background:var(--off-black);border-radius:var(--radius-lg);padding:36px;margin-bottom:32px}
+    .subcom-intro h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;margin-bottom:12px}
+    .subcom-intro p{color:rgba(255,255,255,.6);line-height:1.75;max-width:64ch}
+    .subcom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .subcom-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:22px}
+    .subcom-card h4{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+    .subcom-card p{color:var(--muted);font-size:.87rem;line-height:1.65}
+    .apply-band{background:linear-gradient(135deg,var(--blue) 0%,#0d3d6e 100%);padding:clamp(56px,6vw,80px) clamp(16px,4vw,56px);text-align:center;margin-top:80px}
+    .apply-band h2{color:#fff;margin-bottom:14px}
+    .apply-band p{color:rgba(255,255,255,.65);max-width:52ch;margin:0 auto 32px;line-height:1.75}
+    @media(max-width:1024px){.leaders-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.leaders-grid{grid-template-columns:1fr 1fr}.leader-photo{height:220px}.subcom-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav class="nav dark" id="navbar">
+  <a class="nav-brand" href="index.html"><img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC UFS"/><div class="nav-name">BLASC UFS <span>University of the Free State</span></div></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+    <a href="programmes.html">Programmes</a><a href="leadership.html" class="active">Leadership</a>
+    <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+    <a href="membership.html" class="nav-cta">Join Us</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+  <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="membership.html" class="m-cta">Join Us →</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg"><img src="assets/images/bec-stairs-smile.jpeg" alt=""/></div>
+  <div class="page-hero-content">
+    <p class="eyebrow">Chapter Governance</p>
+    <h1>Leadership</h1>
+    <p>Meet the Branch Executive Committee entrusted with advancing chapter strategy, member development, and constitutional engagement at BLASC UFS.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label fade-up">First Layer Leadership</p>
+    <h2 class="section-title fade-up">Branch Executive Committee</h2>
+    <p class="section-body fade-up">The BEC is elected annually by members in good standing. At least 50% of the BEC must be women, in line with the BLASC Constitution. The BEC serves a 12-month term and is accountable to the general membership.</p>
+
+    <div class="leaders-grid">
+
+      <!-- NDIWANGA -->
+      <div class="leader-card fade-up">
+        <div class="leader-photo"><img src="assets/images/ndiwanga.jpeg" alt="Ndiwanga Madzivhandila"/></div>
+        <div class="leader-info">
+          <p class="leader-role">Chairperson</p>
+          <h3>Ndiwanga Madzivhandila</h3>
+          <p>Chief executive officer of BLASC UFS. Oversees all executive members, chairs meetings, and serves as the chapter's primary spokesperson. Co-founder of the Gear Up Learner's Licence Programme.</p>
+        </div>
+      </div>
+
+      <!-- BONNITA -->
+      <div class="leader-card fade-up">
+        <div class="leader-photo"><img src="assets/images/bonnita-shai-deputy-chairperson.jpg" alt="Bonnita Shai"/></div>
+        <div class="leader-info">
+          <p class="leader-role">Deputy Chairperson</p>
+          <h3>Bonnita Shai</h3>
+          <p>Transformative activist with racial and gender equality at the forefront of her work. Co-founded the Gear Up Programme and pioneered the BLASC UFS website. Heads disciplinary processes and drives international moot court prospects. Advancing AI Law, Cyber Law and E-Law in SA. BLASC journey: Projects & Events sub-committee 2024, impartial student 2025.</p>
+        </div>
+      </div>
+
+      <!-- MUZI -->
+      <div class="leader-card fade-up">
+        <div class="leader-photo placeholder">👤</div>
+        <div class="leader-info">
+          <p class="leader-role">Secretary</p>
+          <h3>Muzi Lekhuwane</h3>
+          <p>Chief administrative officer of BLASC UFS. Manages all records, correspondence, and coordinates BEC meetings. Contact: <a href="mailto:UFSBlascu@gmail.com" style="color:var(--blue-mid)">UFSBlascu@gmail.com</a></p>
+        </div>
+      </div>
+
+      <!-- KAMOHELO -->
+      <div class="leader-card fade-up">
+        <div class="leader-photo placeholder">👤</div>
+        <div class="leader-info">
+          <p class="leader-role">Deputy Secretary</p>
+          <h3>Kamohelo Mofubetsoana</h3>
+          <p>Deputises the Secretary and takes primary responsibility for recruitment of new members into the chapter, ensuring continued growth and engagement.</p>
+        </div>
+      </div>
+
+      <!-- ALAKHE -->
+      <div class="leader-card fade-up">
+        <div class="leader-photo"><img src="assets/images/alakhe.jpeg" alt="Alakhe Mvuyu"/></div>
+        <div class="leader-info">
+          <p class="leader-role">Treasurer</p>
+          <h3>Alakhe Mvuyu</h3>
+          <p>Responsible for chapter finances, banking operations, fundraising coordination, and financial reporting at the AGM. Signatory to all branch financial transactions.</p>
+        </div>
+      </div>
+
+      <!-- NTSAKO -->
+      <div class="leader-card fade-up">
+        <div class="leader-photo"><img src="assets/images/ntsako.jpeg" alt="Ntsako Shivanda"/></div>
+        <div class="leader-info">
+          <p class="leader-role">Academics & Legal Research</p>
+          <h3>Ntsako Shivanda</h3>
+          <p>Oversees all academic programmes and legal research initiatives. Coordinates the NPA Court Shadowing Programme and keeps members updated on relevant legal developments in South Africa.</p>
+        </div>
+      </div>
+
+      <!-- MAHLE -->
+      <div class="leader-card fade-up">
+        <div class="leader-photo"><img src="assets/images/mahle.jpeg" alt="Mahle Bhadulana"/></div>
+        <div class="leader-info">
+          <p class="leader-role">Events Coordinator</p>
+          <h3>Mahle Bhadulana</h3>
+          <p>Plans and coordinates all chapter events and projects. Manages logistics end-to-end and works with the Treasurer to ensure all events are delivered on time and within budget.</p>
+        </div>
+      </div>
+
+      <!-- KUTLOANO -->
+      <div class="leader-card fade-up">
+        <div class="leader-photo"><img src="assets/images/kutloano.jpeg" alt="Kutloano Molekane"/></div>
+        <div class="leader-info">
+          <p class="leader-role">Media & Marketing Officer</p>
+          <h3>Kutloano Molekane</h3>
+          <p>Responsible for promoting BLASC UFS, maintaining the chapter's public image, advertising programmes and events, and profiling executive members for the membership.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SUBCOMMITTEES -->
+    <div class="subcom-section">
+      <div class="subcom-intro fade-up">
+        <h3>Second Layer Leadership — Sub-committees</h3>
+        <p>Each portfolio (except the Chairperson) has a dedicated sub-committee. Sub-committees exist to support office bearers, extend the chapter's capacity, and give more members the opportunity to serve and grow. Sub-committee members report directly to their respective portfolio holder and are an essential part of BLASC UFS's operational backbone.</p>
+      </div>
+      <div class="subcom-grid">
+        <div class="subcom-card fade-up">
+          <h4>Secretary Sub-committee</h4>
+          <p>Assists with administration, minute-taking, correspondence, and maintaining chapter records under the guidance of the Secretary.</p>
+        </div>
+        <div class="subcom-card fade-up">
+          <h4>Treasury Sub-committee</h4>
+          <p>Supports financial tracking, fundraising initiatives, and budget monitoring in collaboration with the Treasurer.</p>
+        </div>
+        <div class="subcom-card fade-up">
+          <h4>Academics Sub-committee</h4>
+          <p>Assists in coordinating academic workshops, legal research, moot court training, and the NPA Shadowing Programme.</p>
+        </div>
+        <div class="subcom-card fade-up">
+          <h4>Events Sub-committee</h4>
+          <p>Supports planning, logistics, and execution of all chapter events, outreach activities, and community programmes.</p>
+        </div>
+        <div class="subcom-card fade-up">
+          <h4>Media Sub-committee</h4>
+          <p>Assists with social media management, photography, graphic design, and communication of chapter activities to the public.</p>
+        </div>
+        <div class="subcom-card fade-up">
+          <h4>Deputy Secretary Sub-committee</h4>
+          <p>Supports membership recruitment drives, onboarding of new members, and maintenance of the membership database.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="apply-band">
+  <div class="section-inner">
+    <p class="section-label gold text-center fade-up" style="justify-content:center">Leadership Pathway</p>
+    <h2 class="section-title light text-center fade-up">Interested in leading?</h2>
+    <p class="fade-up">Applications for BEC positions open during the third term of each academic year. Any member in good standing who has been active for at least one full academic year may stand for Chairperson.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap" class="fade-up">
+      <a href="leadership-application.html" class="btn btn-gold">Apply for Leadership</a>
+      <a href="constitution.html" class="btn btn-outline-white">Read the Constitution</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div><p>The Vanguard of the Legal Profession.</p></div>
+    <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
+    <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Connect</h4><div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

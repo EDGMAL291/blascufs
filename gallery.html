@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery – BLASC UFS</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:12px;margin-top:48px}
+    .g-item{overflow:hidden;border-radius:var(--radius-md);cursor:pointer;position:relative;background:var(--off-white)}
+    .g-item.tall{grid-row:span 2}
+    .g-item.wide{grid-column:span 2}
+    .g-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);display:block}
+    .g-item:hover img{transform:scale(1.07)}
+    .g-item::after{content:'🔍';position:absolute;inset:0;background:rgba(21,101,168,.4);display:flex;align-items:center;justify-content:center;font-size:1.6rem;opacity:0;transition:opacity .3s}
+    .g-item:hover::after{opacity:1}
+    @media(max-width:900px){.gallery-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:180px}.g-item.wide{grid-column:span 2}}
+    @media(max-width:600px){.gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}.g-item.tall{grid-row:span 1}.g-item.wide{grid-column:span 1}}
+  </style>
+</head>
+<body>
+<nav class="nav dark" id="navbar">
+  <a class="nav-brand" href="index.html"><img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC UFS"/><div class="nav-name">BLASC UFS <span>University of the Free State</span></div></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+    <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+    <a href="gallery.html" class="active">Gallery</a><a href="contact.html">Contact</a>
+    <a href="membership.html" class="nav-cta">Join Us</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
+  <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
+  <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
+  <a href="membership.html" class="m-cta">Join Us →</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg"><img src="assets/images/bec-stairs-smile.jpeg" alt=""/></div>
+  <div class="page-hero-content">
+    <p class="eyebrow">Media</p>
+    <h1>Gallery</h1>
+    <p>Curated moments from BLASC UFS chapter programmes, formal engagements, outreach, and student leadership activities.</p>
+  </div>
+</div>
+
+<section class="section" style="background:var(--off-black)">
+  <div class="section-inner">
+    <p class="section-label gold fade-up">Our Moments</p>
+    <h2 class="section-title light fade-up">Life at BLASC UFS</h2>
+    <div class="gallery-grid">
+      <div class="g-item wide fade-up" data-lightbox><img src="assets/images/bec-stairs-smile.jpeg" alt="BEC at Equitas Auditorium"/></div>
+      <div class="g-item tall fade-up" data-lightbox><img src="assets/images/ndiwanga.jpeg" alt="Ndiwanga Madzivhandila — Chairperson"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/bonnita-1.jpeg" alt="Bonnita Shai — Deputy Chairperson"/></div>
+      <div class="g-item wide tall fade-up" data-lightbox><img src="assets/images/bec-outside-smile.jpeg" alt="BEC outside UFS Law building"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/kutloano.jpeg" alt="Kutloano Molekane — Media & Marketing"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/alakhe.jpeg" alt="Alakhe Mvuyu — Treasurer"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/ntsako.jpeg" alt="Ntsako Shivanda — Academics"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/mahle.jpeg" alt="Mahle Bhadulana — Events Coordinator"/></div>
+      <div class="g-item wide fade-up" data-lightbox><img src="assets/images/bec-outside-serious.jpeg" alt="BLASC UFS BEC — serious pose"/></div>
+      <div class="g-item tall fade-up" data-lightbox><img src="assets/images/homepage-hero.jpeg" alt="BLASC UFS at Department of Justice"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/image-09.jpg" alt="BLASC UFS at BLA tent"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/image-01.jpg" alt="BLASC UFS outreach stand"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/image-02.jpg" alt="Members in legal attire at UFS Law"/></div>
+      <div class="g-item wide fade-up" data-lightbox><img src="assets/images/image-10.jpg" alt="Freedom Day Walk 2025"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/image-06.jpg" alt="Lengau Testing Centre"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/pps-visit.jpeg" alt="PPS Career Event"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/bec-stairs-4.jpeg" alt="BEC at Equitas stairs"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/image-12.jpg" alt="Chapter meeting"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/image-03.jpg" alt="Member in NPA robes"/></div>
+      <div class="g-item fade-up" data-lightbox><img src="assets/images/bec-outside-5.jpeg" alt="BEC group portrait"/></div>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('open');document.body.classList.remove('no-scroll')">✕</button>
+  <img id="lightbox-img" src="" alt="Gallery image"/>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div><p>The Vanguard of the Legal Profession.</p></div>
+    <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
+    <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Connect</h4><div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

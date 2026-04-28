@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leadership Application – BLASC</title>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <style>
+    .app-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .app-sidebar { position: sticky; top: 90px; }
+    .sidebar-info {
+      background: var(--off-black);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+    .sidebar-info h3 { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:12px; }
+    .sidebar-info p { color:rgba(255,255,255,0.5); font-size:0.86rem; line-height:1.7; margin-bottom:12px; }
+    .sidebar-info ul { display:grid; gap:8px; }
+    .sidebar-info li { color:rgba(255,255,255,0.55); font-size:0.84rem; display:flex; align-items:flex-start; gap:8px; }
+    .sidebar-info li::before { content:'→'; color:var(--gold); flex-shrink:0; }
+    .form-wrap {
+      background: var(--off-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+    }
+    .form-wrap h2 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:4px; }
+    .form-wrap .sub { color:var(--muted); font-size:0.88rem; margin-bottom:28px; }
+    @media (max-width: 900px) {
+      .app-layout { grid-template-columns: 1fr; }
+      .app-sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav dark" id="navbar">
+  <a class="nav-brand" href="index.html">
+    <img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC"/>
+    <div class="nav-name">BLASC <span>University of the Free State</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="events.html">Events</a>
+    <a href="programmes.html">Programmes</a>
+    <a href="leadership.html">Leadership</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="membership.html" class="nav-cta">Join Us</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="events.html">Events</a>
+  <a href="programmes.html">Programmes</a>
+  <a href="leadership.html">Leadership</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
+  <a href="membership.html" class="m-cta">Join Us →</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg"><img src="assets/images/image-03.jpg" alt=""/></div>
+  <div class="page-hero-content">
+    <p class="eyebrow">Leadership Pathway</p>
+    <h1>Leadership Application</h1>
+    <p>Submit your application to serve the chapter with integrity, accountability, and purpose — shaping the future of BLASC UFS.</p>
+  </div>
+</div>
+
+<section class="section" style="background:var(--off-white)">
+  <div class="section-inner">
+    <div class="app-layout">
+      <div class="app-sidebar fade-up">
+        <div class="sidebar-info">
+          <h3>Before You Apply</h3>
+          <p>Please read the eligibility requirements carefully. Applications open during the third term of each academic year.</p>
+          <ul>
+            <li>Must be a member in good standing</li>
+            <li>Must have been active for at least one academic year (for Chairperson)</li>
+            <li>Must not be under any legal disability</li>
+            <li>Nominations must be seconded by two members in good standing</li>
+            <li>All applications are subject to BEC review</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-wrap fade-up">
+        <h2>Application Form</h2>
+        <p class="sub">All fields marked * are required. Upload your CV to complete the application.</p>
+        <form>
+          <fieldset class="fieldset-block">
+            <legend>Personal Details</legend>
+            <div class="form-grid" style="margin-top:12px">
+              <div class="field"><label>Full Name *</label><input type="text" required placeholder="Your full legal name"/></div>
+              <div class="field"><label>Student Number *</label><input type="text" required placeholder="e.g. 2022123456"/></div>
+              <div class="field"><label>ID Number (Optional)</label><input type="text" placeholder="South African ID number"/></div>
+              <div class="field"><label>Date of Birth (Optional)</label><input type="date"/></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Contact Information</legend>
+            <div class="form-grid" style="margin-top:12px">
+              <div class="field"><label>Email Address *</label><input type="email" required placeholder="your@email.com"/></div>
+              <div class="field"><label>Phone Number</label><input type="tel" placeholder="+27 00 000 0000"/></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Academic Information</legend>
+            <div class="form-grid" style="margin-top:12px">
+              <div class="field"><label>Degree Programme</label><input type="text" placeholder="e.g. LLB"/></div>
+              <div class="field">
+                <label>Year of Study</label>
+                <select>
+                  <option value="">Select year</option>
+                  <option>1st Year</option><option>2nd Year</option><option>3rd Year</option>
+                  <option>4th Year</option><option>Postgraduate</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Expected Graduation Year</label>
+                <select>
+                  <option value="">Select year</option>
+                  <option>2026</option><option>2027</option><option>2028</option>
+                  <option>2029</option><option>2030</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Position Applying For</legend>
+            <div class="field" style="margin-top:12px">
+              <label>Leadership Role *</label>
+              <select required>
+                <option value="">Select a position</option>
+                <option>Chairperson</option>
+                <option>Deputy Chairperson</option>
+                <option>Secretary</option>
+                <option>Deputy Secretary</option>
+                <option>Treasurer</option>
+                <option>Media & Publicity Officer</option>
+                <option>Academic & Legal Research Officer</option>
+                <option>Events Coordinator</option>
+              </select>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Motivation</legend>
+            <div style="margin-top:12px;display:grid;gap:14px">
+              <div class="field"><label>Why are you applying for this position? *</label><textarea required placeholder="Share your motivation…"></textarea></div>
+              <div class="field"><label>What value will you bring to the chapter? *</label><textarea required placeholder="Describe the skills and contributions you would bring…"></textarea></div>
+              <div class="field"><label>What does leadership mean to you? *</label><textarea required placeholder="Reflect on your understanding of leadership…"></textarea></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Experience</legend>
+            <div style="margin-top:12px;display:grid;gap:14px">
+              <div class="field"><label>Previous Leadership Roles</label><textarea placeholder="Describe any previous leadership roles or responsibilities…"></textarea></div>
+              <div class="field"><label>Extracurricular Involvement</label><textarea placeholder="List clubs, societies, volunteer work, etc…"></textarea></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Skills</legend>
+            <div class="check-group" style="margin-top:12px;grid-template-columns:1fr 1fr">
+              <label class="check-label"><input type="checkbox" name="skills" value="communication"/> Communication</label>
+              <label class="check-label"><input type="checkbox" name="skills" value="leadership"/> Leadership</label>
+              <label class="check-label"><input type="checkbox" name="skills" value="organisation"/> Organisation</label>
+              <label class="check-label"><input type="checkbox" name="skills" value="teamwork"/> Teamwork</label>
+              <label class="check-label"><input type="checkbox" name="skills" value="research"/> Legal Research</label>
+              <label class="check-label"><input type="checkbox" name="skills" value="advocacy"/> Advocacy</label>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Availability</legend>
+            <p style="font-size:0.87rem;color:var(--muted);margin:10px 0 12px">Are you able to commit to chapter meetings and activities throughout the year?</p>
+            <div class="radio-group" style="grid-template-columns:1fr 1fr">
+              <label class="check-label"><input type="radio" name="availability" value="yes" required/> Yes, I can commit</label>
+              <label class="check-label"><input type="radio" name="availability" value="no" required/> No, I cannot commit</label>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Supporting Documents</legend>
+            <div class="form-grid" style="margin-top:12px">
+              <div class="field"><label>Upload CV *</label><input type="file" accept=".pdf,.doc,.docx" required/></div>
+              <div class="field"><label>Academic Record (Optional)</label><input type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/></div>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset-block">
+            <legend>Declaration</legend>
+            <div style="margin-top:12px">
+              <label class="check-label">
+                <input type="checkbox" required/>
+                I confirm that the information provided in this application is accurate and complete. I understand that if selected, I am willing to serve the chapter with integrity, accountability, and dedication.
+              </label>
+            </div>
+          </fieldset>
+          <button type="submit" class="btn btn-blue" style="width:100%;border-radius:12px;margin-top:4px;justify-content:center">Submit Application</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">BLASC <span class="footer-brand-sub">University of the Free State</span></div>
+      <p>The Vanguard of the Legal Profession.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="events.html">Events</a>
+      <a href="programmes.html">Programmes</a>
+    </div>
+    <div class="footer-col">
+      <h4>Chapter</h4>
+      <a href="leadership.html">Leadership</a>
+      <a href="membership.html">Membership</a>
+      <a href="constitution.html">Constitution</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <div class="footer-social">
+        <a href="#">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Black Lawyers Association Student Chapter, UFS.</span>
+  </div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>
