@@ -127,8 +127,8 @@
         <div class="npa-steps">
           <div class="npa-step"><strong>Step 1</strong><span>Overview</span></div>
           <div class="npa-step"><strong>Step 2</strong><span>Declaration</span></div>
-          <div class="npa-step"><strong>Step 3</strong><span>Eligibility</span></div>
-          <div class="npa-step"><strong>Step 4</strong><span>Date Selection</span></div>
+          <div class="npa-step"><strong>Step 3</strong><span>Date Selection</span></div>
+          <div class="npa-step"><strong>Step 4</strong><span>Reference Code</span></div>
           <div class="npa-step"><strong>Step 5</strong><span>Google Form</span></div>
         </div>
       </div>
@@ -148,7 +148,7 @@
       <button type="button" class="npa-close" id="npaModalClose" aria-label="Close application modal">×</button>
     </div>
     <div class="npa-modal-body">
-      <div class="npa-flow" id="npaFlow" data-google-form-url="https://forms.gle/REPLACE_WITH_OFFICIAL_BLASC_FORM">
+      <div class="npa-flow" id="npaFlow" data-google-form-url="https://forms.gle/REPLACE_WITH_OFFICIAL_BLASC_FORM" data-code-api-url="https://script.google.com/macros/s/REPLACE_WITH_WEB_APP_DEPLOYMENT_ID/exec">
         <div class="npa-flow-steps" id="npaStepDots"></div>
         <div class="npa-step-card" id="npaStepContainer"></div>
       </div>
@@ -176,111 +176,108 @@
   const applyNowBtn = document.getElementById('npaApplyNowBtn');
   if (!flowRoot || !applyNowBtn || !modal || !modalCloseBtn || !modalBackdrop) return;
   const GOOGLE_FORM_URL = flowRoot.dataset.googleFormUrl;
-  const SUBMISSION_STORE_KEY = 'blascNpaPreApplications2026';
-  const steps = ['Overview', 'Declaration', 'Eligibility', 'Date Selection', 'Google Form'];
+  const CODE_API_URL = flowRoot.dataset.codeApiUrl;
+  const generatedCodes = new Set();
+  const steps = ['Overview', 'Declaration', 'Date Selection', 'Reference Code', 'Google Form'];
   const weekDefinitions = [
-    { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026', maxCapacity: 15 }, { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026', maxCapacity: 15 }, { id: 'w3', number: 3, label: 'Week 3', dateRange: '19–23 May 2026', maxCapacity: 15 }, { id: 'w4', number: 4, label: 'Week 4', dateRange: '26–30 May 2026', maxCapacity: 15 }, { id: 'w5', number: 5, label: 'Week 5', dateRange: '2–6 Jun 2026', maxCapacity: 15 }, { id: 'w6', number: 6, label: 'Week 6', dateRange: '9–13 Jun 2026', maxCapacity: 15 }, { id: 'w7', number: 7, label: 'Week 7', dateRange: '16–20 Jun 2026', maxCapacity: 15 }, { id: 'w8', number: 8, label: 'Week 8', dateRange: '23–27 Jun 2026', maxCapacity: 15 }, { id: 'w9', number: 9, label: 'Week 9', dateRange: '30 Jun–4 Jul 2026', maxCapacity: 15 }, { id: 'w10', number: 10, label: 'Week 10', dateRange: '7–11 Jul 2026', maxCapacity: 15 }, { id: 'w11', number: 11, label: 'Week 11', dateRange: '14–18 Jul 2026', maxCapacity: 15 }, { id: 'w12', number: 12, label: 'Week 12', dateRange: '21–25 Jul 2026', maxCapacity: 15 }, { id: 'w13', number: 13, label: 'Week 13', dateRange: '28 Jul–1 Aug 2026', maxCapacity: 15 }, { id: 'w14', number: 14, label: 'Week 14', dateRange: '4–8 Aug 2026', maxCapacity: 15 }, { id: 'w15', number: 15, label: 'Week 15', dateRange: '11–15 Aug 2026', maxCapacity: 15 }, { id: 'w16', number: 16, label: 'Week 16', dateRange: '18–22 Aug 2026', maxCapacity: 15 }, { id: 'w17', number: 17, label: 'Week 17', dateRange: '25–29 Aug 2026', maxCapacity: 15 }, { id: 'w18', number: 18, label: 'Week 18', dateRange: '1–5 Sep 2026', maxCapacity: 15 }, { id: 'w19', number: 19, label: 'Week 19', dateRange: '8–12 Sep 2026', maxCapacity: 15 }, { id: 'w20', number: 20, label: 'Week 20', dateRange: '15–19 Sep 2026', maxCapacity: 15 },
+    { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026' }, { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026' }, { id: 'w3', number: 3, label: 'Week 3', dateRange: '19–23 May 2026' }, { id: 'w4', number: 4, label: 'Week 4', dateRange: '26–30 May 2026' }, { id: 'w5', number: 5, label: 'Week 5', dateRange: '2–6 Jun 2026' }, { id: 'w6', number: 6, label: 'Week 6', dateRange: '9–13 Jun 2026' }, { id: 'w7', number: 7, label: 'Week 7', dateRange: '16–20 Jun 2026' }, { id: 'w8', number: 8, label: 'Week 8', dateRange: '23–27 Jun 2026' }, { id: 'w9', number: 9, label: 'Week 9', dateRange: '30 Jun–4 Jul 2026' }, { id: 'w10', number: 10, label: 'Week 10', dateRange: '7–11 Jul 2026' }, { id: 'w11', number: 11, label: 'Week 11', dateRange: '14–18 Jul 2026' }, { id: 'w12', number: 12, label: 'Week 12', dateRange: '21–25 Jul 2026' }, { id: 'w13', number: 13, label: 'Week 13', dateRange: '28 Jul–1 Aug 2026' }, { id: 'w14', number: 14, label: 'Week 14', dateRange: '4–8 Aug 2026' }, { id: 'w15', number: 15, label: 'Week 15', dateRange: '11–15 Aug 2026' }, { id: 'w16', number: 16, label: 'Week 16', dateRange: '18–22 Aug 2026' }, { id: 'w17', number: 17, label: 'Week 17', dateRange: '25–29 Aug 2026' }, { id: 'w18', number: 18, label: 'Week 18', dateRange: '1–5 Sep 2026' }, { id: 'w19', number: 19, label: 'Week 19', dateRange: '8–12 Sep 2026' }, { id: 'w20', number: 20, label: 'Week 20', dateRange: '15–19 Sep 2026' }
   ];
-  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, criminalProcedure: '', yearOfStudy: '', transportNeeded: '', selectedWeekId: '', referenceCode: '' };
+  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '' };
   const getWeekById = (id) => weekDefinitions.find((w) => w.id === id);
-  const generateReferenceCode = () => `BLASC-NPA-2026-${Array.from({length:6},()=>('ABCDEFGHJKLMNPQRSTUVWXYZ23456789')[Math.floor(Math.random()*32)]).join('')}`;
-  const getSubmissions = () => { try { return JSON.parse(localStorage.getItem(SUBMISSION_STORE_KEY) || '[]'); } catch { return []; } };
-  const saveSubmissions = (records) => localStorage.setItem(SUBMISSION_STORE_KEY, JSON.stringify(records));
-  const getConfirmedWeekCount = (weekId) => getSubmissions().filter((r) => r.selected_week === weekId && r.status === 'confirmed').length;
-  const isWeekClosed = (weekId) => {
-    const week = getWeekById(weekId);
-    return week ? getConfirmedWeekCount(weekId) >= week.maxCapacity : true;
-  };
-  const getEligibleWeeks = ({ yearOfStudy, criminalProcedure, transportNeeded }) => {
-    if (!yearOfStudy || !criminalProcedure || !transportNeeded) return [];
-    if (criminalProcedure === 'no') return weekDefinitions.filter((w) => w.number >= 11 && w.number <= 20);
-    if (yearOfStudy === 'final') return weekDefinitions.filter((w) => (transportNeeded === 'no' ? w.number >= 1 && w.number <= 3 : w.number >= 4 && w.number <= 5) || w.number >= 15);
-    if (yearOfStudy === 'third') return weekDefinitions.filter((w) => (w.number >= 6 && w.number <= 10) || w.number >= 15);
-    if (yearOfStudy === 'second') return weekDefinitions.filter((w) => (w.number >= 11 && w.number <= 14) || w.number >= 15);
-    return weekDefinitions.filter((w) => w.number >= 15);
-  };
-  const saveSubmission = () => {
-    const records = getSubmissions();
-    const week = getWeekById(state.selectedWeekId);
-    records.push({
-      reference_code: state.referenceCode,
-      year_of_study: state.yearOfStudy,
-      criminal_procedure_status: state.criminalProcedure,
-      transport_needed: state.transportNeeded,
-      selected_week: state.selectedWeekId,
-      selected_week_label: `${week.label} (${week.dateRange})`,
-      created_at: new Date().toISOString(),
-      status: 'pending_google_form',
-      google_form_submitted_at: null,
-      confirmed_at: null,
-      waitlist_reason: null,
-      admin_notes: null
+  const generateReferenceCode = () => Array.from({ length: 6 }, () => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'[Math.floor(Math.random() * 36)]).join('');
+  const hasProgress = () => state.stepIndex > 0 || state.introConsent || state.declarationConsent || state.selectedWeekId || state.referenceCode;
+  const reserveCodeInSheet = async (selectedDate, code) => {
+    if (!CODE_API_URL || CODE_API_URL.includes('REPLACE_WITH_WEB_APP_DEPLOYMENT_ID')) {
+      throw new Error('Google Sheet API URL is not configured.');
+    }
+    const payload = { action: 'reserveCode', code, selectedDate };
+    const response = await fetch(CODE_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
     });
-    saveSubmissions(records);
+    const data = await response.json().catch(() => null);
+    if (!response.ok || !data || !data.ok) {
+      const message = (data && data.error) || `Save failed (${response.status}).`;
+      throw new Error(message);
+    }
+    return data;
   };
-  const hasProgress = () => state.stepIndex > 0 || state.introConsent || state.declarationConsent || state.criminalProcedure || state.yearOfStudy || state.transportNeeded || state.selectedWeekId || state.referenceCode;
+  const reserveUniqueCode = async (selectedDate) => {
+    let lastError = new Error('Could not generate a unique code.');
+    for (let i = 0; i < 12; i += 1) {
+      const code = generateReferenceCode();
+      if (generatedCodes.has(code)) continue;
+      try {
+        await reserveCodeInSheet(selectedDate, code);
+        generatedCodes.add(code);
+        return code;
+      } catch (err) {
+        if (String(err.message || '').toLowerCase().includes('duplicate')) {
+          generatedCodes.add(code);
+          lastError = err;
+          continue;
+        }
+        throw err;
+      }
+    }
+    throw lastError;
+  };
   const closeModal = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); };
   const attemptCloseModal = () => { if (hasProgress() && !window.confirm('You have unsaved progress in this application window. Close anyway?')) return; closeModal(); };
   function renderDots() { const d = document.getElementById('npaStepDots'); d.innerHTML = ''; steps.forEach((s, i) => { const el = document.createElement('div'); el.className = `npa-step-dot${i===state.stepIndex?' active':''}`; el.textContent = `${i+1}. ${s}`; d.appendChild(el); }); }
-  function confirmByReferenceCode(referenceCode, submittedAtIso) {
-    const records = getSubmissions();
-    const idx = records.findIndex((r) => r.reference_code === referenceCode);
-    if (idx === -1) return { ok: false, reason: 'reference_not_found' };
-
-    const record = records[idx];
-    if (record.status === 'confirmed') return { ok: true, status: 'confirmed_already' };
-    if (record.status !== 'pending_google_form' && record.status !== 'draft') return { ok: false, reason: 'not_confirmable_status' };
-
-    const weekId = record.selected_week;
-    const week = getWeekById(weekId);
-    if (!week) return { ok: false, reason: 'invalid_week' };
-
-    record.google_form_submitted_at = submittedAtIso || new Date().toISOString();
-    if (isWeekClosed(weekId)) {
-      record.status = 'needs_reassignment';
-      record.waitlist_reason = 'Week full at form confirmation time';
-      saveSubmissions(records);
-      return { ok: false, reason: 'week_full', status: record.status };
-    }
-
-    record.status = 'confirmed';
-    record.confirmed_at = new Date().toISOString();
-    saveSubmissions(records);
-    return { ok: true, status: 'confirmed' };
-  }
-
   function render() {
     const c = document.getElementById('npaStepContainer'); if (!c) return; renderDots();
-    if (state.stepIndex === 0) { c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. This is a formal 3-part pre-application process.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Date allocation screening</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private personal-information form</span></div></div><p class="npa-step-sub">This BLASC website step collects limited screening information only. Personal identifying information is completed on a separate form to support privacy and safe handling of student information. Completing this process does not automatically guarantee placement.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the 3-part application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`; c.querySelector('#introConsent').onchange=(e)=>state.introConsent=e.target.checked; c.querySelector('#next0').onclick=()=>{ if(!state.introConsent) return; state.stepIndex=1; render(); }; return; }
+    if (state.stepIndex === 0) { c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. This is a formal 3-part pre-application process.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Date selection + code generation</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private Google Form submission</span></div></div><p class="npa-step-sub">This website only handles programme/date/reference-code data. Personal details are captured only in the Google Form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the 3-part application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`; c.querySelector('#introConsent').onchange=(e)=>state.introConsent=e.target.checked; c.querySelector('#next0').onclick=()=>{ if(!state.introConsent) return; state.stepIndex=1; render(); }; return; }
     if (state.stepIndex === 1) { c.innerHTML = `<h3 class="npa-step-title">Student Declaration and Undertaking</h3><p class="npa-step-sub">Please read and confirm before continuing.</p><div class="npa-declaration"><h4>Professional and Confidential Environment</h4><ul><li>Participation is a privilege and not an automatic right.</li><li>The programme is observational, educational, and takes place in a professional prosecutorial setting.</li><li>You may be exposed to sensitive legal processes, witnesses, preparation, and official documents.</li></ul><h4>Conduct and Compliance</h4><ul><li>Strict confidentiality is required during and after participation.</li><li>You must comply with supervision by assigned prosecutors and authorised officials.</li><li>You must adhere to POPIA, the NPA Code of Conduct, and institutional ethical standards.</li><li>Independent consultations with witnesses, complainants, accused persons, or stakeholders are prohibited.</li><li>Personal errands or non-professional tasks are prohibited.</li><li>Carry student ID and follow communicated dress code and working hours when requested.</li></ul><h4>Consequences and Institutional Dignity</h4><ul><li>Non-compliance may lead to immediate termination and may carry disciplinary/legal implications where applicable.</li><li>Participation is voluntary.</li><li>You must uphold the dignity of UFS, BLASC UFS, and the National Prosecuting Authority.</li></ul></div><details class="npa-full-toggle"><summary style="cursor:pointer;color:var(--blue);font-weight:700;font-size:.84rem">View full declaration</summary><p class="npa-note"><button type="button" id="openDeclarationPdfBtn" class="btn btn-outline-dark" style="min-height:38px;padding:8px 14px;font-size:.82rem">Open Full Declaration (PDF)</button></p></details><label class="check-label" style="margin-top:12px"><input type="checkbox" id="decl" ${state.declarationConsent?'checked':''}/> I have read, understood, and agree to the Student Declaration and Undertaking.</label><div class="npa-actions"><button class="btn btn-outline-dark" id="back1">Back</button><button class="btn btn-blue" id="next1">Next</button></div>`; c.querySelector('#decl').onchange=(e)=>state.declarationConsent=e.target.checked; c.querySelector('#back1').onclick=()=>{state.stepIndex=0; render();}; c.querySelector('#next1').onclick=()=>{if(!state.declarationConsent) return; state.stepIndex=2; render();}; const openPdfBtn=c.querySelector('#openDeclarationPdfBtn'); if(openPdfBtn){ openPdfBtn.onclick=()=>{ const pdfUrl=new URL('assets/UFS-ITSOAP-STUDENT-DECLARATION-AND-UNDERTAKING.pdf', window.location.href).href; window.open(pdfUrl,'_blank','noopener,noreferrer'); }; } return; }
-    if (state.stepIndex === 2) { c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><div class="npa-row"><div class="field"><label>Have you completed or are currently completing Criminal Procedure?</label><select id="cp"><option value="">Select</option><option value="completed" ${state.criminalProcedure==='completed'?'selected':''}>Yes, I have completed Criminal Procedure</option><option value="current" ${state.criminalProcedure==='current'?'selected':''}>Yes, I am currently completing Criminal Procedure</option><option value="no" ${state.criminalProcedure==='no'?'selected':''}>No, I have not yet done Criminal Procedure</option></select></div><div class="field"><label>What year of study are you in?</label><select id="yr"><option value="">Select</option><option value="final" ${state.yearOfStudy==='final'?'selected':''}>Final Year</option><option value="third" ${state.yearOfStudy==='third'?'selected':''}>3rd Year</option><option value="second" ${state.yearOfStudy==='second'?'selected':''}>2nd Year</option><option value="first" ${state.yearOfStudy==='first'?'selected':''}>1st Year</option></select></div></div><div class="field"><label>Will you need transport?</label><select id="tr"><option value="">Select</option><option value="no" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value="yes" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability. If no transport is allocated, accepted students are still expected to attend.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back2">Back</button><button class="btn btn-blue" id="next2">Next</button></div>`; c.querySelector('#cp').onchange=(e)=>{state.criminalProcedure=e.target.value;state.selectedWeekId='';}; c.querySelector('#yr').onchange=(e)=>{state.yearOfStudy=e.target.value;state.selectedWeekId='';}; c.querySelector('#tr').onchange=(e)=>{state.transportNeeded=e.target.value;state.selectedWeekId='';}; c.querySelector('#back2').onclick=()=>{state.stepIndex=1; render();}; c.querySelector('#next2').onclick=()=>{if(!state.criminalProcedure||!state.yearOfStudy||!state.transportNeeded) return; state.stepIndex=3; render();}; return; }
-    if (state.stepIndex === 3) {
-      const eligible = getEligibleWeeks(state);
-      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-note">Available weeks are based on <strong>confirmed</strong> submissions only (maximum 15 per week).</p><p class="npa-warning">Your selected week is a preferred placement and is only confirmed after your form submission is received and matched using your reference code.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Next</button></div>`;
+    if (state.stepIndex === 2) {
+      const eligible = weekDefinitions;
+      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-warning">Your selected slot is only confirmed when your Google Form is submitted with the exact same reference code.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Generate Reference Code</button></div>`;
       const wg = c.querySelector('#wg');
       eligible.forEach((w) => {
-        const confirmedCount = getConfirmedWeekCount(w.id);
-        const full = confirmedCount >= w.maxCapacity;
         const b = document.createElement('button');
-        b.type = 'button';
-        b.className = `week-choice ${full ? 'disabled' : 'available'} ${state.selectedWeekId === w.id ? 'selected' : ''}`;
-        b.disabled = full;
-        b.innerHTML = `<strong>${w.label}</strong><span>${w.dateRange}</span><span>${confirmedCount}/${w.maxCapacity} confirmed</span><span class="meta">${full ? 'Closed' : 'Open'}</span>`;
+        b.type = 'button'; b.className = `week-choice available ${state.selectedWeekId === w.id ? 'selected' : ''}`;
+        b.innerHTML = `<strong>${w.label}</strong><span>${w.dateRange}</span><span class="meta">Available</span>`;
         b.onclick = () => { state.selectedWeekId = w.id; render(); };
         wg.appendChild(b);
       });
-      c.querySelector('#back3').onclick = () => { state.stepIndex = 2; render(); };
-      c.querySelector('#next3').onclick = () => { if (!state.selectedWeekId) return; state.stepIndex = 4; render(); };
+      c.querySelector('#back3').onclick = () => { state.stepIndex = 1; render(); };
+      c.querySelector('#next3').onclick = async () => {
+        if (!state.selectedWeekId || state.savingCode) return;
+        const week = getWeekById(state.selectedWeekId);
+        const selectedWeekLabel = week ? `${week.label} (${week.dateRange})` : '';
+        state.saveError = '';
+        state.savingCode = true;
+        c.querySelector('#next3').textContent = 'Saving...';
+        c.querySelector('#next3').disabled = true;
+        try {
+          state.referenceCode = await reserveUniqueCode(selectedWeekLabel);
+          state.selectedWeekLabel = selectedWeekLabel;
+          state.stepIndex = 3;
+        } catch (err) {
+          state.saveError = 'We could not reserve your slot. Please try again.';
+        } finally {
+          state.savingCode = false;
+          render();
+        }
+      };
+      if (state.saveError) {
+        const error = document.createElement('p');
+        error.className = 'npa-warning';
+        error.textContent = state.saveError;
+        c.appendChild(error);
+      }
+      return;
+    }
+    if (state.stepIndex === 3) {
+      c.innerHTML = `<h3 class="npa-step-title">Reference Code Reserved</h3><p class="npa-step-sub"><strong>Selected Date:</strong> ${state.selectedWeekLabel}</p><p class="npa-warning">Your application is not complete yet. Copy this reference code and paste it into the Google Form. Your selected slot will only be confirmed once your Google Form submission contains this exact code.</p><p class="npa-note">Reference Code</p><p><span class="npa-code" id="code">${state.referenceCode}</span></p><p class="npa-note"><strong>Take a screenshot of this code before continuing.</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copy">Copy Code</button><button class="btn btn-blue" id="goNow">Continue to Google Form</button></div>`;
+      c.querySelector('#copy').onclick = async () => { try { await navigator.clipboard.writeText(state.referenceCode); } catch (_) {} };
+      c.querySelector('#goNow').onclick = () => window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
       return;
     }
     if (state.stepIndex === 4) {
-      if (!state.referenceCode) {
-        state.referenceCode = generateReferenceCode();
-        saveSubmission();
-      }
-      const w = getWeekById(state.selectedWeekId);
-      c.innerHTML = `<h3 class="npa-step-title">Form Handoff</h3><p class="npa-step-sub">Continue to the separate form for private personal information. Use the same reference code to match your submissions.</p><p class="npa-warning">Your selected week will only be confirmed after your form is submitted and matched successfully.</p><p class="npa-note">Reference Code</p><p><span class="npa-code" id="code">${state.referenceCode}</span></p><p class="npa-note">Preferred week: <strong>${w ? `${w.label} (${w.dateRange})` : ''}</strong></p><p class="npa-note">Status: <strong>pending_google_form</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copy">Copy Code</button><button class="btn btn-blue" id="go">Continue to Form</button></div>`;
-      c.querySelector('#copy').onclick = async () => { try { await navigator.clipboard.writeText(state.referenceCode); } catch (_) {} };
+      c.innerHTML = `<h3 class="npa-step-title">Continue to Google Form</h3><p class="npa-step-sub">Use your exact reference code in the required field named <strong>Reference Code</strong>.</p><p class="npa-warning">Your application is not complete yet. Copy this reference code and paste it into the Google Form. Your selected slot will only be confirmed once your Google Form submission contains this exact code.</p><p class="npa-note">Reference Code: <strong>${state.referenceCode}</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copyFinal">Copy Code</button><button class="btn btn-blue" id="go">Continue to Google Form</button></div>`;
+      c.querySelector('#copyFinal').onclick = async () => { try { await navigator.clipboard.writeText(state.referenceCode); } catch (_) {} };
       c.querySelector('#go').onclick = () => window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
       return;
     }
@@ -306,12 +303,6 @@
     }
   }
 
-  // Manual/automation hook for form matching by reference code.
-  // Use this from admin tooling or an integration script:
-  // window.confirmNpaGoogleFormMatch('BLASC-NPA-2026-XXXXXX', new Date().toISOString())
-  window.confirmNpaGoogleFormMatch = confirmByReferenceCode;
-  window.getNpaConfirmedWeekCount = getConfirmedWeekCount;
-  window.isNpaWeekClosed = isWeekClosed;
 })();
 </script>
 </body>
