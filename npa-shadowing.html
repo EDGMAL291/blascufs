@@ -17,7 +17,6 @@
     .npa-card ul{list-style:disc;padding-left:18px;display:grid;gap:4px}
     .npa-partners{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .npa-partner{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px}
-    .npa-partner strong{display:block;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:6px}
     .npa-partner span{font-size:.96rem;color:var(--ink);font-weight:600}
     .npa-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .npa-step{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:16px}
@@ -60,6 +59,7 @@
     .week-choice.selected{border-color:var(--blue-mid);background:var(--blue-pale)}
     .week-choice.disabled{opacity:.55;cursor:not-allowed;background:#f8fafc}
     .npa-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;display:inline-block;background:#0f172a;color:#fff;padding:10px 12px;border-radius:10px;font-size:1rem;letter-spacing:.05em}
+    .npa-bottom-cta{display:flex;justify-content:center;margin-top:6px}
     @media(max-width:960px){.npa-grid,.npa-partners,.npa-steps,.npa-row,.npa-part-grid,.week-pick-grid{grid-template-columns:1fr}.npa-flow-steps{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:540px){.npa-modal-dialog{width:100vw;height:100vh;max-height:100vh;margin:0;border-radius:0}.npa-flow-steps{grid-template-columns:1fr}.npa-modal-header{position:sticky;top:0;z-index:2}}
   </style>
@@ -113,27 +113,16 @@
     </div>
 
     <div>
-      <h2 class="section-title" style="font-size:1.7rem">Institutional Partnership</h2>
+      <h2 class="section-title" style="font-size:1.7rem">Partners</h2>
       <div class="npa-partners">
-        <div class="npa-partner"><strong>Partner 1</strong><span>National Prosecuting Authority</span></div>
-        <div class="npa-partner"><strong>Partner 2</strong><span>UFS Faculty of Law</span></div>
-        <div class="npa-partner"><strong>Partner 3</strong><span>BLASC UFS</span></div>
+        <div class="npa-partner"><span>National Prosecuting Authority</span></div>
+        <div class="npa-partner"><span>UFS Faculty of Law</span></div>
+        <div class="npa-partner"><span>BLASC UFS</span></div>
       </div>
     </div>
 
     <div class="npa-grid">
-      <div class="npa-card">
-        <h3>Eligibility and Scheduling</h3>
-        <ul>
-          <li>Final Year (own transport): Weeks 1–3 + Weeks 15–20</li>
-          <li>Final Year (transport needed): Weeks 4–5 + Weeks 15–20</li>
-          <li>3rd Year: Weeks 6–10 + Weeks 15–20</li>
-          <li>2nd Year: Weeks 11–14 + Weeks 15–20</li>
-          <li>1st Year: Weeks 15–20</li>
-          <li>Criminal Procedure = No: Weeks 11–20 only</li>
-        </ul>
-      </div>
-      <div class="npa-card" style="grid-column:span 2">
+      <div class="npa-card" style="grid-column:span 3">
         <h3>How the Application Works</h3>
         <div class="npa-steps">
           <div class="npa-step"><strong>Step 1</strong><span>Overview</span></div>
@@ -144,6 +133,10 @@
           <div class="npa-step"><strong>Step 6</strong><span>Google Form</span></div>
         </div>
       </div>
+    </div>
+
+    <div class="npa-bottom-cta">
+      <button type="button" class="btn btn-gold" id="npaApplyNowBtnBottom">Apply Now</button>
     </div>
   </div>
 </section>
@@ -247,7 +240,7 @@
     record.google_form_submitted_at = submittedAtIso || new Date().toISOString();
     if (isWeekClosed(weekId)) {
       record.status = 'needs_reassignment';
-      record.waitlist_reason = 'Week full at Google Form confirmation time';
+      record.waitlist_reason = 'Week full at form confirmation time';
       saveSubmissions(records);
       return { ok: false, reason: 'week_full', status: record.status };
     }
@@ -260,12 +253,12 @@
 
   function render() {
     const c = document.getElementById('npaStepContainer'); if (!c) return; renderDots();
-    if (state.stepIndex === 0) { c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. This is a formal 3-part pre-application process.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Date allocation screening</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private personal-information Google Form</span></div></div><p class="npa-step-sub">This BLASC website step collects limited screening information only. Personal identifying information is completed on a separate Google Form to support privacy and safe handling of student information. Completing this process does not automatically guarantee placement.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the 3-part application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`; c.querySelector('#introConsent').onchange=(e)=>state.introConsent=e.target.checked; c.querySelector('#next0').onclick=()=>{ if(!state.introConsent) return; state.stepIndex=1; render(); }; return; }
-    if (state.stepIndex === 1) { c.innerHTML = `<h3 class="npa-step-title">Student Declaration and Undertaking</h3><p class="npa-step-sub">Please read and confirm before continuing.</p><div class="npa-declaration"><h4>Professional and Confidential Environment</h4><ul><li>Participation is a privilege and not an automatic right.</li><li>The programme is observational, educational, and takes place in a professional prosecutorial setting.</li><li>You may be exposed to sensitive legal processes, witnesses, preparation, and official documents.</li></ul><h4>Conduct and Compliance</h4><ul><li>Strict confidentiality is required during and after participation.</li><li>You must comply with supervision by assigned prosecutors and authorised officials.</li><li>You must adhere to POPIA, the NPA Code of Conduct, and institutional ethical standards.</li><li>Independent consultations with witnesses, complainants, accused persons, or stakeholders are prohibited.</li><li>Personal errands or non-professional tasks are prohibited.</li><li>Carry student ID and follow communicated dress code and working hours when requested.</li></ul><h4>Consequences and Institutional Dignity</h4><ul><li>Non-compliance may lead to immediate termination and may carry disciplinary/legal implications where applicable.</li><li>Participation is voluntary.</li><li>You must uphold the dignity of UFS, BLASC UFS, and the National Prosecuting Authority.</li></ul></div><details class="npa-full-toggle"><summary style="cursor:pointer;color:var(--blue);font-weight:700;font-size:.84rem">View full declaration</summary><p class="npa-note">Full declaration text can be inserted verbatim here from the official uploaded declaration file.</p></details><label class="check-label" style="margin-top:12px"><input type="checkbox" id="decl" ${state.declarationConsent?'checked':''}/> I have read, understood, and agree to the Student Declaration and Undertaking.</label><div class="npa-actions"><button class="btn btn-outline-dark" id="back1">Back</button><button class="btn btn-blue" id="next1">Next</button></div>`; c.querySelector('#decl').onchange=(e)=>state.declarationConsent=e.target.checked; c.querySelector('#back1').onclick=()=>{state.stepIndex=0; render();}; c.querySelector('#next1').onclick=()=>{if(!state.declarationConsent) return; state.stepIndex=2; render();}; return; }
+    if (state.stepIndex === 0) { c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. This is a formal 3-part pre-application process.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Date allocation screening</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private personal-information form</span></div></div><p class="npa-step-sub">This BLASC website step collects limited screening information only. Personal identifying information is completed on a separate form to support privacy and safe handling of student information. Completing this process does not automatically guarantee placement.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the 3-part application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`; c.querySelector('#introConsent').onchange=(e)=>state.introConsent=e.target.checked; c.querySelector('#next0').onclick=()=>{ if(!state.introConsent) return; state.stepIndex=1; render(); }; return; }
+    if (state.stepIndex === 1) { c.innerHTML = `<h3 class="npa-step-title">Student Declaration and Undertaking</h3><p class="npa-step-sub">Please read and confirm before continuing.</p><div class="npa-declaration"><h4>Professional and Confidential Environment</h4><ul><li>Participation is a privilege and not an automatic right.</li><li>The programme is observational, educational, and takes place in a professional prosecutorial setting.</li><li>You may be exposed to sensitive legal processes, witnesses, preparation, and official documents.</li></ul><h4>Conduct and Compliance</h4><ul><li>Strict confidentiality is required during and after participation.</li><li>You must comply with supervision by assigned prosecutors and authorised officials.</li><li>You must adhere to POPIA, the NPA Code of Conduct, and institutional ethical standards.</li><li>Independent consultations with witnesses, complainants, accused persons, or stakeholders are prohibited.</li><li>Personal errands or non-professional tasks are prohibited.</li><li>Carry student ID and follow communicated dress code and working hours when requested.</li></ul><h4>Consequences and Institutional Dignity</h4><ul><li>Non-compliance may lead to immediate termination and may carry disciplinary/legal implications where applicable.</li><li>Participation is voluntary.</li><li>You must uphold the dignity of UFS, BLASC UFS, and the National Prosecuting Authority.</li></ul></div><details class="npa-full-toggle"><summary style="cursor:pointer;color:var(--blue);font-weight:700;font-size:.84rem">View full declaration</summary><p class="npa-note"><button type="button" id="openDeclarationPdfBtn" class="btn btn-outline-dark" style="min-height:38px;padding:8px 14px;font-size:.82rem">Open Full Declaration (PDF)</button></p></details><label class="check-label" style="margin-top:12px"><input type="checkbox" id="decl" ${state.declarationConsent?'checked':''}/> I have read, understood, and agree to the Student Declaration and Undertaking.</label><div class="npa-actions"><button class="btn btn-outline-dark" id="back1">Back</button><button class="btn btn-blue" id="next1">Next</button></div>`; c.querySelector('#decl').onchange=(e)=>state.declarationConsent=e.target.checked; c.querySelector('#back1').onclick=()=>{state.stepIndex=0; render();}; c.querySelector('#next1').onclick=()=>{if(!state.declarationConsent) return; state.stepIndex=2; render();}; const openPdfBtn=c.querySelector('#openDeclarationPdfBtn'); if(openPdfBtn){ openPdfBtn.onclick=()=>{ const pdfUrl=new URL('assets/UFS-ITSOAP-STUDENT-DECLARATION-AND-UNDERTAKING.pdf', window.location.href).href; window.open(pdfUrl,'_blank','noopener,noreferrer'); }; } return; }
     if (state.stepIndex === 2) { c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><div class="npa-row"><div class="field"><label>Have you completed or are currently completing Criminal Procedure?</label><select id="cp"><option value="">Select</option><option value="completed" ${state.criminalProcedure==='completed'?'selected':''}>Yes, I have completed Criminal Procedure</option><option value="current" ${state.criminalProcedure==='current'?'selected':''}>Yes, I am currently completing Criminal Procedure</option><option value="no" ${state.criminalProcedure==='no'?'selected':''}>No, I have not yet done Criminal Procedure</option></select></div><div class="field"><label>What year of study are you in?</label><select id="yr"><option value="">Select</option><option value="final" ${state.yearOfStudy==='final'?'selected':''}>Final Year</option><option value="third" ${state.yearOfStudy==='third'?'selected':''}>3rd Year</option><option value="second" ${state.yearOfStudy==='second'?'selected':''}>2nd Year</option><option value="first" ${state.yearOfStudy==='first'?'selected':''}>1st Year</option></select></div></div><div class="field"><label>Will you need transport?</label><select id="tr"><option value="">Select</option><option value="no" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value="yes" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability. If no transport is allocated, accepted students are still expected to attend.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back2">Back</button><button class="btn btn-blue" id="next2">Next</button></div>`; c.querySelector('#cp').onchange=(e)=>{state.criminalProcedure=e.target.value;state.selectedWeekId='';}; c.querySelector('#yr').onchange=(e)=>{state.yearOfStudy=e.target.value;state.selectedWeekId='';}; c.querySelector('#tr').onchange=(e)=>{state.transportNeeded=e.target.value;state.selectedWeekId='';}; c.querySelector('#back2').onclick=()=>{state.stepIndex=1; render();}; c.querySelector('#next2').onclick=()=>{if(!state.criminalProcedure||!state.yearOfStudy||!state.transportNeeded) return; state.stepIndex=3; render();}; return; }
     if (state.stepIndex === 3) {
       const eligible = getEligibleWeeks(state);
-      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-note">Available weeks are based on <strong>confirmed</strong> submissions only (maximum 15 per week).</p><p class="npa-warning">Your selected week is a preferred placement and is only confirmed after your Google Form submission is received and matched using your reference code.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Next</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-note">Available weeks are based on <strong>confirmed</strong> submissions only (maximum 15 per week).</p><p class="npa-warning">Your selected week is a preferred placement and is only confirmed after your form submission is received and matched using your reference code.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Next</button></div>`;
       const wg = c.querySelector('#wg');
       eligible.forEach((w) => {
         const confirmedCount = getConfirmedWeekCount(w.id);
@@ -284,7 +277,7 @@
     }
     if (state.stepIndex === 4) {
       const w = getWeekById(state.selectedWeekId);
-      c.innerHTML = `<h3 class="npa-step-title">Initials Only</h3><div class="field"><label>Initials</label><input id="i" type="text" value="${state.initials}" maxlength="8" placeholder="e.g. BM"/></div><p class="npa-note">Preferred week: <strong>${w ? `${w.label} (${w.dateRange})` : ''}</strong></p><p class="npa-note">This week is not secured until your Google Form is submitted and matched.</p><div class="npa-actions"><button class="btn btn-outline-dark" id="back4">Back</button><button class="btn btn-blue" id="next4">Generate Reference Code</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Initials Only</h3><div class="field"><label>Initials</label><input id="i" type="text" value="${state.initials}" maxlength="8" placeholder="e.g. BM"/></div><p class="npa-note">Preferred week: <strong>${w ? `${w.label} (${w.dateRange})` : ''}</strong></p><p class="npa-note">This week is not secured until your form is submitted and matched.</p><div class="npa-actions"><button class="btn btn-outline-dark" id="back4">Back</button><button class="btn btn-blue" id="next4">Generate Reference Code</button></div>`;
       c.querySelector('#i').oninput = (e) => { state.initials = e.target.value.replace(/[^A-Za-z]/g, '').toUpperCase(); e.target.value = state.initials; };
       c.querySelector('#back4').onclick = () => { state.stepIndex = 3; render(); };
       c.querySelector('#next4').onclick = () => {
@@ -297,16 +290,32 @@
       return;
     }
     const w = getWeekById(state.selectedWeekId);
-    c.innerHTML = `<h3 class="npa-step-title">Google Form Handoff</h3><p class="npa-step-sub">Continue to the separate Google Form for private personal information. Use the same reference code to match your submissions.</p><p class="npa-warning">Your selected week will only be confirmed after your Google Form is submitted and matched successfully.</p><p class="npa-note">Reference Code</p><p><span class="npa-code" id="code">${state.referenceCode}</span></p><p class="npa-note">Preferred week: <strong>${w ? `${w.label} (${w.dateRange})` : ''}</strong></p><p class="npa-note">Status: <strong>pending_google_form</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copy">Copy Code</button><button class="btn btn-blue" id="go">Continue to Google Form</button></div>`;
+    c.innerHTML = `<h3 class="npa-step-title">Form Handoff</h3><p class="npa-step-sub">Continue to the separate form for private personal information. Use the same reference code to match your submissions.</p><p class="npa-warning">Your selected week will only be confirmed after your form is submitted and matched successfully.</p><p class="npa-note">Reference Code</p><p><span class="npa-code" id="code">${state.referenceCode}</span></p><p class="npa-note">Preferred week: <strong>${w ? `${w.label} (${w.dateRange})` : ''}</strong></p><p class="npa-note">Status: <strong>pending_google_form</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copy">Copy Code</button><button class="btn btn-blue" id="go">Continue to Form</button></div>`;
     c.querySelector('#copy').onclick = async () => { try { await navigator.clipboard.writeText(state.referenceCode); } catch (_) {} };
     c.querySelector('#go').onclick = () => window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
   }
-  applyNowBtn.addEventListener('click', () => { modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.classList.add('no-scroll'); render(); });
+  const applyNowBtnBottom = document.getElementById('npaApplyNowBtnBottom');
+  const openApplicationModal = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.classList.add('no-scroll'); render(); };
+  applyNowBtn.addEventListener('click', openApplicationModal);
+  if (applyNowBtnBottom) applyNowBtnBottom.addEventListener('click', openApplicationModal);
   modalCloseBtn.addEventListener('click', attemptCloseModal);
   modalBackdrop.addEventListener('click', attemptCloseModal);
   document.addEventListener('keydown', (e) => { if (!modal.classList.contains('open')) return; if (e.key === 'Escape') attemptCloseModal(); });
 
-  // Manual/automation hook for Google Form matching by reference code.
+  // Deep-link support:
+  // - npa-shadowing.html?openApply=true
+  // - npa-shadowing.html#apply
+  const url = new URL(window.location.href);
+  const shouldAutoOpen = url.searchParams.get('openApply') === 'true' || window.location.hash === '#apply';
+  if (shouldAutoOpen) {
+    openApplicationModal();
+    if (url.searchParams.has('openApply')) {
+      url.searchParams.delete('openApply');
+      history.replaceState({}, '', `${url.pathname}${url.search}${url.hash || '#npa-apply'}`);
+    }
+  }
+
+  // Manual/automation hook for form matching by reference code.
   // Use this from admin tooling or an integration script:
   // window.confirmNpaGoogleFormMatch('BLASC-NPA-2026-XXXXXX', new Date().toISOString())
   window.confirmNpaGoogleFormMatch = confirmByReferenceCode;

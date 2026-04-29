@@ -22,6 +22,11 @@
     .info-card{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px}
     .info-card strong{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:4px}
     .info-card span{font-size:.95rem;color:var(--ink);font-weight:500}
+    .npa-history-card{display:flex;flex-direction:column}
+    .npa-history-scroll{max-height:122px;overflow:auto;padding-right:6px;font-size:.92rem;color:var(--ink);font-weight:500;line-height:1.58;scrollbar-width:thin;scrollbar-color:#b8c4d2 transparent}
+    .npa-history-scroll::-webkit-scrollbar{width:6px}
+    .npa-history-scroll::-webkit-scrollbar-track{background:transparent}
+    .npa-history-scroll::-webkit-scrollbar-thumb{background:#c7d1dd;border-radius:999px}
 
     /* Application form panel */
     .app-panel{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;margin-top:32px}
@@ -155,7 +160,10 @@
       </div>
 
       <div class="info-grid npa-info-grid fade-up">
-        <div class="info-card"><strong>Programme History</strong><span>Developed by Bonnita Shai, Deputy Chairperson 2025</span></div>
+        <div class="info-card npa-history-card">
+          <strong>Programme History</strong>
+          <div class="npa-history-scroll">The NPA ITSOAP Programme was formally established in 2025 by BLASC UFS to expand practical legal exposure and bridge the gap between academic learning and professional practice. The initiative was led primarily by Mr Rebaone Pule, then Deputy Chairperson, whose strategic engagement helped establish the programme as a structured platform for student exposure to the criminal justice system.</div>
+        </div>
         <div class="info-card"><strong>Applications Open</strong><span>1 May 2026</span></div>
         <div class="info-card"><strong>Max Per Week</strong><span>15 students</span></div>
         <div class="info-card"><strong>Partnership</strong><span>NPA · UFS Law Faculty · BLASC UFS</span></div>
@@ -163,7 +171,7 @@
 
       <div class="calendar-note fade-up">
         <strong>Applications Open 1 May 2026</strong>
-        <p>This pre-application flow collects only limited screening information on the BLASC website. Personal identifying information is collected privately on a separate Google Form.</p>
+        <p>This pre-application flow collects only limited screening information on the BLASC website. Personal identifying information is collected privately on a separate form.</p>
       </div>
 
       <div class="npa-teaser fade-up">
@@ -174,7 +182,7 @@
             <ul class="npa-list">
               <li>Applications open on 1 May 2026.</li>
               <li>15-student cap per week with live availability handling.</li>
-              <li>Privacy-aware screening on BLASC site, private details on Google Form.</li>
+              <li>Privacy-aware screening on BLASC site, private details on the form.</li>
             </ul>
           </div>
           <div class="npa-cta-card">
@@ -182,7 +190,7 @@
             <p style="font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:14px">Visit the dedicated page to review full details and start the formal NPA application process.</p>
             <div style="display:grid;gap:10px">
               <a class="btn btn-blue" href="npa-shadowing.html" style="width:100%;justify-content:center">View Programme</a>
-              <a class="btn btn-outline-dark" href="npa-shadowing.html#npa-apply" style="width:100%;justify-content:center">Apply Now</a>
+              <a class="btn btn-outline-dark" href="npa-shadowing.html?openApply=true#npa-apply" style="width:100%;justify-content:center">Apply Now</a>
             </div>
           </div>
         </div>
