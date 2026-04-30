@@ -42,7 +42,53 @@
     .npa-part-item{border:1px solid var(--border);background:var(--off-white);border-radius:var(--radius-sm);padding:12px}
     .npa-part-item strong{display:block;font-size:.76rem;color:var(--blue);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
     .npa-part-item span{font-size:.86rem;color:var(--ink)}
-    .npa-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .npa-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+    .field{display:flex;flex-direction:column;gap:8px}
+    .field label{font-size:.82rem;font-weight:700;letter-spacing:.01em;color:var(--ink)}
+    .npa-row .field{display:grid;grid-template-rows:minmax(3.6em,auto) auto;gap:8px}
+    .npa-row .field label{min-height:0;display:block;line-height:1.35}
+    .npa-step-card input[type="text"],
+    .npa-step-card select{
+      width:100%;
+      min-height:46px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:0 12px;
+      font-size:.9rem;
+      color:var(--ink);
+      background:#fff;
+      box-sizing:border-box;
+      transition:border-color .2s ease, box-shadow .2s ease;
+      outline:none;
+    }
+    .npa-step-card select{
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      appearance:none;
+      background-image:none !important;
+      padding-right:12px;
+    }
+    .npa-step-card select::-ms-expand{display:none}
+    .npa-step-card input[type="text"]:focus,
+    .npa-step-card select:focus{
+      border-color:var(--blue-mid);
+      box-shadow:0 0 0 3px rgba(48,126,216,.12);
+    }
+    .npa-invalid{
+      border-color:#c62828 !important;
+      box-shadow:0 0 0 3px rgba(198,40,40,.12) !important;
+      background:#fff7f7 !important;
+    }
+    .npa-invalid-label{color:#9f1d1d !important}
+    .npa-error-note{margin-top:8px;font-size:.78rem;color:#9f1d1d}
+    .npa-shake{animation:npaShake .26s ease}
+    @keyframes npaShake{
+      0%{transform:translateX(0)}
+      25%{transform:translateX(-2px)}
+      50%{transform:translateX(2px)}
+      75%{transform:translateX(-1.5px)}
+      100%{transform:translateX(0)}
+    }
     .npa-actions{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap;margin-top:18px}
     .npa-note{font-size:.82rem;color:var(--muted);line-height:1.6;margin-top:8px}
     .npa-warning{background:#fff8e7;border:1px solid #f5d489;border-radius:var(--radius-sm);padding:12px 14px;font-size:.84rem;color:#7a5300;line-height:1.6;margin:12px 0}
@@ -60,7 +106,7 @@
     .week-choice.disabled{opacity:.55;cursor:not-allowed;background:#f8fafc}
     .npa-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;display:inline-block;background:#0f172a;color:#fff;padding:10px 12px;border-radius:10px;font-size:1rem;letter-spacing:.05em}
     .npa-bottom-cta{display:flex;justify-content:center;margin-top:6px}
-    @media(max-width:960px){.npa-grid,.npa-partners,.npa-steps,.npa-row,.npa-part-grid,.week-pick-grid{grid-template-columns:1fr}.npa-flow-steps{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:960px){.npa-grid,.npa-partners,.npa-steps,.npa-row,.npa-part-grid,.week-pick-grid{grid-template-columns:1fr}.npa-flow-steps{grid-template-columns:repeat(3,1fr)}.npa-row .field{display:flex}.npa-row .field label{min-height:0}}
     @media(max-width:540px){.npa-modal-dialog{width:100vw;height:100vh;max-height:100vh;margin:0;border-radius:0}.npa-flow-steps{grid-template-columns:1fr}.npa-modal-header{position:sticky;top:0;z-index:2}}
   </style>
 </head>
@@ -127,9 +173,9 @@
         <div class="npa-steps">
           <div class="npa-step"><strong>Step 1</strong><span>Overview</span></div>
           <div class="npa-step"><strong>Step 2</strong><span>Declaration</span></div>
-          <div class="npa-step"><strong>Step 3</strong><span>Date Selection</span></div>
-          <div class="npa-step"><strong>Step 4</strong><span>Reference Code</span></div>
-          <div class="npa-step"><strong>Step 5</strong><span>Google Form</span></div>
+          <div class="npa-step"><strong>Step 3</strong><span>Eligibility</span></div>
+          <div class="npa-step"><strong>Step 4</strong><span>Date Selection</span></div>
+          <div class="npa-step"><strong>Step 5</strong><span>Form</span></div>
         </div>
       </div>
     </div>
@@ -148,7 +194,7 @@
       <button type="button" class="npa-close" id="npaModalClose" aria-label="Close application modal">×</button>
     </div>
     <div class="npa-modal-body">
-      <div class="npa-flow" id="npaFlow" data-google-form-url="https://forms.gle/REPLACE_WITH_OFFICIAL_BLASC_FORM" data-code-api-url="https://script.google.com/macros/s/REPLACE_WITH_WEB_APP_DEPLOYMENT_ID/exec">
+      <div class="npa-flow" id="npaFlow" data-google-form-url="https://docs.google.com/forms/d/e/1FAIpQLSe5iWdWjMAduiES-AP-MiHKhfRZnDnurHIaLQQwKg85aax7Ag/viewform" data-code-api-url="https://script.google.com/macros/s/AKfycbxbYNWG8YN6PP2H3G8Ou6-i5N0CuBCBS2-F70FtLouh3eNiUY2XZ7JWO1Kz2WcIIGPjvA/exec">
         <div class="npa-flow-steps" id="npaStepDots"></div>
         <div class="npa-step-card" id="npaStepContainer"></div>
       </div>
@@ -175,87 +221,286 @@
   const flowRoot = document.getElementById('npaFlow');
   const applyNowBtn = document.getElementById('npaApplyNowBtn');
   if (!flowRoot || !applyNowBtn || !modal || !modalCloseBtn || !modalBackdrop) return;
-  const GOOGLE_FORM_URL = flowRoot.dataset.googleFormUrl;
-  const CODE_API_URL = flowRoot.dataset.codeApiUrl;
-  const generatedCodes = new Set();
-  const steps = ['Overview', 'Declaration', 'Date Selection', 'Reference Code', 'Google Form'];
+  const FORM_URL = flowRoot.dataset.googleFormUrl;
+  const CODE_API_URL = flowRoot.dataset.codeApiUrl || '';
+  const PRE_APPLICATION_STORE_KEY = 'blasc_npa_pre_applications_2026';
+  const WEEK_CAPACITY = 15;
+  const steps = ['Overview', 'Declaration', 'Eligibility', 'Date Selection', 'Form'];
   const weekDefinitions = [
     { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026' }, { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026' }, { id: 'w3', number: 3, label: 'Week 3', dateRange: '19–23 May 2026' }, { id: 'w4', number: 4, label: 'Week 4', dateRange: '26–30 May 2026' }, { id: 'w5', number: 5, label: 'Week 5', dateRange: '2–6 Jun 2026' }, { id: 'w6', number: 6, label: 'Week 6', dateRange: '9–13 Jun 2026' }, { id: 'w7', number: 7, label: 'Week 7', dateRange: '16–20 Jun 2026' }, { id: 'w8', number: 8, label: 'Week 8', dateRange: '23–27 Jun 2026' }, { id: 'w9', number: 9, label: 'Week 9', dateRange: '30 Jun–4 Jul 2026' }, { id: 'w10', number: 10, label: 'Week 10', dateRange: '7–11 Jul 2026' }, { id: 'w11', number: 11, label: 'Week 11', dateRange: '14–18 Jul 2026' }, { id: 'w12', number: 12, label: 'Week 12', dateRange: '21–25 Jul 2026' }, { id: 'w13', number: 13, label: 'Week 13', dateRange: '28 Jul–1 Aug 2026' }, { id: 'w14', number: 14, label: 'Week 14', dateRange: '4–8 Aug 2026' }, { id: 'w15', number: 15, label: 'Week 15', dateRange: '11–15 Aug 2026' }, { id: 'w16', number: 16, label: 'Week 16', dateRange: '18–22 Aug 2026' }, { id: 'w17', number: 17, label: 'Week 17', dateRange: '25–29 Aug 2026' }, { id: 'w18', number: 18, label: 'Week 18', dateRange: '1–5 Sep 2026' }, { id: 'w19', number: 19, label: 'Week 19', dateRange: '8–12 Sep 2026' }, { id: 'w20', number: 20, label: 'Week 20', dateRange: '15–19 Sep 2026' }
   ];
-  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '' };
+  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, criminalModule: '', yearOfStudy: '', transportNeeded: '', selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '', weekStatus: {} };
   const getWeekById = (id) => weekDefinitions.find((w) => w.id === id);
-  const generateReferenceCode = () => Array.from({ length: 6 }, () => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'[Math.floor(Math.random() * 36)]).join('');
-  const hasProgress = () => state.stepIndex > 0 || state.introConsent || state.declarationConsent || state.selectedWeekId || state.referenceCode;
-  const reserveCodeInSheet = async (selectedDate, code) => {
-    if (!CODE_API_URL || CODE_API_URL.includes('REPLACE_WITH_WEB_APP_DEPLOYMENT_ID')) {
-      throw new Error('Google Sheet API URL is not configured.');
+  const isCodeApiConfigured = () => Boolean(CODE_API_URL && !CODE_API_URL.includes('REPLACE_WITH_WEB_APP_DEPLOYMENT_ID'));
+  const readPreApplications = () => {
+    try {
+      const records = JSON.parse(localStorage.getItem(PRE_APPLICATION_STORE_KEY) || '[]');
+      return Array.isArray(records) ? records : [];
+    } catch (_) {
+      return [];
     }
-    const payload = { action: 'reserveCode', code, selectedDate };
+  };
+  const writePreApplications = (records) => {
+    localStorage.setItem(PRE_APPLICATION_STORE_KEY, JSON.stringify(records));
+  };
+  const generateReferenceCode = () => {
+    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const suffix = Array.from({ length: 6 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');
+    return `BLASC-NPA-2026-${suffix}`;
+  };
+  const generateUniqueReferenceCode = () => {
+    const records = readPreApplications();
+    for (let i = 0; i < 20; i += 1) {
+      const code = generateReferenceCode();
+      if (!records.some((record) => record.reference_code === code)) return code;
+    }
+    return generateReferenceCode();
+  };
+  const getConfirmedWeekCount = (weekId) => readPreApplications().filter((record) => record.selected_week === weekId && record.status === 'confirmed').length;
+  const getRemoteWeekStatus = (weekId) => state.weekStatus[weekId] || null;
+  const isWeekClosed = (weekId) => {
+    const remote = getRemoteWeekStatus(weekId);
+    if (remote) return Boolean(remote.closed);
+    return getConfirmedWeekCount(weekId) >= WEEK_CAPACITY;
+  };
+  const getWeekConfirmedCount = (weekId) => {
+    const remote = getRemoteWeekStatus(weekId);
+    if (remote && Number.isFinite(remote.confirmed_count)) return remote.confirmed_count;
+    return getConfirmedWeekCount(weekId);
+  };
+  const savePendingPreApplication = () => {
+    const records = readPreApplications();
+    const week = getWeekById(state.selectedWeekId);
+    const record = {
+      reference_code: state.referenceCode,
+      year_of_study: state.yearOfStudy,
+      criminal_procedure_status: state.criminalModule,
+      selected_week: state.selectedWeekId,
+      selected_week_label: state.selectedWeekLabel,
+      created_at: new Date().toISOString(),
+      status: 'pending_google_form',
+      google_form_submitted_at: null,
+      confirmed_at: null,
+      waitlist_reason: null,
+      admin_notes: '',
+      week_capacity: week ? WEEK_CAPACITY : null
+    };
+    writePreApplications([...records.filter((item) => item.reference_code !== state.referenceCode), record]);
+  };
+  const buildPreApplicationPayload = () => ({
+    action: 'createPreApplication',
+      referenceCode: state.referenceCode,
+      yearOfStudy: state.yearOfStudy,
+      criminalProcedureStatus: state.criminalModule,
+      transportNeeded: state.transportNeeded,
+      selectedWeekId: state.selectedWeekId,
+      selectedWeekLabel: state.selectedWeekLabel
+  });
+  const postToCodeApi = async (payload) => {
     const response = await fetch(CODE_API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
-    const data = await response.json().catch(() => null);
+    const raw = await response.text();
+    let data = null;
+    try {
+      data = raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      data = null;
+    }
     if (!response.ok || !data || !data.ok) {
-      const message = (data && data.error) || `Save failed (${response.status}).`;
-      throw new Error(message);
+      if (response.status === 401) {
+        throw new Error('Application API access is not authorized (401). Update Apps Script Web App access to "Anyone with the link" and redeploy.');
+      }
+      if (!data && response.status === 200) {
+        throw new Error('API returned non-JSON content. Redeploy the Apps Script Web App and confirm the URL is the latest /exec deployment.');
+      }
+      throw new Error((data && data.error) || `API request failed (${response.status}).`);
     }
     return data;
   };
-  const reserveUniqueCode = async (selectedDate) => {
-    let lastError = new Error('Could not generate a unique code.');
-    for (let i = 0; i < 12; i += 1) {
-      const code = generateReferenceCode();
-      if (generatedCodes.has(code)) continue;
+  const syncWeekStatusFromApi = async () => {
+    if (!isCodeApiConfigured()) return;
+    try {
+      const data = await postToCodeApi({ action: 'getWeekStatus' });
+      if (data && data.weekStatus && typeof data.weekStatus === 'object') {
+        state.weekStatus = data.weekStatus;
+      }
+    } catch (_) {}
+  };
+  const reservePreApplicationRemotely = async () => {
+    if (!isCodeApiConfigured()) {
+      throw new Error('Application API is not configured yet.');
+    }
+    let lastErr = new Error('Could not reserve reference code.');
+    for (let i = 0; i < 15; i += 1) {
+      state.referenceCode = generateUniqueReferenceCode();
       try {
-        await reserveCodeInSheet(selectedDate, code);
-        generatedCodes.add(code);
-        return code;
-      } catch (err) {
-        if (String(err.message || '').toLowerCase().includes('duplicate')) {
-          generatedCodes.add(code);
-          lastError = err;
-          continue;
+        const data = await postToCodeApi(buildPreApplicationPayload());
+        state.referenceCode = String(data.referenceCode || state.referenceCode);
+        if (data.weekStatus && typeof data.weekStatus === 'object') {
+          state.weekStatus = data.weekStatus;
         }
+        return;
+      } catch (err) {
+        lastErr = err;
+        if (String(err.message || '').toLowerCase().includes('duplicate')) continue;
         throw err;
       }
     }
-    throw lastError;
+    throw lastErr;
+  };
+  const hasProgress = () => state.stepIndex > 0 || state.introConsent || state.declarationConsent || state.criminalModule || state.yearOfStudy || state.transportNeeded || state.selectedWeekId || state.referenceCode;
+  const hasCriminalProcedure = () => state.criminalModule === 'yes' || state.criminalModule === 'current';
+  const getDateOptionsForState = () => {
+    let allowedWeeks = [];
+    if (!hasCriminalProcedure()) {
+      allowedWeeks = [...Array.from({ length: 4 }, (_, i) => i + 11), ...Array.from({ length: 6 }, (_, i) => i + 15)];
+    } else if (state.yearOfStudy === 'final') {
+      if (state.transportNeeded === 'yes') {
+        allowedWeeks = [4, 5, ...Array.from({ length: 6 }, (_, i) => i + 15)];
+      } else {
+        allowedWeeks = [1, 2, 3, ...Array.from({ length: 6 }, (_, i) => i + 15)];
+      }
+    } else if (state.yearOfStudy === 'third') {
+      allowedWeeks = [6, 7, 8, 9, 10, ...Array.from({ length: 6 }, (_, i) => i + 15)];
+    } else if (state.yearOfStudy === 'second') {
+      allowedWeeks = [11, 12, 13, 14, ...Array.from({ length: 6 }, (_, i) => i + 15)];
+    } else if (state.yearOfStudy === 'first') {
+      allowedWeeks = Array.from({ length: 6 }, (_, i) => i + 15);
+    }
+    return weekDefinitions
+      .filter((week) => allowedWeeks.includes(week.number))
+      .sort((a, b) => a.number - b.number);
   };
   const closeModal = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); };
   const attemptCloseModal = () => { if (hasProgress() && !window.confirm('You have unsaved progress in this application window. Close anyway?')) return; closeModal(); };
   function renderDots() { const d = document.getElementById('npaStepDots'); d.innerHTML = ''; steps.forEach((s, i) => { const el = document.createElement('div'); el.className = `npa-step-dot${i===state.stepIndex?' active':''}`; el.textContent = `${i+1}. ${s}`; d.appendChild(el); }); }
   function render() {
     const c = document.getElementById('npaStepContainer'); if (!c) return; renderDots();
-    if (state.stepIndex === 0) { c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. This is a formal 3-part pre-application process.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Date selection + code generation</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private Google Form submission</span></div></div><p class="npa-step-sub">This website only handles programme/date/reference-code data. Personal details are captured only in the Google Form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the 3-part application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`; c.querySelector('#introConsent').onchange=(e)=>state.introConsent=e.target.checked; c.querySelector('#next0').onclick=()=>{ if(!state.introConsent) return; state.stepIndex=1; render(); }; return; }
-    if (state.stepIndex === 1) { c.innerHTML = `<h3 class="npa-step-title">Student Declaration and Undertaking</h3><p class="npa-step-sub">Please read and confirm before continuing.</p><div class="npa-declaration"><h4>Professional and Confidential Environment</h4><ul><li>Participation is a privilege and not an automatic right.</li><li>The programme is observational, educational, and takes place in a professional prosecutorial setting.</li><li>You may be exposed to sensitive legal processes, witnesses, preparation, and official documents.</li></ul><h4>Conduct and Compliance</h4><ul><li>Strict confidentiality is required during and after participation.</li><li>You must comply with supervision by assigned prosecutors and authorised officials.</li><li>You must adhere to POPIA, the NPA Code of Conduct, and institutional ethical standards.</li><li>Independent consultations with witnesses, complainants, accused persons, or stakeholders are prohibited.</li><li>Personal errands or non-professional tasks are prohibited.</li><li>Carry student ID and follow communicated dress code and working hours when requested.</li></ul><h4>Consequences and Institutional Dignity</h4><ul><li>Non-compliance may lead to immediate termination and may carry disciplinary/legal implications where applicable.</li><li>Participation is voluntary.</li><li>You must uphold the dignity of UFS, BLASC UFS, and the National Prosecuting Authority.</li></ul></div><details class="npa-full-toggle"><summary style="cursor:pointer;color:var(--blue);font-weight:700;font-size:.84rem">View full declaration</summary><p class="npa-note"><button type="button" id="openDeclarationPdfBtn" class="btn btn-outline-dark" style="min-height:38px;padding:8px 14px;font-size:.82rem">Open Full Declaration (PDF)</button></p></details><label class="check-label" style="margin-top:12px"><input type="checkbox" id="decl" ${state.declarationConsent?'checked':''}/> I have read, understood, and agree to the Student Declaration and Undertaking.</label><div class="npa-actions"><button class="btn btn-outline-dark" id="back1">Back</button><button class="btn btn-blue" id="next1">Next</button></div>`; c.querySelector('#decl').onchange=(e)=>state.declarationConsent=e.target.checked; c.querySelector('#back1').onclick=()=>{state.stepIndex=0; render();}; c.querySelector('#next1').onclick=()=>{if(!state.declarationConsent) return; state.stepIndex=2; render();}; const openPdfBtn=c.querySelector('#openDeclarationPdfBtn'); if(openPdfBtn){ openPdfBtn.onclick=()=>{ const pdfUrl=new URL('assets/UFS-ITSOAP-STUDENT-DECLARATION-AND-UNDERTAKING.pdf', window.location.href).href; window.open(pdfUrl,'_blank','noopener,noreferrer'); }; } return; }
+    const flagInvalid = (el) => {
+      if (!el) return;
+      el.classList.remove('npa-shake');
+      if (el.tagName === 'LABEL') {
+        el.classList.add('npa-invalid-label');
+      } else {
+        el.classList.add('npa-invalid');
+      }
+      void el.offsetWidth;
+      el.classList.add('npa-shake');
+    };
+    const clearInvalid = (el) => {
+      if (!el) return;
+      el.classList.remove('npa-invalid', 'npa-invalid-label', 'npa-shake');
+    };
+    if (state.stepIndex === 0) {
+      c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. This is a formal application flow for date selection and reference-code generation.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Eligibility and date selection</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private form submission</span></div></div><p class="npa-step-sub">This website only handles eligibility answers, selected date, and reference-code data. Personal details are collected only in the separate form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`;
+      const introConsentInput = c.querySelector('#introConsent');
+      const introConsentLabel = introConsentInput && introConsentInput.closest('label');
+      introConsentInput.onchange = (e) => { state.introConsent = e.target.checked; if (state.introConsent) clearInvalid(introConsentLabel); };
+      c.querySelector('#next0').onclick = () => {
+        if (!state.introConsent) {
+          flagInvalid(introConsentLabel);
+          return;
+        }
+        state.stepIndex = 1;
+        render();
+      };
+      return;
+    }
+    if (state.stepIndex === 1) {
+      c.innerHTML = `<h3 class="npa-step-title">Student Declaration and Undertaking</h3><p class="npa-step-sub">Please read and confirm before continuing.</p><div class="npa-declaration"><h4>Professional and Confidential Environment</h4><ul><li>Participation is a privilege and not an automatic right.</li><li>The programme is observational, educational, and takes place in a professional prosecutorial setting.</li><li>You may be exposed to sensitive legal processes, witnesses, preparation, and official documents.</li></ul><h4>Conduct and Compliance</h4><ul><li>Strict confidentiality is required during and after participation.</li><li>You must comply with supervision by assigned prosecutors and authorised officials.</li><li>You must adhere to POPIA, the NPA Code of Conduct, and institutional ethical standards.</li><li>Independent consultations with witnesses, complainants, accused persons, or stakeholders are prohibited.</li><li>Personal errands or non-professional tasks are prohibited.</li><li>Carry student ID and follow communicated dress code and working hours when requested.</li></ul><h4>Consequences and Institutional Dignity</h4><ul><li>Non-compliance may lead to immediate termination and may carry disciplinary/legal implications where applicable.</li><li>Participation is voluntary.</li><li>You must uphold the dignity of UFS, BLASC UFS, and the National Prosecuting Authority.</li></ul></div><details class="npa-full-toggle"><summary style="cursor:pointer;color:var(--blue);font-weight:700;font-size:.84rem">View full declaration</summary><p class="npa-note"><button type="button" id="openDeclarationPdfBtn" class="btn btn-outline-dark" style="min-height:38px;padding:8px 14px;font-size:.82rem">Open Full Declaration (PDF)</button></p></details><label class="check-label" style="margin-top:12px"><input type="checkbox" id="decl" ${state.declarationConsent?'checked':''}/> I have read, understood, and agree to the Student Declaration and Undertaking.</label><div class="npa-actions"><button class="btn btn-outline-dark" id="back1">Back</button><button class="btn btn-blue" id="next1">Next</button></div>`;
+      const declarationInput = c.querySelector('#decl');
+      const declarationLabel = declarationInput && declarationInput.closest('label');
+      declarationInput.onchange = (e) => { state.declarationConsent = e.target.checked; if (state.declarationConsent) clearInvalid(declarationLabel); };
+      c.querySelector('#back1').onclick = () => { state.stepIndex = 0; render(); };
+      c.querySelector('#next1').onclick = () => {
+        if (!state.declarationConsent) {
+          flagInvalid(declarationLabel);
+          return;
+        }
+        state.stepIndex = 2;
+        render();
+      };
+      const openPdfBtn = c.querySelector('#openDeclarationPdfBtn');
+      if (openPdfBtn) {
+        openPdfBtn.onclick = () => {
+          const pdfUrl = new URL('assets/UFS-ITSOAP-STUDENT-DECLARATION-AND-UNDERTAKING.pdf', window.location.href).href;
+          window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+        };
+      }
+      return;
+    }
     if (state.stepIndex === 2) {
-      const eligible = weekDefinitions;
-      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-warning">Your selected slot is only confirmed when your Google Form is submitted with the exact same reference code.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Generate Reference Code</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">Eligibility answers are only used to filter available date options. Personal details are not collected on this website.</p><div class="npa-row"><div class="field"><label>Have you completed the relevant criminal procedure/criminal process module?</label><select id="criminalModule"><option value="">Select</option><option value="yes" ${state.criminalModule==='yes'?'selected':''}>Yes</option><option value="no" ${state.criminalModule==='no'?'selected':''}>No</option><option value="current" ${state.criminalModule==='current'?'selected':''}>Currently completing it</option></select></div><div class="field"><label>What year of study are you currently in?</label><select id="yearOfStudy"><option value="">Select</option><option value="first" ${state.yearOfStudy==='first'?'selected':''}>1st year</option><option value="second" ${state.yearOfStudy==='second'?'selected':''}>2nd year</option><option value="third" ${state.yearOfStudy==='third'?'selected':''}>3rd year</option><option value="final" ${state.yearOfStudy==='final'?'selected':''}>Final year</option></select></div></div><div class="field" style="margin-top:12px"><label>Will you need transport?</label><select id="transportNeeded"><option value=\"\">Select</option><option value=\"no\" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value=\"yes\" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability. If transport is not allocated, students accepted into the programme are still expected to attend.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
+      const criminalModuleSelect = c.querySelector('#criminalModule');
+      const yearOfStudySelect = c.querySelector('#yearOfStudy');
+      const transportSelect = c.querySelector('#transportNeeded');
+      criminalModuleSelect.onchange = (e) => { state.criminalModule = e.target.value; state.selectedWeekId = ''; clearInvalid(criminalModuleSelect); };
+      yearOfStudySelect.onchange = (e) => { state.yearOfStudy = e.target.value; state.selectedWeekId = ''; clearInvalid(yearOfStudySelect); };
+      transportSelect.onchange = (e) => { state.transportNeeded = e.target.value; state.selectedWeekId = ''; clearInvalid(transportSelect); };
+      c.querySelector('#backEligibility').onclick = () => { state.stepIndex = 1; render(); };
+      c.querySelector('#nextEligibility').onclick = () => {
+        let hasError = false;
+        if (!state.criminalModule) { flagInvalid(criminalModuleSelect); hasError = true; }
+        if (!state.yearOfStudy) { flagInvalid(yearOfStudySelect); hasError = true; }
+        if (!state.transportNeeded) { flagInvalid(transportSelect); hasError = true; }
+        if (hasError) return;
+        state.stepIndex = 3;
+        render();
+      };
+      return;
+    }
+    if (state.stepIndex === 3) {
+      const eligible = getDateOptionsForState();
+      const guidance = hasCriminalProcedure()
+        ? 'Based on your answers, you may select a preferred eligible programme week.'
+        : 'You may still apply. Because Criminal Procedure has not been completed yet, only the later 1st/2nd-year appropriate weeks are shown.';
+      if (isCodeApiConfigured() && Object.keys(state.weekStatus).length === 0) {
+        syncWeekStatusFromApi().finally(() => {
+          if (state.stepIndex === 3) render();
+        });
+      }
+      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-step-sub">${guidance}</p><p class="npa-warning">Your selected week is not finally secured at this stage. It will only be confirmed after the separate form is submitted and matched with your reference code.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Generate Reference Code</button></div>`;
       const wg = c.querySelector('#wg');
       eligible.forEach((w) => {
+        const confirmedCount = getWeekConfirmedCount(w.id);
+        const closed = isWeekClosed(w.id);
         const b = document.createElement('button');
-        b.type = 'button'; b.className = `week-choice available ${state.selectedWeekId === w.id ? 'selected' : ''}`;
-        b.innerHTML = `<strong>${w.label}</strong><span>${w.dateRange}</span><span class="meta">Available</span>`;
-        b.onclick = () => { state.selectedWeekId = w.id; render(); };
+        b.type = 'button'; b.className = `week-choice ${closed ? 'disabled' : 'available'} ${state.selectedWeekId === w.id ? 'selected' : ''}`;
+        b.disabled = closed;
+        b.innerHTML = `<strong>${w.label}</strong><span>${w.dateRange}</span><span class="meta">${closed ? 'Closed' : `${confirmedCount}/${WEEK_CAPACITY} confirmed`}</span>`;
+        b.onclick = () => {
+          if (closed) return;
+          state.selectedWeekId = w.id;
+          render();
+        };
         wg.appendChild(b);
       });
-      c.querySelector('#back3').onclick = () => { state.stepIndex = 1; render(); };
+      c.querySelector('#back3').onclick = () => { state.stepIndex = 2; render(); };
       c.querySelector('#next3').onclick = async () => {
-        if (!state.selectedWeekId || state.savingCode) return;
+        if (!state.selectedWeekId || state.savingCode) {
+          if (!state.selectedWeekId) {
+            const wgEl = c.querySelector('#wg');
+            flagInvalid(wgEl);
+          }
+          return;
+        }
         const week = getWeekById(state.selectedWeekId);
+        if (!week || isWeekClosed(week.id)) return;
         const selectedWeekLabel = week ? `${week.label} (${week.dateRange})` : '';
         state.saveError = '';
         state.savingCode = true;
         c.querySelector('#next3').textContent = 'Saving...';
         c.querySelector('#next3').disabled = true;
         try {
-          state.referenceCode = await reserveUniqueCode(selectedWeekLabel);
           state.selectedWeekLabel = selectedWeekLabel;
-          state.stepIndex = 3;
+          await reservePreApplicationRemotely();
+          savePendingPreApplication();
+          state.stepIndex = 4;
         } catch (err) {
-          state.saveError = 'We could not reserve your slot. Please try again.';
+          state.saveError = String(err && err.message ? err.message : 'We could not create your reference code. Please try again.');
         } finally {
           state.savingCode = false;
           render();
@@ -269,16 +514,75 @@
       }
       return;
     }
-    if (state.stepIndex === 3) {
-      c.innerHTML = `<h3 class="npa-step-title">Reference Code Reserved</h3><p class="npa-step-sub"><strong>Selected Date:</strong> ${state.selectedWeekLabel}</p><p class="npa-warning">Your application is not complete yet. Copy this reference code and paste it into the Google Form. Your selected slot will only be confirmed once your Google Form submission contains this exact code.</p><p class="npa-note">Reference Code</p><p><span class="npa-code" id="code">${state.referenceCode}</span></p><p class="npa-note"><strong>Take a screenshot of this code before continuing.</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copy">Copy Code</button><button class="btn btn-blue" id="goNow">Continue to Google Form</button></div>`;
-      c.querySelector('#copy').onclick = async () => { try { await navigator.clipboard.writeText(state.referenceCode); } catch (_) {} };
-      c.querySelector('#goNow').onclick = () => window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
-      return;
-    }
     if (state.stepIndex === 4) {
-      c.innerHTML = `<h3 class="npa-step-title">Continue to Google Form</h3><p class="npa-step-sub">Use your exact reference code in the required field named <strong>Reference Code</strong>.</p><p class="npa-warning">Your application is not complete yet. Copy this reference code and paste it into the Google Form. Your selected slot will only be confirmed once your Google Form submission contains this exact code.</p><p class="npa-note">Reference Code: <strong>${state.referenceCode}</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copyFinal">Copy Code</button><button class="btn btn-blue" id="go">Continue to Google Form</button></div>`;
-      c.querySelector('#copyFinal').onclick = async () => { try { await navigator.clipboard.writeText(state.referenceCode); } catch (_) {} };
-      c.querySelector('#go').onclick = () => window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer');
+      c.innerHTML = `<h3 class="npa-step-title">Reference Code and Form Handoff</h3><p class="npa-step-sub"><strong>Selected Week:</strong> ${state.selectedWeekLabel}</p><p class="npa-warning">Your application is not complete yet. Copy this reference code and paste it into the separate form. Your selected week will only be confirmed once that form submission contains this exact code and is matched successfully.</p><p class="npa-note">Reference Code</p><p><span class="npa-code" id="code">${state.referenceCode}</span></p><p class="npa-note"><strong>Take a screenshot of this code before continuing.</strong></p><div class="npa-actions"><button class="btn btn-outline-dark" id="copy">Copy Code</button><a class="btn btn-blue" id="goNow" href="${FORM_URL}" target="_blank" rel="noopener noreferrer">Continue to Form</a></div><p class="npa-note" id="copyFeedback" aria-live="polite"></p>`;
+      const copyTextWithFallback = async (text) => {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.setAttribute('readonly', '');
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+        temp.style.pointerEvents = 'none';
+        document.body.appendChild(temp);
+        temp.focus();
+        temp.select();
+        let ok = false;
+        try {
+          ok = document.execCommand('copy');
+        } catch (_) {
+          ok = false;
+        }
+        document.body.removeChild(temp);
+        return ok;
+      };
+      c.querySelector('#copy').onclick = async (event) => {
+        const copyBtn = event.currentTarget;
+        const originalLabel = copyBtn.textContent;
+        const feedback = c.querySelector('#copyFeedback');
+        copyBtn.textContent = 'Copying...';
+        copyBtn.disabled = true;
+        try {
+          const copied = await copyTextWithFallback(state.referenceCode);
+          if (!copied) {
+            window.prompt('Copy this reference code:', state.referenceCode);
+            copyBtn.textContent = 'Copy Manually';
+            if (feedback) feedback.textContent = 'Clipboard access was blocked. A manual copy prompt was opened.';
+            window.setTimeout(() => {
+              copyBtn.textContent = originalLabel;
+              copyBtn.disabled = false;
+              if (feedback) feedback.textContent = '';
+            }, 5000);
+            return;
+          }
+          copyBtn.textContent = 'Copied';
+          if (feedback) feedback.textContent = 'Reference code copied.';
+          window.setTimeout(() => {
+            copyBtn.textContent = originalLabel;
+            copyBtn.disabled = false;
+            if (feedback) feedback.textContent = '';
+          }, 5000);
+        } catch (_) {
+          window.prompt('Copy this reference code:', state.referenceCode);
+          copyBtn.textContent = 'Copy Manually';
+          if (feedback) feedback.textContent = 'Clipboard copy failed. Manual copy prompt opened.';
+          window.setTimeout(() => {
+            copyBtn.textContent = originalLabel;
+            copyBtn.disabled = false;
+            if (feedback) feedback.textContent = '';
+          }, 5000);
+        }
+      };
+      c.querySelector('#goNow').onclick = (event) => {
+        const popup = window.open(FORM_URL, '_blank', 'noopener,noreferrer');
+        if (!popup) {
+          event.preventDefault();
+          window.location.href = FORM_URL;
+        }
+      };
       return;
     }
   }

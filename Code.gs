@@ -22,8 +22,8 @@ function createUfsNpaPrivateApplicationForm() {
     form.addPageBreakItem().setTitle('Matching Details');
 
     var refCodeValidation = FormApp.createTextValidation()
-      .requireTextMatchesPattern('^[A-Z0-9]{6}$')
-      .setHelpText('Enter the 6-character reference code generated on the BLASC website.')
+      .requireTextMatchesPattern('^BLASC-NPA-2026-[A-Z0-9]{6}$')
+      .setHelpText('Enter the reference code generated on the BLASC website (for example: BLASC-NPA-2026-7F3K2Q).')
       .build();
 
     var refCodeItem = form.addTextItem()
@@ -101,7 +101,7 @@ function createUfsNpaPrivateApplicationForm() {
 
 function logPrefilledReferenceCodeTemplate_(form, refCodeItem) {
   try {
-    var itemResponse = refCodeItem.asTextItem().createResponse('PLACEHOLDERCODE');
+    var itemResponse = refCodeItem.asTextItem().createResponse('BLASC-NPA-2026-PLACEHOLDER');
     var formResponse = form.createResponse();
     formResponse.withItemResponse(itemResponse);
     Logger.log('Prefilled URL template (Reference Code): ' + formResponse.toPrefilledUrl());
@@ -113,33 +113,94 @@ function logPrefilledReferenceCodeTemplate_(form, refCodeItem) {
 /**
  * Web app endpoint.
  * Request body JSON:
- * {"action":"reserveCode","code":"K7M4Q2","selectedDate":"Week 3 (19–23 May 2026)"}
+ * {"action":"createPreApplication","referenceCode":"BLASC-NPA-2026-7F3K2Q","yearOfStudy":"third","criminalProcedureStatus":"yes","transportNeeded":"no","selectedWeekId":"w6","selectedWeekLabel":"Week 6 (9-13 Jun 2026)"}
+ * {"action":"getWeekStatus"}
  */
 function doPost(e) {
   try {
     var payload = parseJsonBody_(e);
-    if (!payload || payload.action !== 'reserveCode') {
-      return jsonResponse_({ ok: false, error: 'Invalid action.' });
+    var action = payload && payload.action ? String(payload.action) : '';
+    if (!action) return jsonResponse_({ ok: false, error: 'Invalid action.' });
+
+    if (action === 'createPreApplication') {
+      return createPreApplication_(payload);
     }
-
-    var code = normalizeCode_(payload.code);
-    var selectedDate = String(payload.selectedDate || '').trim();
-
-    if (!/^[A-Z0-9]{6}$/.test(code)) return jsonResponse_({ ok: false, error: 'Invalid code format.' });
-    if (!selectedDate) return jsonResponse_({ ok: false, error: 'Selected Date is required.' });
-
-    var sheet = getValidCodeSheet_();
-    ensureValidCodeHeaders_(sheet);
-
-    if (codeExists_(sheet, code)) {
-      return jsonResponse_({ ok: false, error: 'Duplicate code.' });
+    if (action === 'getWeekStatus') {
+      return getWeekStatusResponse_();
     }
-
-    sheet.appendRow([code, selectedDate, 'pending']);
-    return jsonResponse_({ ok: true, code: code, status: 'pending' });
+    return jsonResponse_({ ok: false, error: 'Unsupported action.' });
   } catch (err) {
     return jsonResponse_({ ok: false, error: 'Server error: ' + err.message });
   }
+}
+
+function doGet(e) {
+  try {
+    var action = e && e.parameter && e.parameter.action ? String(e.parameter.action) : '';
+    if (action === 'getWeekStatus') {
+      return getWeekStatusResponse_();
+    }
+    return jsonResponse_({ ok: true, message: 'BLASC NPA API is live.' });
+  } catch (err) {
+    return jsonResponse_({ ok: false, error: 'Server error: ' + err.message });
+  }
+}
+
+function createPreApplication_(payload) {
+  var referenceCode = normalizeReferenceCodeForStorage_(payload.referenceCode);
+  var yearOfStudy = String(payload.yearOfStudy || '').trim().toLowerCase();
+  var criminalProcedureStatus = String(payload.criminalProcedureStatus || '').trim().toLowerCase();
+  var transportNeeded = String(payload.transportNeeded || '').trim().toLowerCase();
+  var selectedWeekId = String(payload.selectedWeekId || '').trim().toLowerCase();
+  var selectedWeekLabel = String(payload.selectedWeekLabel || '').trim();
+
+  if (!isValidReferenceCode_(referenceCode)) return jsonResponse_({ ok: false, error: 'Invalid reference code format.' });
+  if (!selectedWeekId) return jsonResponse_({ ok: false, error: 'Selected week is required.' });
+  if (!selectedWeekLabel) return jsonResponse_({ ok: false, error: 'Selected week label is required.' });
+
+  var sheet = getValidCodeSheet_();
+  ensureValidCodeHeaders_(sheet);
+  var rows = sheet.getDataRange().getValues();
+  var index = buildHeaderIndex_(rows[0] || []);
+  var referenceCodeIdx = (index['reference code'] || 1) - 1;
+  var statusIdx = (index['status'] || 7) - 1;
+
+  for (var i = 1; i < rows.length; i++) {
+    if (normalizeReferenceCodeForCompare_(rows[i][referenceCodeIdx]) === normalizeReferenceCodeForCompare_(referenceCode)) {
+      return jsonResponse_({ ok: false, error: 'Duplicate reference code.' });
+    }
+  }
+
+  sheet.appendRow([
+    referenceCode,
+    yearOfStudy,
+    criminalProcedureStatus,
+    transportNeeded,
+    selectedWeekId,
+    selectedWeekLabel,
+    new Date(),
+    'pending_google_form',
+    '',
+    '',
+    '',
+    ''
+  ]);
+
+  return jsonResponse_({
+    ok: true,
+    referenceCode: referenceCode,
+    status: 'pending_google_form',
+    weekStatus: buildWeekStatusMap_(sheet)
+  });
+}
+
+function getWeekStatusResponse_() {
+  var sheet = getValidCodeSheet_();
+  ensureValidCodeHeaders_(sheet);
+  return jsonResponse_({
+    ok: true,
+    weekStatus: buildWeekStatusMap_(sheet)
+  });
 }
 
 /**
@@ -149,7 +210,7 @@ function doPost(e) {
 function onFormSubmit(e) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var validSheet = ss.getSheetByName('ValidCode');
-  var responsesSheet = ss.getSheetByName('responses');
+  var responsesSheet = e && e.range ? e.range.getSheet() : null;
   if (!validSheet || !responsesSheet || !e || !e.range) return;
 
   ensureValidCodeHeaders_(validSheet);
@@ -165,53 +226,101 @@ function onFormSubmit(e) {
   var codeCheckCol = ensureResponseColumn_(responsesSheet, responseHeaders, 'Code Check');
   var matchedDateCol = ensureResponseColumn_(responsesSheet, responseHeaders, 'Matched Date');
   var adminNotesCol = ensureResponseColumn_(responsesSheet, responseHeaders, 'Admin Notes');
+  var matchedStatusCol = ensureResponseColumn_(responsesSheet, responseHeaders, 'Matched Status');
+  var confirmedAtCol = ensureResponseColumn_(responsesSheet, responseHeaders, 'Confirmed At');
 
-  var submittedCode = normalizeCode_(responsesSheet.getRange(row, codeCol).getValue());
-  if (!submittedCode || !/^[A-Z0-9]{6}$/.test(submittedCode)) {
+  var submittedCode = normalizeReferenceCodeForStorage_(responsesSheet.getRange(row, codeCol).getValue());
+  if (!isValidReferenceCode_(submittedCode)) {
     responsesSheet.getRange(row, codeCheckCol).setValue('Invalid Code');
     responsesSheet.getRange(row, matchedDateCol).setValue('');
     responsesSheet.getRange(row, adminNotesCol).setValue('Missing or invalid Reference Code format.');
+    responsesSheet.getRange(row, matchedStatusCol).setValue('');
+    responsesSheet.getRange(row, confirmedAtCol).setValue('');
     return;
   }
 
   var validRows = validSheet.getDataRange().getValues();
   var validIndex = buildHeaderIndex_(validRows[0] || []);
-  var codeIdx = (validIndex['code'] || 1) - 1;
-  var selectedDateIdx = (validIndex['selected date'] || 2) - 1;
-  var statusIdx = (validIndex['status'] || 3) - 1;
+  var codeIdx = (validIndex['reference code'] || 1) - 1;
+  var selectedWeekIdIdx = (validIndex['selected week id'] || 5) - 1;
+  var selectedWeekLabelIdx = (validIndex['selected week label'] || 6) - 1;
+  var statusIdx = (validIndex['status'] || 8) - 1;
+  var formSubmittedAtIdx = (validIndex['google_form_submitted_at'] || 9) - 1;
+  var confirmedAtIdx = (validIndex['confirmed_at'] || 10) - 1;
+  var waitlistReasonIdx = (validIndex['waitlist_reason'] || 11) - 1;
+  var adminNotesIdx = (validIndex['admin_notes'] || 12) - 1;
 
   var matches = [];
   for (var i = 1; i < validRows.length; i++) {
-    if (normalizeCode_(validRows[i][codeIdx]) === submittedCode) matches.push(i + 1);
+    if (normalizeReferenceCodeForCompare_(validRows[i][codeIdx]) === normalizeReferenceCodeForCompare_(submittedCode)) matches.push(i + 1);
   }
 
   if (matches.length !== 1) {
     responsesSheet.getRange(row, codeCheckCol).setValue('Invalid Code');
     responsesSheet.getRange(row, matchedDateCol).setValue('');
     responsesSheet.getRange(row, adminNotesCol).setValue(matches.length === 0 ? 'Reference Code not found in ValidCode.' : 'Duplicate records found in ValidCode.');
+    responsesSheet.getRange(row, matchedStatusCol).setValue('');
+    responsesSheet.getRange(row, confirmedAtCol).setValue('');
     return;
   }
 
   var matchRow = matches[0];
   var statusValue = String(validSheet.getRange(matchRow, statusIdx + 1).getValue() || '').trim().toLowerCase();
-  var matchedDate = String(validSheet.getRange(matchRow, selectedDateIdx + 1).getValue() || '').trim();
+  var selectedWeekId = String(validSheet.getRange(matchRow, selectedWeekIdIdx + 1).getValue() || '').trim().toLowerCase();
+  var selectedWeekLabel = String(validSheet.getRange(matchRow, selectedWeekLabelIdx + 1).getValue() || '').trim();
   if (statusValue === 'confirmed') {
     responsesSheet.getRange(row, codeCheckCol).setValue('Duplicate Code');
-    responsesSheet.getRange(row, matchedDateCol).setValue(matchedDate);
+    responsesSheet.getRange(row, matchedDateCol).setValue(selectedWeekLabel);
     responsesSheet.getRange(row, adminNotesCol).setValue('Reference Code already confirmed.');
+    responsesSheet.getRange(row, matchedStatusCol).setValue('confirmed');
+    responsesSheet.getRange(row, confirmedAtCol).setValue(validSheet.getRange(matchRow, confirmedAtIdx + 1).getValue());
     return;
   }
-  if (statusValue !== 'pending') {
+  if (statusValue !== 'pending_google_form' && statusValue !== 'pending') {
     responsesSheet.getRange(row, codeCheckCol).setValue('Invalid Code');
-    responsesSheet.getRange(row, matchedDateCol).setValue(matchedDate);
-    responsesSheet.getRange(row, adminNotesCol).setValue('Reference Code status is not pending (' + statusValue + ').');
+    responsesSheet.getRange(row, matchedDateCol).setValue(selectedWeekLabel);
+    responsesSheet.getRange(row, adminNotesCol).setValue('Reference Code status is not pending_google_form (' + statusValue + ').');
+    responsesSheet.getRange(row, matchedStatusCol).setValue(statusValue);
+    responsesSheet.getRange(row, confirmedAtCol).setValue('');
+    return;
+  }
+
+  if (!selectedWeekId) {
+    responsesSheet.getRange(row, codeCheckCol).setValue('Invalid Code');
+    responsesSheet.getRange(row, matchedDateCol).setValue(selectedWeekLabel);
+    responsesSheet.getRange(row, adminNotesCol).setValue('Matched record has no selected week id.');
+    responsesSheet.getRange(row, matchedStatusCol).setValue(statusValue);
+    responsesSheet.getRange(row, confirmedAtCol).setValue('');
+    return;
+  }
+
+  var weekConfirmedCount = countConfirmedForWeek_(validRows, validIndex, selectedWeekId, matchRow);
+  var now = new Date();
+  validSheet.getRange(matchRow, formSubmittedAtIdx + 1).setValue(now);
+
+  if (weekConfirmedCount >= 15) {
+    validSheet.getRange(matchRow, statusIdx + 1).setValue('needs_reassignment');
+    validSheet.getRange(matchRow, waitlistReasonIdx + 1).setValue('Week full at form submission time.');
+    validSheet.getRange(matchRow, adminNotesIdx + 1).setValue('Set by trigger: capacity reached before confirmation.');
+
+    responsesSheet.getRange(row, codeCheckCol).setValue('Waitlist');
+    responsesSheet.getRange(row, matchedDateCol).setValue(selectedWeekLabel);
+    responsesSheet.getRange(row, adminNotesCol).setValue('Selected week is full. Record marked needs_reassignment for admin review.');
+    responsesSheet.getRange(row, matchedStatusCol).setValue('needs_reassignment');
+    responsesSheet.getRange(row, confirmedAtCol).setValue('');
     return;
   }
 
   validSheet.getRange(matchRow, statusIdx + 1).setValue('confirmed');
+  validSheet.getRange(matchRow, confirmedAtIdx + 1).setValue(now);
+  validSheet.getRange(matchRow, waitlistReasonIdx + 1).setValue('');
+  validSheet.getRange(matchRow, adminNotesIdx + 1).setValue('Confirmed by form submission match.');
+
   responsesSheet.getRange(row, codeCheckCol).setValue('confirmed');
-  responsesSheet.getRange(row, matchedDateCol).setValue(matchedDate);
+  responsesSheet.getRange(row, matchedDateCol).setValue(selectedWeekLabel);
   responsesSheet.getRange(row, adminNotesCol).setValue('Reference Code matched and confirmed.');
+  responsesSheet.getRange(row, matchedStatusCol).setValue('confirmed');
+  responsesSheet.getRange(row, confirmedAtCol).setValue(now);
 }
 
 function getValidCodeSheet_() {
@@ -222,7 +331,20 @@ function getValidCodeSheet_() {
 }
 
 function ensureValidCodeHeaders_(sheet) {
-  var headers = ['Code', 'Selected Date', 'Status'];
+  var headers = [
+    'Reference Code',
+    'Year of Study',
+    'Criminal Procedure Status',
+    'Transport Needed',
+    'Selected Week ID',
+    'Selected Week Label',
+    'Created At',
+    'Status',
+    'Google_Form_Submitted_At',
+    'Confirmed_At',
+    'Waitlist_Reason',
+    'Admin_Notes'
+  ];
   var current = sheet.getRange(1, 1, 1, headers.length).getValues()[0];
   for (var i = 0; i < headers.length; i++) {
     if (String(current[i] || '').trim() !== headers[i]) sheet.getRange(1, i + 1).setValue(headers[i]);
@@ -234,9 +356,46 @@ function codeExists_(sheet, code) {
   if (lastRow < 2) return false;
   var values = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
   for (var i = 0; i < values.length; i++) {
-    if (normalizeCode_(values[i][0]) === code) return true;
+    if (normalizeReferenceCodeForCompare_(values[i][0]) === normalizeReferenceCodeForCompare_(code)) return true;
   }
   return false;
+}
+
+function countConfirmedForWeek_(rows, headerIndex, selectedWeekId, skipRow) {
+  var weekIdx = (headerIndex['selected week id'] || 5) - 1;
+  var statusIdx = (headerIndex['status'] || 8) - 1;
+  var total = 0;
+  for (var i = 1; i < rows.length; i++) {
+    if (skipRow && i + 1 === skipRow) continue;
+    var weekValue = String(rows[i][weekIdx] || '').trim().toLowerCase();
+    var statusValue = String(rows[i][statusIdx] || '').trim().toLowerCase();
+    if (weekValue === selectedWeekId && statusValue === 'confirmed') total += 1;
+  }
+  return total;
+}
+
+function buildWeekStatusMap_(sheet) {
+  var rows = sheet.getDataRange().getValues();
+  if (rows.length < 2) return {};
+  var headerIndex = buildHeaderIndex_(rows[0] || []);
+  var weekIdx = (headerIndex['selected week id'] || 5) - 1;
+  var statusIdx = (headerIndex['status'] || 8) - 1;
+  var result = {};
+
+  for (var i = 1; i < rows.length; i++) {
+    var weekId = String(rows[i][weekIdx] || '').trim().toLowerCase();
+    var status = String(rows[i][statusIdx] || '').trim().toLowerCase();
+    if (!weekId) continue;
+    if (!result[weekId]) result[weekId] = { confirmed_count: 0, closed: false };
+    if (status === 'confirmed') result[weekId].confirmed_count += 1;
+  }
+
+  var keys = Object.keys(result);
+  for (var j = 0; j < keys.length; j++) {
+    var key = keys[j];
+    result[key].closed = result[key].confirmed_count >= 15;
+  }
+  return result;
 }
 
 function ensureResponseColumn_(sheet, cachedHeaders, headerName) {
@@ -259,8 +418,16 @@ function buildHeaderIndex_(headers) {
   return index;
 }
 
-function normalizeCode_(value) {
+function normalizeReferenceCodeForCompare_(value) {
   return String(value || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+}
+
+function normalizeReferenceCodeForStorage_(value) {
+  return String(value || '').trim().toUpperCase();
+}
+
+function isValidReferenceCode_(value) {
+  return /^BLASC-NPA-2026-[A-Z0-9]{6}$/.test(String(value || '').trim().toUpperCase());
 }
 
 function parseJsonBody_(e) {
