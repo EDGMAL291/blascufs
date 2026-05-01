@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="assets/style.css?v=20260501-anim"/>
+<link rel="stylesheet" href="assets/style.css?v=20260501-polish"/>
   <style>
     .constitution-layout {
       display: grid;
@@ -50,6 +50,7 @@
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <nav class="nav dark" id="navbar">
   <a class="nav-brand" href="index.html">
@@ -66,11 +67,11 @@
     <a href="contact.html">Contact</a>
     <a href="membership.html" class="nav-cta">Membership</a>
   </div>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+  <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
   <a href="events.html">Events</a>
@@ -81,8 +82,8 @@
   <a href="membership.html" class="m-cta">Membership →</a>
 </div>
 
-<div class="page-hero">
-  <div class="page-hero-bg" style="background:var(--off-black)"></div>
+<div class="page-hero" id="main-content">
+  <div class="page-hero-bg"><img src="assets/images/image-03.jpg" alt="BLASC UFS member in formal legal setting" style="object-position:center 24%"/></div>
   <div class="page-hero-content">
     <p class="eyebrow">Governance</p>
     <h1>Constitution</h1>
@@ -156,7 +157,7 @@
         <a class="social-link" href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
           <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
         </a>
-        <a class="social-link" href="mailto:UFSBlascu@gmail.com" aria-label="Email" title="Email">
+        <a class="social-link" href="mailto:Blascu@gmail.com" aria-label="Email" title="Email">
           <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
         </a>
         <span class="social-link social-link--pending" aria-hidden="true" title="Add Facebook link">
@@ -175,6 +176,6 @@
     <span>© 2026 Black Lawyers Association Student Chapter, UFS.</span>
   </div>
 </footer>
-<script src="assets/main.js?v=20260501-anim"></script>
+<script src="assets/main.js?v=20260501-polish"></script>
 </body>
 </html>
