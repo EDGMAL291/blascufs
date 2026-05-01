@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Events – BLASC UFS</title>
-  <link rel="stylesheet" href="assets/style.css"/>
+
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/style.css?v=20260501-anim"/>
   <style>
     .events-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px;border-bottom:2px solid var(--border);padding-bottom:0}
     .etab{background:none;border:none;padding:12px 20px;font-size:.9rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;border-radius:0}
@@ -15,7 +20,7 @@
     .event-img-wrap{border-radius:var(--radius-lg);overflow:hidden;height:380px}
     .event-img-wrap img{width:100%;height:100%;object-fit:cover}
     .event-meta-tag{display:inline-flex;align-items:center;gap:6px;background:var(--blue-pale);color:var(--blue);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:16px}
-    .event-body h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--ink);margin-bottom:14px}
+    .event-body h2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;color:var(--ink);margin-bottom:14px}
     .event-body p{color:var(--muted);line-height:1.78;margin-bottom:12px}
     .event-info-row{display:flex;gap:20px;flex-wrap:wrap;margin:20px 0}
     .einfo{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px}
@@ -31,7 +36,7 @@
     <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html" class="active">Events</a>
     <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
     <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
-    <a href="membership.html" class="nav-cta">Join Us</a>
+    <a href="membership.html" class="nav-cta">Membership</a>
   </div>
   <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
@@ -39,7 +44,7 @@
   <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
   <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
   <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
-  <a href="membership.html" class="m-cta">Join Us →</a>
+  <a href="membership.html" class="m-cta">Membership →</a>
 </div>
 
 <div class="page-hero">
@@ -54,10 +59,10 @@
 <section class="section">
   <div class="section-inner">
     <div class="events-tabs">
-      <button class="etab active" onclick="showEtab('moot')">🏛️ Moot Court Competition</button>
-      <button class="etab" onclick="showEtab('freedom')">✊ Freedom Day March</button>
-      <button class="etab" onclick="showEtab('career')">💼 Career Events</button>
-      <button class="etab" onclick="showEtab('justice')">🌍 Social Justice</button>
+      <button class="etab active" onclick="showEtab('moot')">Moot Court Competition</button>
+      <button class="etab" onclick="showEtab('freedom')">Freedom Day March</button>
+      <button class="etab" onclick="showEtab('career')">Career Events</button>
+      <button class="etab" onclick="showEtab('justice')">Social Justice</button>
     </div>
 
     <!-- MOOT COURT -->
@@ -65,7 +70,7 @@
       <div class="event-detail">
         <div class="event-img-wrap fade-up"><img src="assets/images/image-02.jpg" alt="BLASC UFS Moot Court"/></div>
         <div class="event-body fade-up">
-          <span class="event-meta-tag">🏛️ Training & Competition</span>
+          <span class="event-meta-tag">Training & Competition</span>
           <h2>Moot Court Competition</h2>
           <p>The BLASC UFS Moot Court Competition simulates real court proceedings — inviting practising legal professionals to sit as judges while students argue their cases. It is one of the most important skill-building events the chapter runs.</p>
           <p>Participants engage in authentic courtroom scenarios across different areas of law, developing critical competencies under real pressure from experienced practitioners.</p>
@@ -85,7 +90,7 @@
       <div class="event-detail">
         <div class="event-img-wrap fade-up"><img src="assets/images/image-10.jpg" alt="Freedom Day March 2025"/></div>
         <div class="event-body fade-up">
-          <span class="event-meta-tag">✊ Annual Commemoration</span>
+          <span class="event-meta-tag">Annual Commemoration</span>
           <h2>Freedom Day March — 27 April</h2>
           <p>Every year on 27 April, BLASC UFS takes to the streets to commemorate Freedom Day. The march is not merely symbolic — it is a deliberate act of reflection on the cost of freedom, what it took to get here, and why transformation must continue.</p>
           <p>The 2025 march carried the theme <strong>"Purpose"</strong> — reflecting on what drives BLASC UFS members forward as future legal professionals in a society still working toward full transformation.</p>
@@ -104,7 +109,7 @@
       <div class="event-detail">
         <div class="event-img-wrap fade-up"><img src="assets/images/pps-visit.jpeg" alt="BLASC Career Event"/></div>
         <div class="event-body fade-up">
-          <span class="event-meta-tag">💼 Professional Development</span>
+          <span class="event-meta-tag">Professional Development</span>
           <h2>Career Events</h2>
           <p>BLASC UFS runs career events designed to help young legal minds navigate the world of work. These events are practical, industry-relevant, and tailored to the realities facing law graduates in South Africa.</p>
           <div class="event-info-row">
@@ -114,7 +119,7 @@
           </div>
           <p>Sessions include career readiness workshops, CV writing clinics, mock interview sessions, and panels featuring practising attorneys, advocates, prosecutors, and corporate lawyers. Events like the PPS partnership expose members to financial planning for young professionals.</p>
           <p>The goal is simple: by the time a BLASC UFS member graduates, they should know exactly how to enter the profession and thrive in it.</p>
-          <a href="membership.html" class="btn btn-blue" style="margin-top:8px">Become a Member to Attend</a>
+          <a href="membership.html" class="btn btn-blue" style="margin-top:8px">Apply for Membership to Attend</a>
         </div>
       </div>
     </div>
@@ -124,7 +129,7 @@
       <div class="event-detail">
         <div class="event-img-wrap fade-up"><img src="assets/images/image-09.jpg" alt="BLASC Social Justice"/></div>
         <div class="event-body fade-up">
-          <span class="event-meta-tag">🌍 Social Justice & Transformation</span>
+          <span class="event-meta-tag">Social Justice & Transformation</span>
           <h2>Social Justice & Transformation Events</h2>
           <p>BLASC UFS marks key days in the South African calendar with events that go beyond celebration — they are spaces for reflection, education, and action. These events connect our legal education to the lived realities of the people we will serve.</p>
           <div class="event-info-row">
@@ -147,11 +152,27 @@
     <div class="footer-brand"><div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div><p>The Vanguard of the Legal Profession.</p></div>
     <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
     <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
-    <div class="footer-col"><h4>Connect</h4><div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div></div>
+    <div class="footer-col"><h4>Connect</h4><div class="footer-social" aria-label="Social media links">
+        <a class="social-link" href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a class="social-link" href="mailto:UFSBlascu@gmail.com" aria-label="Email" title="Email">
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+        </a>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add Facebook link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3h-3.1V9.2c0-.9.3-1.5 1.6-1.5h1.7V5.1c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2V11H8v3h2.2v8h3.3z"/></svg>
+        </span>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add LinkedIn link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M6.9 8.8a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8zM5.3 19.2h3.2V10H5.3v9.2zM10.4 10h3v1.3h.1c.4-.8 1.4-1.6 2.9-1.6 3.1 0 3.6 2 3.6 4.7v4.8h-3.2v-4.3c0-1 0-2.4-1.5-2.4s-1.7 1.1-1.7 2.3v4.4h-3.2V10z"/></svg>
+        </span>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add X link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M18.9 3h2.9l-6.3 7.2L23 21h-5.9l-4.6-6-5.2 6H4.4l6.8-7.8L1 3h6l4.1 5.4L18.9 3zm-1 16.3h1.6L6.1 4.6H4.4l13.5 14.7z"/></svg>
+        </span>
+      </div></div>
   </div>
   <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
 </footer>
-<script src="assets/main.js"></script>
+<script src="assets/main.js?v=20260501-anim"></script>
 <script>
 function showEtab(id) {
   document.querySelectorAll('.etab-panel').forEach(p => p.classList.remove('active'));

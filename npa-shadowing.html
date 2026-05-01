@@ -4,15 +4,20 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>In the Shadow of the Prosecutor – BLASC UFS</title>
-  <link rel="stylesheet" href="assets/style.css"/>
+
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/style.css?v=20260501-anim"/>
   <style>
-    .npa-hero{position:relative;min-height:56vh;display:flex;align-items:flex-end;overflow:hidden;background:#0b0e13}
-    .npa-hero-bg{position:absolute;inset:0;background:url('assets/images/bec-stairs-serious.jpeg') center/cover no-repeat}
+    .npa-hero{position:relative;min-height:68vh;display:flex;align-items:flex-end;overflow:hidden;background:#0b0e13}
+    .npa-hero-bg{position:absolute;inset:0;background:url('assets/images/bec-stairs-serious.jpeg') center 16%/cover no-repeat}
     .npa-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(92deg,rgba(6,8,11,.94) 0%,rgba(6,8,11,.74) 44%,rgba(6,8,11,.46) 100%),linear-gradient(to top,rgba(6,8,11,.86),rgba(6,8,11,.08))}
     .npa-hero-content{position:relative;z-index:1;padding:130px clamp(16px,4vw,56px) 64px;width:min(100%,960px)}
     .npa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
     .npa-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:20px}
-    .npa-card h3{font-family:'Playfair Display',serif;font-size:1.08rem;color:var(--ink);margin-bottom:8px}
+    .npa-card h3{font-size:1.08rem;color:var(--ink);margin-bottom:8px}
     .npa-card p,.npa-card li{font-size:.9rem;color:var(--muted);line-height:1.7}
     .npa-card ul{list-style:disc;padding-left:18px;display:grid;gap:4px}
     .npa-partners{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -27,7 +32,7 @@
     .npa-modal-backdrop{position:absolute;inset:0;background:rgba(6,9,13,.72);backdrop-filter:blur(4px)}
     .npa-modal-dialog{position:relative;z-index:1;width:min(980px,calc(100vw - 32px));max-height:calc(100vh - 36px);margin:18px auto;background:#fff;border:1px solid var(--border);border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;overflow:hidden}
     .npa-modal-header{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:18px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#fafcff 0%,#fff 100%)}
-    .npa-modal-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+    .npa-modal-title{font-size:1.15rem;font-weight:700;color:var(--ink);margin-bottom:4px}
     .npa-modal-sub{font-size:.8rem;color:var(--muted)}
     .npa-close{width:34px;height:34px;border:1px solid var(--border);border-radius:10px;background:#fff;font-size:1.15rem;line-height:1;color:var(--ink)}
     .npa-modal-body{padding:16px 20px 20px;overflow:auto}
@@ -36,7 +41,7 @@
     .npa-step-dot{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 8px;text-align:center;font-size:.72rem;font-weight:700;color:var(--grey)}
     .npa-step-dot.active{border-color:var(--blue-mid);background:var(--blue-pale);color:var(--blue)}
     .npa-step-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:22px}
-    .npa-step-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+    .npa-step-title{font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:6px}
     .npa-step-sub{font-size:.9rem;line-height:1.7;color:var(--muted);margin-bottom:18px}
     .npa-part-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
     .npa-part-item{border:1px solid var(--border);background:var(--off-white);border-radius:var(--radius-sm);padding:12px}
@@ -117,7 +122,7 @@
     <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
     <a href="programmes.html" class="active">Programmes</a><a href="leadership.html">Leadership</a>
     <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
-    <a href="membership.html" class="nav-cta">Join Us</a>
+    <a href="membership.html" class="nav-cta">Membership</a>
   </div>
   <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
@@ -125,14 +130,14 @@
   <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
   <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
   <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
-  <a href="membership.html" class="m-cta">Join Us →</a>
+  <a href="membership.html" class="m-cta">Membership →</a>
 </div>
 
 <header class="npa-hero">
   <div class="npa-hero-bg"></div>
   <div class="npa-hero-content">
     <p class="eyebrow">NPA Partnership</p>
-    <h1 style="color:#fff;font-family:'Playfair Display',serif;font-size:clamp(2.05rem,5vw,3.6rem);line-height:1.08;margin-bottom:14px">In the Shadow of the Prosecutor</h1>
+    <h1 style="color:#fff;font-size:clamp(2.05rem,5vw,3.6rem);line-height:1.08;margin-bottom:14px">In the Shadow of the Prosecutor</h1>
     <p style="color:rgba(255,255,255,.78);max-width:62ch;font-size:1rem;line-height:1.8">A formal court-shadowing programme connecting UFS law students to the practical world of public prosecution through collaboration between the National Prosecuting Authority, the UFS Faculty of Law, and BLASC UFS.</p>
     <div id="npa-apply" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
       <button type="button" class="btn btn-gold" id="npaApplyNowBtn">Apply Now</button>
@@ -207,12 +212,28 @@
     <div class="footer-brand"><div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div><p>The Vanguard of the Legal Profession.</p></div>
     <div class="footer-col"><h4>Navigate</h4><a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a><a href="programmes.html">Programmes</a><a href="gallery.html">Gallery</a></div>
     <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
-    <div class="footer-col"><h4>Connect</h4><div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div></div>
+    <div class="footer-col"><h4>Connect</h4><div class="footer-social" aria-label="Social media links">
+        <a class="social-link" href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a class="social-link" href="mailto:UFSBlascu@gmail.com" aria-label="Email" title="Email">
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+        </a>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add Facebook link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3h-3.1V9.2c0-.9.3-1.5 1.6-1.5h1.7V5.1c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2V11H8v3h2.2v8h3.3z"/></svg>
+        </span>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add LinkedIn link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M6.9 8.8a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8zM5.3 19.2h3.2V10H5.3v9.2zM10.4 10h3v1.3h.1c.4-.8 1.4-1.6 2.9-1.6 3.1 0 3.6 2 3.6 4.7v4.8h-3.2v-4.3c0-1 0-2.4-1.5-2.4s-1.7 1.1-1.7 2.3v4.4h-3.2V10z"/></svg>
+        </span>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add X link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M18.9 3h2.9l-6.3 7.2L23 21h-5.9l-4.6-6-5.2 6H4.4l6.8-7.8L1 3h6l4.1 5.4L18.9 3zm-1 16.3h1.6L6.1 4.6H4.4l13.5 14.7z"/></svg>
+        </span>
+      </div></div>
   </div>
   <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
 </footer>
 
-<script src="assets/main.js"></script>
+<script src="assets/main.js?v=20260501-anim"></script>
 <script>
 (() => {
   const modal = document.getElementById('npaModal');

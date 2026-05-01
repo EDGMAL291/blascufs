@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Leadership Application – BLASC</title>
-  <link rel="stylesheet" href="assets/style.css"/>
+  <title>Leadership Application – BLASC UFS</title>
+
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/style.css?v=20260501-anim"/>
   <style>
     .app-layout {
       display: grid;
@@ -18,7 +23,7 @@
       border-radius: var(--radius-lg);
       padding: 28px;
     }
-    .sidebar-info h3 { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:12px; }
+    .sidebar-info h3 { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif; font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:12px; }
     .sidebar-info p { color:rgba(255,255,255,0.5); font-size:0.86rem; line-height:1.7; margin-bottom:12px; }
     .sidebar-info ul { display:grid; gap:8px; }
     .sidebar-info li { color:rgba(255,255,255,0.55); font-size:0.84rem; display:flex; align-items:flex-start; gap:8px; }
@@ -29,8 +34,19 @@
       border-radius: var(--radius-lg);
       padding: 36px;
     }
-    .form-wrap h2 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:4px; }
-    .form-wrap .sub { color:var(--muted); font-size:0.88rem; margin-bottom:28px; }
+    .form-wrap h2 { font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:4px; }
+    .form-wrap .sub { color:var(--muted); font-size:0.88rem; margin-bottom:14px; }
+    .privacy-note {
+      background:#fff;
+      border:1px solid rgba(21,101,168,0.16);
+      border-left:3px solid var(--blue);
+      border-radius:var(--radius-md);
+      color:var(--muted);
+      font-size:0.88rem;
+      line-height:1.65;
+      margin:0 0 28px;
+      padding:14px 16px;
+    }
     @media (max-width: 900px) {
       .app-layout { grid-template-columns: 1fr; }
       .app-sidebar { position: static; }
@@ -42,7 +58,7 @@
 <nav class="nav dark" id="navbar">
   <a class="nav-brand" href="index.html">
     <img class="nav-logo" src="assets/images/logo.jpeg" alt="BLASC"/>
-    <div class="nav-name">BLASC <span>University of the Free State</span></div>
+    <div class="nav-name">BLASC UFS <span>University of the Free State</span></div>
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a>
@@ -52,7 +68,7 @@
     <a href="leadership.html">Leadership</a>
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
-    <a href="membership.html" class="nav-cta">Join Us</a>
+    <a href="membership.html" class="nav-cta">Membership</a>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
@@ -66,7 +82,7 @@
   <a href="leadership.html">Leadership</a>
   <a href="gallery.html">Gallery</a>
   <a href="contact.html">Contact</a>
-  <a href="membership.html" class="m-cta">Join Us →</a>
+  <a href="membership.html" class="m-cta">Membership →</a>
 </div>
 
 <div class="page-hero">
@@ -88,7 +104,7 @@
           <ul>
             <li>Must be a member in good standing</li>
             <li>Must have been active for at least one academic year (for Chairperson)</li>
-            <li>Must not be under any legal disability</li>
+            <li>Must meet the constitutional eligibility requirements</li>
             <li>Nominations must be seconded by two members in good standing</li>
             <li>All applications are subject to BEC review</li>
           </ul>
@@ -97,22 +113,29 @@
 
       <div class="form-wrap fade-up">
         <h2>Application Form</h2>
-        <p class="sub">All fields marked * are required. Upload your CV to complete the application.</p>
+        <p class="sub">All fields marked * are required.</p>
+        <p class="privacy-note">Do not upload documents or enter sensitive personal information on this website. This form is only an expression of interest. If supporting documents are needed, BLASC UFS will request them later through an official channel.</p>
         <form>
           <fieldset class="fieldset-block">
-            <legend>Personal Details</legend>
+            <legend>Applicant Details</legend>
             <div class="form-grid" style="margin-top:12px">
-              <div class="field"><label>Full Name *</label><input type="text" required placeholder="Your full legal name"/></div>
-              <div class="field"><label>Student Number *</label><input type="text" required placeholder="e.g. 2022123456"/></div>
-              <div class="field"><label>ID Number (Optional)</label><input type="text" placeholder="South African ID number"/></div>
-              <div class="field"><label>Date of Birth (Optional)</label><input type="date"/></div>
+              <div class="field"><label>Full Name *</label><input type="text" required placeholder="Your full name"/></div>
+              <div class="field"><label>UFS Email Address *</label><input type="email" required placeholder="your@ufs.ac.za"/></div>
             </div>
           </fieldset>
           <fieldset class="fieldset-block">
-            <legend>Contact Information</legend>
+            <legend>Contact Preference</legend>
             <div class="form-grid" style="margin-top:12px">
-              <div class="field"><label>Email Address *</label><input type="email" required placeholder="your@email.com"/></div>
-              <div class="field"><label>Phone Number</label><input type="tel" placeholder="+27 00 000 0000"/></div>
+              <div class="field">
+                <label>Preferred Follow-up Channel *</label>
+                <select required>
+                  <option value="">Select a channel</option>
+                  <option>Email</option>
+                  <option>WhatsApp after official BLASC contact</option>
+                  <option>In-person follow-up</option>
+                </select>
+              </div>
+              <div class="field"><label>Optional Contact Note</label><input type="text" placeholder="Example: available after 16:00"/></div>
             </div>
           </fieldset>
           <fieldset class="fieldset-block">
@@ -189,18 +212,11 @@
             </div>
           </fieldset>
           <fieldset class="fieldset-block">
-            <legend>Supporting Documents</legend>
-            <div class="form-grid" style="margin-top:12px">
-              <div class="field"><label>Upload CV *</label><input type="file" accept=".pdf,.doc,.docx" required/></div>
-              <div class="field"><label>Academic Record (Optional)</label><input type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/></div>
-            </div>
-          </fieldset>
-          <fieldset class="fieldset-block">
             <legend>Declaration</legend>
             <div style="margin-top:12px">
               <label class="check-label">
                 <input type="checkbox" required/>
-                I confirm that the information provided in this application is accurate and complete. I understand that if selected, I am willing to serve the chapter with integrity, accountability, and dedication.
+                I confirm that the information provided is accurate and does not include sensitive personal information or uploaded documents. I understand that any formal verification will happen later through an official BLASC UFS channel.
               </label>
             </div>
           </fieldset>
@@ -214,7 +230,7 @@
 <footer class="site-footer">
   <div class="footer-grid">
     <div class="footer-brand">
-      <div class="footer-brand-name">BLASC <span class="footer-brand-sub">University of the Free State</span></div>
+      <div class="footer-brand-name">BLASC UFS <span class="footer-brand-sub">University of the Free State</span></div>
       <p>The Vanguard of the Legal Profession.</p>
     </div>
     <div class="footer-col">
@@ -233,8 +249,22 @@
     </div>
     <div class="footer-col">
       <h4>Connect</h4>
-      <div class="footer-social">
-        <a href="#">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a>
+      <div class="footer-social" aria-label="Social media links">
+        <a class="social-link" href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a class="social-link" href="mailto:UFSBlascu@gmail.com" aria-label="Email" title="Email">
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+        </a>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add Facebook link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3h-3.1V9.2c0-.9.3-1.5 1.6-1.5h1.7V5.1c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2V11H8v3h2.2v8h3.3z"/></svg>
+        </span>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add LinkedIn link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M6.9 8.8a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8zM5.3 19.2h3.2V10H5.3v9.2zM10.4 10h3v1.3h.1c.4-.8 1.4-1.6 2.9-1.6 3.1 0 3.6 2 3.6 4.7v4.8h-3.2v-4.3c0-1 0-2.4-1.5-2.4s-1.7 1.1-1.7 2.3v4.4h-3.2V10z"/></svg>
+        </span>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add X link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M18.9 3h2.9l-6.3 7.2L23 21h-5.9l-4.6-6-5.2 6H4.4l6.8-7.8L1 3h6l4.1 5.4L18.9 3zm-1 16.3h1.6L6.1 4.6H4.4l13.5 14.7z"/></svg>
+        </span>
       </div>
     </div>
   </div>
@@ -242,6 +272,6 @@
     <span>© 2026 Black Lawyers Association Student Chapter, UFS.</span>
   </div>
 </footer>
-<script src="assets/main.js"></script>
+<script src="assets/main.js?v=20260501-anim"></script>
 </body>
 </html>

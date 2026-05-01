@@ -4,16 +4,31 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BLASC UFS – Black Lawyers Association Student Chapter</title>
-  <link rel="stylesheet" href="assets/style.css"/>
+
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/style.css?v=20260501-anim"/>
   <style>
-    .hero{position:relative;height:100vh;min-height:620px;display:flex;align-items:flex-end;overflow:hidden}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
+    }
+    body .hero h1,
+    body .section-title,
+    body .stat-num,
+    body .pillar h3,
+    body .nav-name{
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
+    }
+    .hero{position:relative;height:100vh;min-height:760px;display:flex;align-items:flex-end;overflow:hidden}
     .hero-bg{position:absolute;inset:0}
-    .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
     .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,12,15,.93) 0%,rgba(10,12,15,.5) 45%,rgba(10,12,15,.15) 100%)}
     .hero-content{position:relative;z-index:1;padding:clamp(40px,6vw,88px) clamp(16px,4vw,56px);max-width:960px}
     .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:22px}
     .hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--gold)}
-    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,7vw,5.5rem);line-height:1.03;color:#fff;font-weight:900;margin-bottom:22px}
+    .hero h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;font-size:clamp(2.4rem,6vw,6rem);line-height:1;color:#fff;font-weight:900;margin-bottom:18px}
     .hero h1 em{color:var(--gold-light);font-style:normal}
     .hero-desc{color:rgba(255,255,255,.68);font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1.78;max-width:54ch;margin-bottom:36px}
     .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
@@ -24,7 +39,7 @@
     .about-text .bp{color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:16px;max-width:50ch}
     .about-stats{display:flex;gap:36px;flex-wrap:wrap;margin-top:24px}
     .stat{border-left:2px solid var(--gold);padding-left:16px}
-    .stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--gold-light);line-height:1}
+    .stat-num{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;font-size:1.8rem;font-weight:900;color:var(--gold-light);line-height:1}
     .stat-label{font-size:.73rem;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
     .about-img{overflow:hidden}
     .about-img img{width:100%;height:100%;object-fit:cover}
@@ -33,14 +48,18 @@
     .pillar{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:30px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
     .pillar:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(21,101,168,.1)}
     .pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-light))}
-    .pillar-icon{width:46px;height:46px;background:var(--blue-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:18px}
-    .pillar h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:8px;color:var(--ink)}
+    .pillar h3{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:8px;color:var(--ink)}
     .pillar p{color:var(--muted);font-size:.91rem;line-height:1.7}
     .cta-band{background:linear-gradient(135deg,var(--blue) 0%,#0d3d6e 100%);padding:clamp(56px,6vw,80px) clamp(16px,4vw,56px);text-align:center}
     .cta-band h2{color:#fff;margin-bottom:16px}
     .cta-band p{color:rgba(255,255,255,.65);max-width:52ch;margin:0 auto 32px;line-height:1.75}
     .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
     @media(max-width:900px){.about-split{grid-template-columns:1fr}.about-img{height:360px}.pillars-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:768px){
+      .hero h1{font-size:clamp(2rem,8.2vw,3.25rem);line-height:.95;margin-bottom:12px}
+      .hero-content{padding-top:clamp(16px,4.5vw,32px);padding-bottom:clamp(24px,6vw,44px)}
+      .hero-desc{margin-bottom:20px;line-height:1.66}
+    }
     @media(max-width:600px){.pillars-grid{grid-template-columns:1fr}}
   </style>
 </head>
@@ -58,7 +77,7 @@
     <a href="leadership.html">Leadership</a>
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
-    <a href="membership.html" class="nav-cta">Join Us</a>
+    <a href="membership.html" class="nav-cta">Membership</a>
   </div>
   <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
 </nav>
@@ -66,7 +85,7 @@
   <a href="index.html">Home</a><a href="about.html">About</a><a href="events.html">Events</a>
   <a href="programmes.html">Programmes</a><a href="leadership.html">Leadership</a>
   <a href="gallery.html">Gallery</a><a href="contact.html">Contact</a>
-  <a href="membership.html" class="m-cta">Join Us →</a>
+  <a href="membership.html" class="m-cta">Membership →</a>
 </div>
 
 <section class="hero">
@@ -76,7 +95,7 @@
     <h1>Building <em>Africa's</em> future<br/>through law &amp; justice.</h1>
     <p class="hero-desc">BLASC UFS at the University of the Free State is committed to advancing social justice, protecting member rights, and building a non-racial, non-sexist legal profession for all South Africans.</p>
     <div class="hero-btns">
-      <a href="membership.html" class="btn btn-gold">Join the Chapter</a>
+      <a href="membership.html" class="btn btn-gold">Apply for Membership</a>
       <a href="about.html" class="btn btn-outline-white">Learn More</a>
     </div>
   </div>
@@ -95,7 +114,7 @@
       <div class="stat"><div class="stat-num">BLA</div><div class="stat-label">Mother Body</div></div>
     </div>
   </div>
-  <div class="about-img">
+  <div class="about-img fade-up">
     <img src="assets/images/bec-outside-smile.jpeg" alt="BLASC UFS Branch Executive Committee"/>
   </div>
 </div>
@@ -105,12 +124,12 @@
     <p class="section-label fade-up">What We Stand For</p>
     <h2 class="section-title fade-up">Our pillars of action</h2>
     <div class="pillars-grid">
-      <div class="pillar fade-up"><div class="pillar-icon">⚖️</div><h3>Social Justice</h3><p>Championing the rights of historically disadvantaged communities, women, and persons with disabilities through legal advocacy and awareness.</p></div>
-      <div class="pillar fade-up"><div class="pillar-icon">🎓</div><h3>Legal Education</h3><p>Moot court training, advocacy workshops, NPA placements, and academic programmes preparing members for professional legal practice.</p></div>
-      <div class="pillar fade-up"><div class="pillar-icon">🤝</div><h3>Mentorship</h3><p>Guided mentorship linking law students with experienced practitioners, alumni, and partner institutions locally and internationally.</p></div>
-      <div class="pillar fade-up"><div class="pillar-icon">📣</div><h3>Advocacy</h3><p>We are the voice of UFS law students — engaging institutions, responding to legislation, and participating in constitutional discourse.</p></div>
-      <div class="pillar fade-up"><div class="pillar-icon">🌍</div><h3>Community Outreach</h3><p>Freedom Day marches, civic registration drives, and legal awareness campaigns connecting the chapter to the communities we serve.</p></div>
-      <div class="pillar fade-up"><div class="pillar-icon">🏛️</div><h3>Good Governance</h3><p>Transparent, accountable leadership guided by our constitution ensures every member is represented and every voice matters.</p></div>
+      <div class="pillar fade-up"><h3>Social Justice</h3><p>Championing the rights of historically disadvantaged communities, women, and persons with disabilities through legal advocacy and awareness.</p></div>
+      <div class="pillar fade-up"><h3>Legal Education</h3><p>Moot court training, advocacy workshops, NPA placements, and academic programmes preparing members for professional legal practice.</p></div>
+      <div class="pillar fade-up"><h3>Mentorship</h3><p>Guided mentorship linking law students with experienced practitioners, alumni, and partner institutions locally and internationally.</p></div>
+      <div class="pillar fade-up"><h3>Advocacy</h3><p>We are the voice of UFS law students — engaging institutions, responding to legislation, and participating in constitutional discourse.</p></div>
+      <div class="pillar fade-up"><h3>Community Outreach</h3><p>Freedom Day marches, civic registration drives, and legal awareness campaigns connecting the chapter to the communities we serve.</p></div>
+      <div class="pillar fade-up"><h3>Good Governance</h3><p>Transparent, accountable leadership guided by our constitution ensures every member is represented and every voice matters.</p></div>
     </div>
   </div>
 </section>
@@ -137,9 +156,23 @@
     <div class="footer-col"><h4>Chapter</h4><a href="leadership.html">Leadership</a><a href="membership.html">Membership</a><a href="constitution.html">Constitution</a><a href="contact.html">Contact</a></div>
     <div class="footer-col">
       <h4>Connect</h4>
-      <div class="footer-social"><a href="https://instagram.com/ufs_blasc" target="_blank">IG</a><a href="#">FB</a><a href="#">LI</a><a href="#">X</a></div>
-      <h4 style="margin-top:20px">Email</h4>
-      <a href="mailto:UFSBlascu@gmail.com">UFSBlascu@gmail.com</a>
+      <div class="footer-social" aria-label="Social media links">
+        <a class="social-link" href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a class="social-link" href="mailto:UFSBlascu@gmail.com" aria-label="Email" title="Email">
+          <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+        </a>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add Facebook link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3h-3.1V9.2c0-.9.3-1.5 1.6-1.5h1.7V5.1c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2V11H8v3h2.2v8h3.3z"/></svg>
+        </span>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add LinkedIn link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M6.9 8.8a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8zM5.3 19.2h3.2V10H5.3v9.2zM10.4 10h3v1.3h.1c.4-.8 1.4-1.6 2.9-1.6 3.1 0 3.6 2 3.6 4.7v4.8h-3.2v-4.3c0-1 0-2.4-1.5-2.4s-1.7 1.1-1.7 2.3v4.4h-3.2V10z"/></svg>
+        </span>
+        <span class="social-link social-link--pending" aria-hidden="true" title="Add X link">
+          <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M18.9 3h2.9l-6.3 7.2L23 21h-5.9l-4.6-6-5.2 6H4.4l6.8-7.8L1 3h6l4.1 5.4L18.9 3zm-1 16.3h1.6L6.1 4.6H4.4l13.5 14.7z"/></svg>
+        </span>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
@@ -147,6 +180,6 @@
     <span>University of the Free State · Bloemfontein</span>
   </div>
 </footer>
-<script src="assets/main.js"></script>
+<script src="assets/main.js?v=20260501-anim"></script>
 </body>
 </html>
