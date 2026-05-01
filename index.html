@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="assets/style.css?v=20260501-mobileh1"/>
+<link rel="stylesheet" href="assets/style.css?v=20260501-heromore"/>
   <style>
     body{
       font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;
@@ -21,16 +21,18 @@
     body .nav-name{
       font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
     }
-    .hero{position:relative;height:100vh;min-height:760px;display:flex;align-items:flex-end;overflow:hidden}
+    .hero{position:relative;height:100vh;min-height:720px;display:flex;align-items:flex-end;overflow:hidden}
     .hero-bg{position:absolute;inset:0}
     .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 18%}
     .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,12,15,.93) 0%,rgba(10,12,15,.5) 45%,rgba(10,12,15,.15) 100%)}
-    .hero-content{position:relative;z-index:1;padding:clamp(40px,6vw,88px) clamp(16px,4vw,56px);max-width:960px}
+    .hero-content{position:relative;z-index:1;padding:clamp(40px,6vw,88px) clamp(16px,4vw,56px);max-width:900px}
     .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:22px}
     .hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--gold)}
     .hero h1{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;font-size:clamp(2.4rem,6vw,6rem);line-height:1;color:#fff;font-weight:900;margin-bottom:18px}
     .hero h1 em{color:var(--gold-light);font-style:normal}
-    .hero-desc{color:rgba(255,255,255,.68);font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1.78;max-width:54ch;margin-bottom:36px}
+    .hero-desc{color:rgba(255,255,255,.72);font-size:clamp(.95rem,1.6vw,1.1rem);line-height:1.65;max-width:42ch;margin-bottom:28px}
+    .hero-desc a{color:var(--gold-light);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+    .hero-desc a:hover{color:#f1c86a}
     .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
     .hero-scroll{position:absolute;bottom:30px;right:clamp(16px,4vw,56px);z-index:1;color:rgba(255,255,255,.35);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;writing-mode:vertical-rl;display:flex;align-items:center;gap:10px}
     .hero-scroll::after{content:'';width:1px;height:50px;background:rgba(255,255,255,.2)}
@@ -56,11 +58,22 @@
     .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
     @media(max-width:900px){.about-split{grid-template-columns:1fr}.about-img{height:360px}.pillars-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:768px){
-      .hero h1{font-size:clamp(2rem,8.2vw,3.25rem);line-height:.95;margin-bottom:12px}
-      .hero-content{padding-top:clamp(16px,4.5vw,32px);padding-bottom:clamp(24px,6vw,44px)}
-      .hero-desc{margin-bottom:20px;line-height:1.66}
+      .hero{min-height:640px}
+      .hero-eyebrow{display:none}
+      .hero h1{font-size:clamp(1.75rem,7vw,2.35rem);line-height:1.02;margin-bottom:12px}
+      .hero-content{padding-top:clamp(16px,4.5vw,32px);padding-bottom:clamp(24px,6vw,40px)}
+      .hero-desc{font-size:.92rem;max-width:34ch;margin-bottom:18px;line-height:1.52}
     }
-    @media(max-width:600px){.pillars-grid{grid-template-columns:1fr}}
+    @media(max-width:600px){
+      .hero{min-height:620px}
+      .hero-content{padding-left:20px;padding-right:20px}
+      .pillars-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:420px){
+      .hero{min-height:600px}
+      .hero h1{font-size:clamp(1.55rem,7vw,1.95rem)}
+      .hero-desc{font-size:.86rem;max-width:31ch}
+    }
   </style>
 </head>
 <body>
@@ -92,9 +105,8 @@
 <section class="hero" id="main-content">
   <div class="hero-bg"><img src="assets/images/homepage-hero.jpeg" alt="BLASC UFS at Department of Justice"/></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Black Lawyers Association Student Chapter · UFS · Bloemfontein</p>
     <h1>Building <em>Africa's</em> future<br/>through law &amp; justice.</h1>
-    <p class="hero-desc">BLASC UFS at the University of the Free State is committed to advancing social justice, protecting member rights, and building a non-racial, non-sexist legal profession for all South Africans.</p>
+    <p class="hero-desc">Advancing social justice, student leadership, and a transformed legal profession at the University of the Free State. <a href="about.html">See more</a>.</p>
     <div class="hero-btns">
       <a href="membership.html" class="btn btn-gold">Apply for Membership</a>
       <a href="about.html" class="btn btn-outline-white">Learn More</a>
@@ -181,6 +193,6 @@
     <span>University of the Free State · Bloemfontein</span>
   </div>
 </footer>
-<script src="assets/main.js?v=20260501-mobileh1"></script>
+<script src="assets/main.js?v=20260501-heromore"></script>
 </body>
 </html>
