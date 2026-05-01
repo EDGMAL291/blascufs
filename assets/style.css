@@ -1093,8 +1093,9 @@ body .footer-grid::before {
   .page-hero { min-height: 320px; height: 38vh; }
   .page-hero-content { padding-top: 112px; padding-bottom: 44px; }
   body .page-hero-content h1,
-  .page-hero-content h1 {
-    font-size: clamp(1.55rem, 5.4vw, 2.3rem);
+  .page-hero-content h1,
+  .npa-hero-content h1 {
+    font-size: clamp(1.45rem, 4.8vw, 2rem) !important;
     line-height: 1.02;
     margin-bottom: 10px;
   }
@@ -1120,11 +1121,17 @@ body .footer-grid::before {
 @media (max-width: 480px) {
   body .hero { min-height: 600px; }
   .page-hero { min-height: 300px; }
-  body .hero h1 { font-size: clamp(2.25rem, 13vw, 3.5rem); }
+  body .hero h1 {
+    font-size: clamp(1.45rem, 8vw, 2.05rem) !important;
+    line-height: 1.02 !important;
+    margin-bottom: 10px !important;
+  }
   body .page-hero-content h1,
-  .page-hero-content h1 {
-    font-size: clamp(1.35rem, 7vw, 1.85rem);
-    line-height: 1.02;
+  .page-hero-content h1,
+  .npa-hero-content h1 {
+    font-size: clamp(1.1rem, 6vw, 1.5rem) !important;
+    line-height: 1.02 !important;
+    margin-bottom: 8px !important;
   }
   .page-hero-content { padding-bottom: 34px; }
   .page-hero-content p { font-size: 0.8rem; line-height: 1.5; }
