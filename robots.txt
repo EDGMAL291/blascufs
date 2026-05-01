@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://blascufs.co.za/sitemap.xml
