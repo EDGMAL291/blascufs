@@ -43,6 +43,8 @@
     .detail-card{display:flex;align-items:flex-start;gap:14px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 20px}
     .detail-body strong{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:3px}
     .detail-body span{font-size:.93rem;color:var(--ink);line-height:1.55}
+    .contact-social-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .contact-social-actions .btn{border-radius:10px;padding:10px 16px;font-size:.84rem}
     .form-panel{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px}
     .form-panel h2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:4px}
     .form-panel .sub{color:var(--muted);font-size:.88rem;margin-bottom:28px}
@@ -83,40 +85,43 @@
       <div>
         <p class="section-label fade-up">Chapter Contact Details</p>
         <h2 class="section-title fade-up">How to reach us</h2>
-        <p class="section-body fade-up">For membership queries, event enquiries, programme applications, or general correspondence — use the details below or send a message using the form.</p>
+        <p class="section-body fade-up">For membership queries, event enquiries, programme applications, or general correspondence, use the details below or send a message using the form.</p>
         <div class="contact-details">
           <div class="detail-card fade-up">
-
             <div class="detail-body"><strong>Secretary</strong><span>Muzi Lekhuwane</span></div>
           </div>
           <div class="detail-card fade-up">
-
             <div class="detail-body"><strong>Email</strong><span><a href="mailto:Blascu@gmail.com" style="color:var(--blue-mid)">Blascu@gmail.com</a></span></div>
           </div>
           <div class="detail-card fade-up">
-
-            <div class="detail-body"><strong>Instagram</strong><span><a href="https://instagram.com/ufs_blasc" target="_blank" style="color:var(--blue-mid)">@ufs_blasc</a></span></div>
+            <div class="detail-body"><strong>Instagram</strong><span><a href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" style="color:var(--blue-mid)">@ufs_blasc</a></span></div>
           </div>
           <div class="detail-card fade-up">
-
+            <div class="detail-body"><strong>Facebook</strong><span><a href="https://www.facebook.com/share/1Czmz11UWm/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" style="color:var(--blue-mid)">BLASC UFS on Facebook</a></span></div>
+          </div>
+          <div class="detail-card fade-up">
+            <div class="detail-body"><strong>TikTok</strong><span><a href="https://www.tiktok.com/@ufs_blasc" target="_blank" rel="noopener noreferrer" style="color:var(--blue-mid)">@ufs_blasc</a></span></div>
+          </div>
+          <div class="detail-card fade-up">
             <div class="detail-body"><strong>Campus</strong><span>University of the Free State<br/>Bloemfontein, Free State</span></div>
           </div>
           <div class="detail-card fade-up">
-
             <div class="detail-body"><strong>Response Time</strong><span>We aim to respond within 2–3 working days.</span></div>
           </div>
         </div>
         <div style="margin-top:32px" class="fade-up">
           <p class="section-label">Follow Us</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-            <a href="https://instagram.com/ufs_blasc" target="_blank" class="btn btn-outline-dark" style="border-radius:10px;padding:10px 16px;font-size:.84rem">Instagram @ufs_blasc</a>
-
+          <div class="contact-social-actions">
+            <a href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">Instagram</a>
+            <a href="https://www.facebook.com/share/1Czmz11UWm/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">Facebook</a>
+            <a href="https://www.tiktok.com/@ufs_blasc" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">TikTok</a>
+            <a href="mailto:Blascu@gmail.com" class="btn btn-blue">Email Us</a>
           </div>
         </div>
       </div>
 
       <div class="form-panel fade-up">
-        <h2>Send an Inquiry</h2>
+        <h2>Send an Enquiry</h2>
         <p class="sub">All fields marked * are required.</p>
         <form id="contactForm">
           <div class="form-grid">
@@ -163,7 +168,7 @@
         <span class="social-link social-link--pending" aria-hidden="true" title="Add LinkedIn link">
           <svg class="social-icon-fill" viewBox="0 0 24 24"><path d="M6.9 8.8a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8zM5.3 19.2h3.2V10H5.3v9.2zM10.4 10h3v1.3h.1c.4-.8 1.4-1.6 2.9-1.6 3.1 0 3.6 2 3.6 4.7v4.8h-3.2v-4.3c0-1 0-2.4-1.5-2.4s-1.7 1.1-1.7 2.3v4.4h-3.2V10z"/></svg>
         </span>
-        <a class="social-link" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
+        <a class="social-link" href="https://www.tiktok.com/@ufs_blasc" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok">
           <svg class="social-icon-fill" viewBox="0 0 16 16"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
         </a>
       </div></div>
