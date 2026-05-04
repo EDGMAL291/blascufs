@@ -99,14 +99,30 @@
       -webkit-appearance:none;
       -moz-appearance:none;
       appearance:none;
-      background-image:none !important;
-      padding-right:12px;
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--blue-mid) 50%),
+        linear-gradient(135deg, var(--blue-mid) 50%, transparent 50%),
+        linear-gradient(to right, #d6e0eb, #d6e0eb) !important;
+      background-position:
+        calc(100% - 18px) calc(50% - 2px),
+        calc(100% - 12px) calc(50% - 2px),
+        calc(100% - 34px) 50% !important;
+      background-size:
+        6px 6px,
+        6px 6px,
+        1px 20px !important;
+      background-repeat:no-repeat !important;
+      padding-right:42px;
     }
     .npa-step-card select::-ms-expand{display:none}
     .npa-step-card input[type="text"]:focus,
     .npa-step-card select:focus{
       border-color:var(--blue-mid);
       box-shadow:0 0 0 3px rgba(48,126,216,.12);
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--blue) 50%),
+        linear-gradient(135deg, var(--blue) 50%, transparent 50%),
+        linear-gradient(to right, #c7d8e9, #c7d8e9) !important;
     }
     .npa-invalid{
       border-color:#c62828 !important;
@@ -491,6 +507,7 @@
     }
     if (state.stepIndex === 2) {
       c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">Eligibility answers are only used to filter available date options. Personal details are not collected on this website.</p><div class="npa-row"><div class="field"><label>Have you completed the relevant criminal procedure/criminal process module?</label><select id="criminalModule"><option value="">Select</option><option value="yes" ${state.criminalModule==='yes'?'selected':''}>Yes</option><option value="no" ${state.criminalModule==='no'?'selected':''}>No</option><option value="current" ${state.criminalModule==='current'?'selected':''}>Currently completing it</option></select></div><div class="field"><label>What year of study are you currently in?</label><select id="yearOfStudy"><option value="">Select</option><option value="first" ${state.yearOfStudy==='first'?'selected':''}>1st year</option><option value="second" ${state.yearOfStudy==='second'?'selected':''}>2nd year</option><option value="third" ${state.yearOfStudy==='third'?'selected':''}>3rd year</option><option value="final" ${state.yearOfStudy==='final'?'selected':''}>Final year</option></select></div></div><div class="field" style="margin-top:12px"><label>Will you need transport?</label><select id="transportNeeded"><option value=\"\">Select</option><option value=\"no\" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value=\"yes\" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability. If transport is not allocated, students accepted into the programme are still expected to attend.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
+      if (typeof window.blascEnhanceAnimatedSelects === 'function') window.blascEnhanceAnimatedSelects(c);
       const criminalModuleSelect = c.querySelector('#criminalModule');
       const yearOfStudySelect = c.querySelector('#yearOfStudy');
       const transportSelect = c.querySelector('#transportNeeded');

@@ -94,19 +94,7 @@
             <div class="detail-body"><strong>Email</strong><span><a href="mailto:Blascu@gmail.com" style="color:var(--blue-mid)">Blascu@gmail.com</a></span></div>
           </div>
           <div class="detail-card fade-up">
-            <div class="detail-body"><strong>Instagram</strong><span><a href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" style="color:var(--blue-mid)">@ufs_blasc</a></span></div>
-          </div>
-          <div class="detail-card fade-up">
-            <div class="detail-body"><strong>Facebook</strong><span><a href="https://www.facebook.com/share/1Czmz11UWm/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" style="color:var(--blue-mid)">BLASC UFS on Facebook</a></span></div>
-          </div>
-          <div class="detail-card fade-up">
-            <div class="detail-body"><strong>TikTok</strong><span><a href="https://www.tiktok.com/@ufs_blasc" target="_blank" rel="noopener noreferrer" style="color:var(--blue-mid)">@ufs_blasc</a></span></div>
-          </div>
-          <div class="detail-card fade-up">
             <div class="detail-body"><strong>Campus</strong><span>University of the Free State<br/>Bloemfontein, Free State</span></div>
-          </div>
-          <div class="detail-card fade-up">
-            <div class="detail-body"><strong>Response Time</strong><span>We aim to respond within 2–3 working days.</span></div>
           </div>
         </div>
         <div style="margin-top:32px" class="fade-up">
@@ -115,7 +103,7 @@
             <a href="https://instagram.com/ufs_blasc" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">Instagram</a>
             <a href="https://www.facebook.com/share/1Czmz11UWm/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">Facebook</a>
             <a href="https://www.tiktok.com/@ufs_blasc" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">TikTok</a>
-            <a href="mailto:Blascu@gmail.com" class="btn btn-blue">Email Us</a>
+            <a href="mailto:Blascu@gmail.com" class="btn btn-blue">Email</a>
           </div>
         </div>
       </div>
@@ -135,6 +123,7 @@
               <option>Join now</option>
               <option>General enquiries</option>
               <option>Gear up applications</option>
+              <option>NPA shadowing programme</option>
               <option>Impartial student applications</option>
               <option>Subcommittee application</option>
             </select>
@@ -189,7 +178,6 @@
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
-
       const subject = subjectInput.value.trim();
       const bodyLines = [
         `Name: ${nameInput.value.trim()}`,
