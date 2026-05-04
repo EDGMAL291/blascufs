@@ -347,11 +347,14 @@
       selectedWeekId: state.selectedWeekId,
       selectedWeekLabel: state.selectedWeekLabel
   });
-  const postToCodeApi = async (payload) => {
-    const response = await fetch(CODE_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
+  const requestCodeApi = async (payload) => {
+    const url = new URL(CODE_API_URL);
+    Object.entries(payload).forEach(([key, value]) => {
+      url.searchParams.set(key, value == null ? '' : String(value));
+    });
+    const response = await fetch(url.href, {
+      method: 'GET',
+      cache: 'no-store'
     });
     const raw = await response.text();
     let data = null;
@@ -369,12 +372,15 @@
       }
       throw new Error((data && data.error) || `API request failed (${response.status}).`);
     }
+    if (payload.action === 'createPreApplication' && !data.referenceCode) {
+      throw new Error('Application API deployment is out of date. Redeploy the Apps Script Web App before generating reference codes.');
+    }
     return data;
   };
   const syncWeekStatusFromApi = async () => {
     if (!isCodeApiConfigured()) return;
     try {
-      const data = await postToCodeApi({ action: 'getWeekStatus' });
+      const data = await requestCodeApi({ action: 'getWeekStatus' });
       if (data && data.weekStatus && typeof data.weekStatus === 'object') {
         state.weekStatus = data.weekStatus;
       }
@@ -388,7 +394,7 @@
     for (let i = 0; i < 15; i += 1) {
       state.referenceCode = generateUniqueReferenceCode();
       try {
-        const data = await postToCodeApi(buildPreApplicationPayload());
+        const data = await requestCodeApi(buildPreApplicationPayload());
         state.referenceCode = String(data.referenceCode || state.referenceCode);
         if (data.weekStatus && typeof data.weekStatus === 'object') {
           state.weekStatus = data.weekStatus;

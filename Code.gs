@@ -112,7 +112,7 @@ function logPrefilledReferenceCodeTemplate_(form, refCodeItem) {
 
 /**
  * Web app endpoint.
- * Request body JSON:
+ * POST request body JSON, or GET query parameters:
  * {"action":"createPreApplication","referenceCode":"BLASC-NPA-2026-7F3K2Q","yearOfStudy":"third","criminalProcedureStatus":"yes","transportNeeded":"no","selectedWeekId":"w6","selectedWeekLabel":"Week 6 (9-13 Jun 2026)"}
  * {"action":"getWeekStatus"}
  */
@@ -137,6 +137,9 @@ function doPost(e) {
 function doGet(e) {
   try {
     var action = e && e.parameter && e.parameter.action ? String(e.parameter.action) : '';
+    if (action === 'createPreApplication') {
+      return createPreApplication_(payloadFromRequestParameters_(e.parameter || {}));
+    }
     if (action === 'getWeekStatus') {
       return getWeekStatusResponse_();
     }
@@ -437,6 +440,18 @@ function parseJsonBody_(e) {
   } catch (_) {
     return null;
   }
+}
+
+function payloadFromRequestParameters_(params) {
+  return {
+    action: String(params.action || ''),
+    referenceCode: String(params.referenceCode || ''),
+    yearOfStudy: String(params.yearOfStudy || ''),
+    criminalProcedureStatus: String(params.criminalProcedureStatus || ''),
+    transportNeeded: String(params.transportNeeded || ''),
+    selectedWeekId: String(params.selectedWeekId || ''),
+    selectedWeekLabel: String(params.selectedWeekLabel || '')
+  };
 }
 
 function jsonResponse_(obj) {
