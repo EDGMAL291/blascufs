@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="assets/style.css?v=20260505-polish"/>
+<link rel="stylesheet" href="assets/style.css?v=20260506-senior-pass"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -87,11 +87,11 @@
 
 <section class="section">
   <div class="section-inner">
-    <div class="events-tabs">
-      <button class="etab active" type="button" onclick="showEtab('moot', this)">Moot Court Competition</button>
-      <button class="etab" type="button" onclick="showEtab('freedom', this)">Freedom Day March</button>
-      <button class="etab" type="button" onclick="showEtab('career', this)">Career Events</button>
-      <button class="etab" type="button" onclick="showEtab('justice', this)">Social Justice</button>
+    <div class="events-tabs" aria-label="Event categories">
+      <button class="etab active" type="button" data-tab-target="moot">Moot Court Competition</button>
+      <button class="etab" type="button" data-tab-target="freedom">Freedom Day March</button>
+      <button class="etab" type="button" data-tab-target="career">Career Events</button>
+      <button class="etab" type="button" data-tab-target="justice">Social Justice</button>
     </div>
 
     <!-- MOOT COURT -->
@@ -201,14 +201,6 @@
   </div>
   <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
 </footer>
-<script src="assets/main.js?v=20260505-polish"></script>
-<script>
-function showEtab(id, button) {
-  document.querySelectorAll('.etab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.etab').forEach(b => b.classList.remove('active'));
-  document.getElementById('etab-' + id).classList.add('active');
-  if (button) button.classList.add('active');
-}
-</script>
+<script src="assets/main.js?v=20260506-senior-pass"></script>
 </body>
 </html>

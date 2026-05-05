@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── ACTIVE NAV LINK ──
   const path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
-    const href = a.getAttribute('href');
+    const href = (a.getAttribute('href') || '').split(/[?#]/)[0];
     if (href === path || (path === '' && href === 'index.html')) {
       a.classList.add('active');
+      a.setAttribute('aria-current', 'page');
     }
   });
 
@@ -23,23 +24,108 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      const isOpen = mobileMenu.classList.toggle('open');
+    const setMobileMenuOpen = (isOpen) => {
+      mobileMenu.classList.toggle('open', isOpen);
       hamburger.classList.toggle('open', isOpen);
       hamburger.setAttribute('aria-expanded', String(isOpen));
       hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
       document.body.classList.toggle('no-scroll', isOpen);
+    };
+
+    hamburger.addEventListener('click', () => {
+      setMobileMenuOpen(!mobileMenu.classList.contains('open'));
     });
     mobileMenu.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        hamburger.setAttribute('aria-label', 'Open menu');
-        document.body.classList.remove('no-scroll');
+        setMobileMenuOpen(false);
       });
     });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        setMobileMenuOpen(false);
+        hamburger.focus();
+      }
+    });
   }
+
+  // ── ACCESSIBLE TABS ──
+  const setupTabInterface = ({ tabListSelector, buttonSelector, panelSelector, panelPrefix }) => {
+    const tabList = document.querySelector(tabListSelector);
+    if (!tabList) return;
+
+    const buttons = Array.from(tabList.querySelectorAll(buttonSelector));
+    const panels = Array.from(document.querySelectorAll(panelSelector));
+    if (!buttons.length || !panels.length) return;
+
+    tabList.setAttribute('role', 'tablist');
+
+    const getTargetId = (button) => {
+      const target = button.dataset.tabTarget || '';
+      return target.startsWith(panelPrefix) ? target : `${panelPrefix}${target}`;
+    };
+
+    const activateTab = (button, focus = false) => {
+      const targetId = getTargetId(button);
+      buttons.forEach(tabButton => {
+        const isActive = tabButton === button;
+        tabButton.classList.toggle('active', isActive);
+        tabButton.setAttribute('aria-selected', String(isActive));
+        tabButton.tabIndex = isActive ? 0 : -1;
+      });
+      panels.forEach(panel => {
+        const isActive = panel.id === targetId;
+        panel.classList.toggle('active', isActive);
+        panel.hidden = !isActive;
+      });
+      if (focus) button.focus();
+    };
+
+    buttons.forEach((button, index) => {
+      const targetId = getTargetId(button);
+      const panel = document.getElementById(targetId);
+      if (!panel) return;
+      if (!button.id) button.id = `${targetId}-tab`;
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-controls', targetId);
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', button.id);
+
+      button.addEventListener('click', () => activateTab(button));
+      button.addEventListener('keydown', (event) => {
+        const currentIndex = buttons.indexOf(button);
+        let nextIndex = currentIndex;
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (currentIndex + 1) % buttons.length;
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = buttons.length - 1;
+        if (nextIndex !== currentIndex) {
+          event.preventDefault();
+          activateTab(buttons[nextIndex], true);
+        }
+      });
+
+      const initiallyActive = button.classList.contains('active') || panel.classList.contains('active') || index === 0;
+      button.setAttribute('aria-selected', String(initiallyActive));
+      button.tabIndex = initiallyActive ? 0 : -1;
+      panel.hidden = !initiallyActive;
+    });
+
+    const activeButton = buttons.find(button => button.classList.contains('active')) || buttons[0];
+    activateTab(activeButton);
+  };
+
+  setupTabInterface({
+    tabListSelector: '.prog-tabs',
+    buttonSelector: '.tab-btn',
+    panelSelector: '.tab-panel',
+    panelPrefix: 'tab-'
+  });
+  setupTabInterface({
+    tabListSelector: '.events-tabs',
+    buttonSelector: '.etab',
+    panelSelector: '.etab-panel',
+    panelPrefix: 'etab-'
+  });
 
   // ── FADE-UP INTERSECTION OBSERVER ──
   const observer = new IntersectionObserver((entries) => {
@@ -56,22 +142,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightbox = document.getElementById('lightbox');
   if (lightbox) {
     const lbImg = document.getElementById('lightbox-img');
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      document.body.classList.remove('no-scroll');
+    };
     document.querySelectorAll('[data-lightbox]').forEach(el => {
       el.addEventListener('click', () => {
-        lbImg.src = el.querySelector('img').src;
+        const img = el.querySelector('img');
+        if (!img || !lbImg) return;
+        lbImg.src = img.src;
+        lbImg.alt = img.alt || 'BLASC UFS gallery image';
         lightbox.classList.add('open');
         document.body.classList.add('no-scroll');
       });
     });
-    lightbox.addEventListener('click', () => {
-      lightbox.classList.remove('open');
-      document.body.classList.remove('no-scroll');
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox || event.target.closest('.lightbox-close')) closeLightbox();
     });
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') {
-        lightbox.classList.remove('open');
-        document.body.classList.remove('no-scroll');
-      }
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
     });
   }
 
@@ -82,13 +171,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const btn = form.querySelector('[type="submit"]');
       if (btn) {
         const original = btn.textContent;
-        btn.textContent = '✓ Sent!';
+        btn.textContent = 'Sent';
         btn.style.background = '#16a34a';
         btn.disabled = true;
+        btn.setAttribute('aria-live', 'polite');
         setTimeout(() => {
           btn.textContent = original;
           btn.style.background = '';
           btn.disabled = false;
+          btn.removeAttribute('aria-live');
           form.reset();
         }, 3000);
       }

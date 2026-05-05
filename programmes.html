@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="assets/style.css?v=20260505-polish"/>
+<link rel="stylesheet" href="assets/style.css?v=20260506-senior-pass"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -135,11 +135,11 @@
 <section class="section">
   <div class="section-inner">
 
-    <div class="prog-tabs">
-      <button class="tab-btn active" type="button" onclick="showTab('gearup', this)">Gear Up</button>
-      <button class="tab-btn" type="button" onclick="showTab('npa', this)">In the Shadow of the Prosecutor</button>
-      <button class="tab-btn" type="button" onclick="showTab('moot', this)">Moot Court Training</button>
-      <button class="tab-btn" type="button" onclick="showTab('other', this)">Other Programmes</button>
+    <div class="prog-tabs" aria-label="Programme categories">
+      <button class="tab-btn active" type="button" data-tab-target="gearup">Gear Up</button>
+      <button class="tab-btn" type="button" data-tab-target="npa">In the Shadow of the Prosecutor</button>
+      <button class="tab-btn" type="button" data-tab-target="moot">Moot Court Training</button>
+      <button class="tab-btn" type="button" data-tab-target="other">Other Programmes</button>
     </div>
 
     <!-- ══ GEAR UP ══ -->
@@ -271,7 +271,7 @@
       </div>
       <div style="background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-md);padding:24px;margin-top:28px" class="fade-up">
         <strong style="font-size:.95rem;color:var(--ink)">Want to participate or get more information?</strong>
-        <p style="color:var(--muted);font-size:.9rem;margin-top:8px;line-height:1.7">Contact the <strong>Academics & Legal Research Officer (Ntsako Shivanda)</strong> or the <strong>Secretary (Muzi Lekhuwane)</strong> via <a href="mailto:Blascu@gmail.com" style="color:var(--blue-mid)">Blascu@gmail.com</a> or reach us on Instagram <a href="https://instagram.com/ufs_blasc" style="color:var(--blue-mid)" target="_blank">@ufs_blasc</a>.</p>
+        <p style="color:var(--muted);font-size:.9rem;margin-top:8px;line-height:1.7">Contact the <strong>Academics & Legal Research Officer (Ntsako Shivanda)</strong> or the <strong>Secretary (Muzi Lekhuwane)</strong> via <a href="mailto:Blascu@gmail.com" style="color:var(--blue-mid)">Blascu@gmail.com</a> or reach us on Instagram <a href="https://instagram.com/ufs_blasc" style="color:var(--blue-mid)" target="_blank" rel="noopener noreferrer">@ufs_blasc</a>.</p>
       </div>
     </div>
 
@@ -321,15 +321,6 @@
   <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
 </footer>
 
-<script src="assets/main.js?v=20260505-polish"></script>
-<script>
-function showTab(id, button) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  if (button) button.classList.add('active');
-}
-
-</script>
+<script src="assets/main.js?v=20260506-senior-pass"></script>
 </body>
 </html>
