@@ -203,6 +203,8 @@
         <h3>Application Details</h3>
         <ul>
           <li>Applications open: 1 May 2026</li>
+          <li>Current intake: final-year students only</li>
+          <li>Applicants must have completed Criminal Procedure</li>
           <li>Maximum: 15 students per week</li>
           <li>Submission does not guarantee placement</li>
         </ul>
@@ -296,7 +298,7 @@
   const weekDefinitions = [
     { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026' }, { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026' }, { id: 'w3', number: 3, label: 'Week 3', dateRange: '19–23 May 2026' }, { id: 'w4', number: 4, label: 'Week 4', dateRange: '26–30 May 2026' }, { id: 'w5', number: 5, label: 'Week 5', dateRange: '2–6 Jun 2026' }, { id: 'w6', number: 6, label: 'Week 6', dateRange: '9–13 Jun 2026' }, { id: 'w7', number: 7, label: 'Week 7', dateRange: '16–20 Jun 2026' }, { id: 'w8', number: 8, label: 'Week 8', dateRange: '23–27 Jun 2026' }, { id: 'w9', number: 9, label: 'Week 9', dateRange: '30 Jun–4 Jul 2026' }, { id: 'w10', number: 10, label: 'Week 10', dateRange: '7–11 Jul 2026' }, { id: 'w11', number: 11, label: 'Week 11', dateRange: '14–18 Jul 2026' }, { id: 'w12', number: 12, label: 'Week 12', dateRange: '21–25 Jul 2026' }, { id: 'w13', number: 13, label: 'Week 13', dateRange: '28 Jul–1 Aug 2026' }, { id: 'w14', number: 14, label: 'Week 14', dateRange: '4–8 Aug 2026' }, { id: 'w15', number: 15, label: 'Week 15', dateRange: '11–15 Aug 2026' }, { id: 'w16', number: 16, label: 'Week 16', dateRange: '18–22 Aug 2026' }, { id: 'w17', number: 17, label: 'Week 17', dateRange: '25–29 Aug 2026' }, { id: 'w18', number: 18, label: 'Week 18', dateRange: '1–5 Sep 2026' }, { id: 'w19', number: 19, label: 'Week 19', dateRange: '8–12 Sep 2026' }, { id: 'w20', number: 20, label: 'Week 20', dateRange: '15–19 Sep 2026' }
   ];
-  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, criminalModule: '', yearOfStudy: '', transportNeeded: '', selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '', weekStatus: {} };
+  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, criminalModule: '', yearOfStudy: 'final', transportNeeded: '', selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '', weekStatus: {} };
   const getWeekById = (id) => weekDefinitions.find((w) => w.id === id);
   const isCodeApiConfigured = () => Boolean(CODE_API_URL && !CODE_API_URL.includes('REPLACE_WITH_WEB_APP_DEPLOYMENT_ID'));
   const readPreApplications = () => {
@@ -425,23 +427,11 @@
     throw lastErr;
   };
   const hasProgress = () => state.stepIndex > 0 || state.introConsent || state.declarationConsent || state.criminalModule || state.yearOfStudy || state.transportNeeded || state.selectedWeekId || state.referenceCode;
-  const hasCriminalProcedure = () => state.criminalModule === 'yes' || state.criminalModule === 'current';
+  const hasCriminalProcedure = () => state.criminalModule === 'yes';
   const getDateOptionsForState = () => {
     let allowedWeeks = [];
-    if (!hasCriminalProcedure()) {
-      allowedWeeks = [...Array.from({ length: 4 }, (_, i) => i + 11), ...Array.from({ length: 6 }, (_, i) => i + 15)];
-    } else if (state.yearOfStudy === 'final') {
-      if (state.transportNeeded === 'yes') {
-        allowedWeeks = [4, 5, ...Array.from({ length: 6 }, (_, i) => i + 15)];
-      } else {
-        allowedWeeks = [1, 2, 3, ...Array.from({ length: 6 }, (_, i) => i + 15)];
-      }
-    } else if (state.yearOfStudy === 'third') {
-      allowedWeeks = [6, 7, 8, 9, 10, ...Array.from({ length: 6 }, (_, i) => i + 15)];
-    } else if (state.yearOfStudy === 'second') {
-      allowedWeeks = [11, 12, 13, 14, ...Array.from({ length: 6 }, (_, i) => i + 15)];
-    } else if (state.yearOfStudy === 'first') {
-      allowedWeeks = Array.from({ length: 6 }, (_, i) => i + 15);
+    if (hasCriminalProcedure() && state.yearOfStudy === 'final') {
+      allowedWeeks = [2, 3, ...Array.from({ length: 6 }, (_, i) => i + 15)];
     }
     return weekDefinitions
       .filter((week) => allowedWeeks.includes(week.number))
@@ -468,7 +458,7 @@
       el.classList.remove('npa-invalid', 'npa-invalid-label', 'npa-shake');
     };
     if (state.stepIndex === 0) {
-      c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. This is a formal application flow for date selection and reference-code generation.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Eligibility and date selection</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private form submission</span></div></div><p class="npa-step-sub">This website only handles eligibility answers, selected date, and reference-code data. Personal details are collected only in the separate form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. For the current intake, applications are limited to final-year students who have completed Criminal Procedure.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Eligibility and date selection</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private form submission</span></div></div><p class="npa-step-sub">This website only handles eligibility answers, selected date, and reference-code data. Personal details are collected only in the separate form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`;
       const introConsentInput = c.querySelector('#introConsent');
       const introConsentLabel = introConsentInput && introConsentInput.closest('label');
       introConsentInput.onchange = (e) => { state.introConsent = e.target.checked; if (state.introConsent) clearInvalid(introConsentLabel); };
@@ -506,19 +496,17 @@
       return;
     }
     if (state.stepIndex === 2) {
-      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">Eligibility answers are only used to filter available date options. Personal details are not collected on this website.</p><div class="npa-row"><div class="field"><label>Have you completed the relevant criminal procedure/criminal process module?</label><select id="criminalModule"><option value="">Select</option><option value="yes" ${state.criminalModule==='yes'?'selected':''}>Yes</option><option value="no" ${state.criminalModule==='no'?'selected':''}>No</option><option value="current" ${state.criminalModule==='current'?'selected':''}>Currently completing it</option></select></div><div class="field"><label>What year of study are you currently in?</label><select id="yearOfStudy"><option value="">Select</option><option value="first" ${state.yearOfStudy==='first'?'selected':''}>1st year</option><option value="second" ${state.yearOfStudy==='second'?'selected':''}>2nd year</option><option value="third" ${state.yearOfStudy==='third'?'selected':''}>3rd year</option><option value="final" ${state.yearOfStudy==='final'?'selected':''}>Final year</option></select></div></div><div class="field" style="margin-top:12px"><label>Will you need transport?</label><select id="transportNeeded"><option value=\"\">Select</option><option value=\"no\" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value=\"yes\" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability. If transport is not allocated, students accepted into the programme are still expected to attend.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">For the current intake, applications are limited to final-year students who have completed Criminal Procedure. Personal details are not collected on this website.</p><div class="npa-row"><div class="field"><label>Have you completed Criminal Procedure?</label><select id="criminalModule"><option value="">Select</option><option value="yes" ${state.criminalModule==='yes'?'selected':''}>Yes</option><option value="no" ${state.criminalModule==='no'?'selected':''}>No</option></select></div><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div></div><p class="npa-note">Students who have not completed Criminal Procedure are not eligible for this intake. BLASC will revisit the criteria for later intakes.</p><div class="field" style="margin-top:12px"><label>Will you need transport?</label><select id="transportNeeded"><option value=\"\">Select</option><option value=\"no\" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value=\"yes\" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability. If transport is not allocated, students accepted into the programme are still expected to attend.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
       if (typeof window.blascEnhanceAnimatedSelects === 'function') window.blascEnhanceAnimatedSelects(c);
       const criminalModuleSelect = c.querySelector('#criminalModule');
-      const yearOfStudySelect = c.querySelector('#yearOfStudy');
       const transportSelect = c.querySelector('#transportNeeded');
+      state.yearOfStudy = 'final';
       criminalModuleSelect.onchange = (e) => { state.criminalModule = e.target.value; state.selectedWeekId = ''; clearInvalid(criminalModuleSelect); };
-      yearOfStudySelect.onchange = (e) => { state.yearOfStudy = e.target.value; state.selectedWeekId = ''; clearInvalid(yearOfStudySelect); };
       transportSelect.onchange = (e) => { state.transportNeeded = e.target.value; state.selectedWeekId = ''; clearInvalid(transportSelect); };
       c.querySelector('#backEligibility').onclick = () => { state.stepIndex = 1; render(); };
       c.querySelector('#nextEligibility').onclick = () => {
         let hasError = false;
-        if (!state.criminalModule) { flagInvalid(criminalModuleSelect); hasError = true; }
-        if (!state.yearOfStudy) { flagInvalid(yearOfStudySelect); hasError = true; }
+        if (state.criminalModule !== 'yes') { flagInvalid(criminalModuleSelect); hasError = true; }
         if (!state.transportNeeded) { flagInvalid(transportSelect); hasError = true; }
         if (hasError) return;
         state.stepIndex = 3;
@@ -528,9 +516,7 @@
     }
     if (state.stepIndex === 3) {
       const eligible = getDateOptionsForState();
-      const guidance = hasCriminalProcedure()
-        ? 'Based on your answers, you may select a preferred eligible programme week.'
-        : 'You may still apply. Because Criminal Procedure has not been completed yet, only the later 1st/2nd-year appropriate weeks are shown.';
+      const guidance = 'Based on your answers, you may select a preferred eligible programme week. The first intake available through this application flow starts next week.';
       if (isCodeApiConfigured() && Object.keys(state.weekStatus).length === 0) {
         syncWeekStatusFromApi().finally(() => {
           if (state.stepIndex === 3) render();
