@@ -143,6 +143,9 @@
     .npa-note{font-size:.82rem;color:var(--muted);line-height:1.6;margin-top:8px}
     .npa-warning{background:#fff8e7;border:1px solid #f5d489;border-radius:var(--radius-sm);padding:12px 14px;font-size:.84rem;color:#7a5300;line-height:1.6;margin:12px 0}
     .npa-declaration{border:1px solid var(--border);border-radius:12px;background:#f9fbff;padding:14px;max-height:280px;overflow:auto}
+    .npa-declaration-brand{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid #dde6f1;margin-bottom:10px}
+    .npa-declaration-brand img{width:32px;height:32px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid #dfe6ef;padding:2px}
+    .npa-declaration-pill{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;border:1px solid #cddbed;background:#fff;color:var(--blue)}
     .npa-declaration h4{font-size:.84rem;color:var(--ink);margin:10px 0 6px}
     .npa-declaration ul{list-style:disc;padding-left:18px;color:var(--muted);font-size:.84rem;line-height:1.55}
     .npa-full-toggle{margin-top:12px}
@@ -202,8 +205,8 @@
       <div class="npa-card">
         <h3>Application Details</h3>
         <ul>
-          <li>Applications open: 1 May 2026</li>
-          <li>Current intake: final-year students only</li>
+          <li>Applications open: 7 May 2026</li>
+          <li>This week's intake: final-year students only</li>
           <li>Applicants must have completed Criminal Procedure</li>
           <li>Maximum: 15 students per week</li>
           <li>Submission does not guarantee placement</li>
@@ -296,7 +299,8 @@
   const WEEK_CAPACITY = 15;
   const steps = ['Overview', 'Declaration', 'Eligibility', 'Date Selection', 'Form'];
   const weekDefinitions = [
-    { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026' }, { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026' }, { id: 'w3', number: 3, label: 'Week 3', dateRange: '19–23 May 2026' }, { id: 'w4', number: 4, label: 'Week 4', dateRange: '26–30 May 2026' }, { id: 'w5', number: 5, label: 'Week 5', dateRange: '2–6 Jun 2026' }, { id: 'w6', number: 6, label: 'Week 6', dateRange: '9–13 Jun 2026' }, { id: 'w7', number: 7, label: 'Week 7', dateRange: '16–20 Jun 2026' }, { id: 'w8', number: 8, label: 'Week 8', dateRange: '23–27 Jun 2026' }, { id: 'w9', number: 9, label: 'Week 9', dateRange: '30 Jun–4 Jul 2026' }, { id: 'w10', number: 10, label: 'Week 10', dateRange: '7–11 Jul 2026' }, { id: 'w11', number: 11, label: 'Week 11', dateRange: '14–18 Jul 2026' }, { id: 'w12', number: 12, label: 'Week 12', dateRange: '21–25 Jul 2026' }, { id: 'w13', number: 13, label: 'Week 13', dateRange: '28 Jul–1 Aug 2026' }, { id: 'w14', number: 14, label: 'Week 14', dateRange: '4–8 Aug 2026' }, { id: 'w15', number: 15, label: 'Week 15', dateRange: '11–15 Aug 2026' }, { id: 'w16', number: 16, label: 'Week 16', dateRange: '18–22 Aug 2026' }, { id: 'w17', number: 17, label: 'Week 17', dateRange: '25–29 Aug 2026' }, { id: 'w18', number: 18, label: 'Week 18', dateRange: '1–5 Sep 2026' }, { id: 'w19', number: 19, label: 'Week 19', dateRange: '8–12 Sep 2026' }, { id: 'w20', number: 20, label: 'Week 20', dateRange: '15–19 Sep 2026' }
+    { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026' },
+    { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026' }
   ];
   const state = { stepIndex: 0, introConsent: false, declarationConsent: false, criminalModule: '', yearOfStudy: 'final', transportNeeded: '', selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '', weekStatus: {} };
   const getWeekById = (id) => weekDefinitions.find((w) => w.id === id);
@@ -430,9 +434,7 @@
   const hasCriminalProcedure = () => state.criminalModule === 'yes';
   const getDateOptionsForState = () => {
     let allowedWeeks = [];
-    if (hasCriminalProcedure() && state.yearOfStudy === 'final') {
-      allowedWeeks = [2, 3, ...Array.from({ length: 6 }, (_, i) => i + 15)];
-    }
+    if (hasCriminalProcedure() && state.yearOfStudy === 'final') allowedWeeks = [1, 2];
     return weekDefinitions
       .filter((week) => allowedWeeks.includes(week.number))
       .sort((a, b) => a.number - b.number);
@@ -458,7 +460,7 @@
       el.classList.remove('npa-invalid', 'npa-invalid-label', 'npa-shake');
     };
     if (state.stepIndex === 0) {
-      c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>1 May 2026</strong>. For the current intake, applications are limited to final-year students who have completed Criminal Procedure.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Eligibility and date selection</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private form submission</span></div></div><p class="npa-step-sub">This website only handles eligibility answers, selected date, and reference-code data. Personal details are collected only in the separate form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>7 May 2026</strong>. For this week's intake, applications are limited to final-year students who have completed Criminal Procedure.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Eligibility and date selection</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private form submission</span></div></div><p class="npa-step-sub">This website only handles eligibility answers, selected date, and reference-code data. Personal details are collected only in the separate form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`;
       const introConsentInput = c.querySelector('#introConsent');
       const introConsentLabel = introConsentInput && introConsentInput.closest('label');
       introConsentInput.onchange = (e) => { state.introConsent = e.target.checked; if (state.introConsent) clearInvalid(introConsentLabel); };
@@ -473,7 +475,7 @@
       return;
     }
     if (state.stepIndex === 1) {
-      c.innerHTML = `<h3 class="npa-step-title">Student Declaration and Undertaking</h3><p class="npa-step-sub">Please read and confirm before continuing.</p><div class="npa-declaration"><h4>Professional and Confidential Environment</h4><ul><li>Participation is a privilege and not an automatic right.</li><li>The programme is observational, educational, and takes place in a professional prosecutorial setting.</li><li>You may be exposed to sensitive legal processes, witnesses, preparation, and official documents.</li></ul><h4>Conduct and Compliance</h4><ul><li>Strict confidentiality is required during and after participation.</li><li>You must comply with supervision by assigned prosecutors and authorised officials.</li><li>You must adhere to POPIA, the NPA Code of Conduct, and institutional ethical standards.</li><li>Independent consultations with witnesses, complainants, accused persons, or stakeholders are prohibited.</li><li>Personal errands or non-professional tasks are prohibited.</li><li>Carry student ID and follow communicated dress code and working hours when requested.</li></ul><h4>Consequences and Institutional Dignity</h4><ul><li>Non-compliance may lead to immediate termination and may carry disciplinary/legal implications where applicable.</li><li>Participation is voluntary.</li><li>You must uphold the dignity of UFS, BLASC UFS, and the National Prosecuting Authority.</li></ul></div><details class="npa-full-toggle"><summary style="cursor:pointer;color:var(--blue);font-weight:700;font-size:.84rem">View full declaration</summary><p class="npa-note"><button type="button" id="openDeclarationPdfBtn" class="btn btn-outline-dark" style="min-height:38px;padding:8px 14px;font-size:.82rem">Open Full Declaration (PDF)</button></p></details><label class="check-label" style="margin-top:12px"><input type="checkbox" id="decl" ${state.declarationConsent?'checked':''}/> I have read, understood, and agree to the Student Declaration and Undertaking.</label><div class="npa-actions"><button class="btn btn-outline-dark" id="back1">Back</button><button class="btn btn-blue" id="next1">Next</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Student Declaration and Undertaking</h3><p class="npa-step-sub">Please read and confirm before continuing.</p><div class="npa-declaration"><div class="npa-declaration-brand"><img src="assets/images/logo.jpeg" alt="BLASC UFS"/><span class="npa-declaration-pill">BLASC UFS</span><span class="npa-declaration-pill">NPA Partnership</span><span class="npa-declaration-pill">UFS Law Faculty</span></div><h4>Professional and Confidential Environment</h4><ul><li>Participation is a privilege and not an automatic right.</li><li>The programme is observational and educational within a professional prosecutorial environment.</li><li>You may be exposed to sensitive legal processes, witnesses, preparation discussions, and official documents.</li></ul><h4>Conduct and Compliance</h4><ul><li>Strict confidentiality is required during and after participation.</li><li>You must comply with supervision by assigned prosecutors and authorised officials.</li><li>You must adhere to POPIA, the NPA Code of Conduct, and institutional ethical standards.</li><li>Independent consultations with witnesses, complainants, accused persons, or stakeholders are prohibited.</li><li>Personal errands or non-professional tasks are prohibited.</li><li>Carry student ID and follow communicated dress code and working hours when requested.</li></ul><h4>Consequences and Institutional Dignity</h4><ul><li>Non-compliance may lead to immediate termination and may carry disciplinary or legal implications where applicable.</li><li>Participation is voluntary.</li><li>You must uphold the dignity of UFS, BLASC UFS, and the National Prosecuting Authority.</li></ul></div><details class="npa-full-toggle"><summary style="cursor:pointer;color:var(--blue);font-weight:700;font-size:.84rem">View full declaration</summary><p class="npa-note"><button type="button" id="openDeclarationPdfBtn" class="btn btn-outline-dark" style="min-height:38px;padding:8px 14px;font-size:.82rem">Open Full Declaration (PDF)</button></p></details><label class="check-label" style="margin-top:12px"><input type="checkbox" id="decl" ${state.declarationConsent?'checked':''}/> I have read, understood, and agree to the Student Declaration and Undertaking.</label><div class="npa-actions"><button class="btn btn-outline-dark" id="back1">Back</button><button class="btn btn-blue" id="next1">Next</button></div>`;
       const declarationInput = c.querySelector('#decl');
       const declarationLabel = declarationInput && declarationInput.closest('label');
       declarationInput.onchange = (e) => { state.declarationConsent = e.target.checked; if (state.declarationConsent) clearInvalid(declarationLabel); };
@@ -489,14 +491,14 @@
       const openPdfBtn = c.querySelector('#openDeclarationPdfBtn');
       if (openPdfBtn) {
         openPdfBtn.onclick = () => {
-          const pdfUrl = new URL('assets/UFS-ITSOAP-STUDENT-DECLARATION-AND-UNDERTAKING.pdf', window.location.href).href;
+          const pdfUrl = new URL('assets/UFS-NPA-UNDERTAKING-AND-DECLARATION-2026.pdf', window.location.href).href;
           window.open(pdfUrl, '_blank', 'noopener,noreferrer');
         };
       }
       return;
     }
     if (state.stepIndex === 2) {
-      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">For the current intake, applications are limited to final-year students who have completed Criminal Procedure. Personal details are not collected on this website.</p><div class="npa-row"><div class="field"><label>Have you completed Criminal Procedure?</label><select id="criminalModule"><option value="">Select</option><option value="yes" ${state.criminalModule==='yes'?'selected':''}>Yes</option><option value="no" ${state.criminalModule==='no'?'selected':''}>No</option></select></div><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div></div><p class="npa-note">Students who have not completed Criminal Procedure are not eligible for this intake. BLASC will revisit the criteria for later intakes.</p><div class="field" style="margin-top:12px"><label>Will you need transport?</label><select id="transportNeeded"><option value=\"\">Select</option><option value=\"no\" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value=\"yes\" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability. If transport is not allocated, students accepted into the programme are still expected to attend.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">For this week's intake, applications are limited to final-year students who have completed Criminal Procedure. Personal details are not collected on this website.</p><div class="npa-row"><div class="field"><label>Have you completed Criminal Procedure?</label><select id="criminalModule"><option value="">Select</option><option value="yes" ${state.criminalModule==='yes'?'selected':''}>Yes</option><option value="no" ${state.criminalModule==='no'?'selected':''}>No</option></select></div><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div></div><p class="npa-note">Students who have not completed Criminal Procedure are not eligible for this intake. BLASC will revisit the criteria for later intakes.</p><div class="field" style="margin-top:12px"><label>Will you need transport?</label><select id="transportNeeded"><option value=\"\">Select</option><option value=\"no\" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value=\"yes\" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability and is captured for planning only at this stage.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
       if (typeof window.blascEnhanceAnimatedSelects === 'function') window.blascEnhanceAnimatedSelects(c);
       const criminalModuleSelect = c.querySelector('#criminalModule');
       const transportSelect = c.querySelector('#transportNeeded');
@@ -507,7 +509,6 @@
       c.querySelector('#nextEligibility').onclick = () => {
         let hasError = false;
         if (state.criminalModule !== 'yes') { flagInvalid(criminalModuleSelect); hasError = true; }
-        if (!state.transportNeeded) { flagInvalid(transportSelect); hasError = true; }
         if (hasError) return;
         state.stepIndex = 3;
         render();
