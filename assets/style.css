@@ -207,6 +207,10 @@ h1, h2, h3, h4, p, a, span, label { overflow-wrap: break-word; }
   transition: color 0.2s;
 }
 .mobile-menu a:hover { color: var(--gold-light); }
+.mobile-menu a.active,
+.mobile-menu a[aria-current="page"] {
+  color: var(--gold-light);
+}
 .mobile-menu .m-cta {
   margin-top: 24px;
   background: linear-gradient(135deg, var(--gold-light), var(--gold));
@@ -773,9 +777,13 @@ h2.section-title.light { color: #fff; }
 .lightbox-close {
   position: absolute;
   top: 18px; right: 22px;
+  background: none;
+  border: 0;
   color: rgba(255,255,255,0.6);
   font-size: 2rem;
   line-height: 1;
+  cursor: pointer;
+  padding: 4px;
   transition: color 0.2s;
 }
 .lightbox-close:hover { color: #fff; }
