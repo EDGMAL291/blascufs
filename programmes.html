@@ -41,7 +41,9 @@
   <style>
     /* Tab system */
     .prog-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px;border-bottom:2px solid var(--border);padding-bottom:0}
+    body .prog-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
     .tab-btn{background:none;border:none;padding:12px 20px;font-size:.9rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s;border-radius:0}
+    body .tab-btn{width:100%;display:flex;align-items:center;justify-content:center;text-align:center}
     .tab-btn.active{color:var(--blue);border-bottom-color:var(--blue)}
     .tab-btn:hover{color:var(--ink)}
     .tab-panel{display:none}
@@ -103,6 +105,7 @@
     .op-card p{color:var(--muted);font-size:.89rem;line-height:1.7}
 
     @media(max-width:900px){.info-grid,.npa-info-grid{grid-template-columns:1fr 1fr}.moot-grid,.other-prog,.npa-teaser-grid{grid-template-columns:1fr}}
+    @media(max-width:700px){body .prog-tabs{grid-template-columns:1fr}body .tab-btn{justify-content:flex-start;text-align:left}}
     @media(max-width:900px){.moot-photo-grid{grid-template-columns:1fr}.moot-photo-grid img{height:auto;max-height:520px}}
     @media(max-width:540px){.info-grid,.npa-info-grid{grid-template-columns:1fr}}
   </style>
@@ -150,7 +153,7 @@
         <div>
           <span class="prog-badge">Flagship Programme</span>
           <h2 class="section-title" style="margin-top:12px">Gear Up Learner's Licence Programme</h2>
-          <p class="section-body">A BLASC UFS flagship initiative designed to help students obtain their learner's licence and remove a key barrier to independence and career mobility. The programme is coordinated by Wanga together with Treasurer Alakhe Mvuyu.</p>
+          <p class="section-body">A BLASC UFS flagship initiative designed to help students obtain their learner's licence and remove a key barrier to independence and career mobility. The programme is coordinated by Chairperson Ndiwanga Madzivhandila together with Treasurer Alakhe Mvuyu.</p>
         </div>
       </div>
 

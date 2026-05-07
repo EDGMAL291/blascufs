@@ -1431,12 +1431,16 @@ body .hero h1 em {
 }
 
 .home-actions-wrap {
-  width: min(1200px, calc(100% - 32px));
-  margin: 44px auto 0;
+  position: relative;
+  padding: clamp(52px, 6vw, 78px) clamp(16px, 4vw, 56px);
+  background:
+    linear-gradient(180deg, #f8fbff 0%, #eef5fb 100%);
+  border-top: 1px solid rgba(15,82,143,0.08);
 }
 
 .home-actions-head {
-  margin-bottom: 18px;
+  width: min(1200px, 100%);
+  margin: 0 auto 24px;
 }
 
 .home-actions-head .section-label {
@@ -1449,46 +1453,74 @@ body .hero h1 em {
 }
 
 .home-actions {
+  width: min(1200px, 100%);
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 14px;
+  gap: 16px;
 }
 
 .home-action {
-  min-height: 178px;
+  position: relative;
+  min-height: 210px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 24px;
-  border-radius: 18px;
-  border: 1px solid rgba(15,82,143,0.16);
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 26px;
+  border-radius: 8px;
+  border: 1px solid rgba(15,82,143,0.14);
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,250,255,0.98));
-  box-shadow: var(--shadow-lg);
+    linear-gradient(180deg, rgba(255,255,255,1), rgba(247,251,255,0.96));
+  box-shadow: 0 18px 42px rgba(10,12,15,0.08);
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
   grid-column: span 6;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 .home-action:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: rgba(15,82,143,0.32);
-  box-shadow: 0 34px 76px rgba(7,9,13,0.18), 0 18px 38px rgba(15,82,143,0.14);
+  box-shadow: 0 30px 68px rgba(7,9,13,0.14), 0 14px 30px rgba(15,82,143,0.12);
+}
+
+.home-action::after {
+  content: '';
+  position: absolute;
+  inset: auto 18px 16px auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background:
+    linear-gradient(135deg, var(--blue-mid), var(--blue));
+  opacity: 0.1;
+  transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+
+.home-action:hover::after {
+  transform: scale(1.08);
+  opacity: 0.18;
 }
 
 .home-action span {
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--blue-pale);
   color: var(--blue);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .home-action strong {
   display: block;
   color: var(--ink);
-  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
-  line-height: 1.1;
+  max-width: 18ch;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  line-height: 1.08;
 }
 
 .home-action em {
@@ -1496,22 +1528,56 @@ body .hero h1 em {
   font-size: 0.9rem;
   font-style: normal;
   line-height: 1.55;
+  max-width: 44ch;
+}
+
+.home-action b {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: auto;
+  color: var(--blue);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.home-action b::after {
+  content: '→';
+  transition: transform 0.2s var(--ease);
+}
+
+.home-action:hover b::after {
+  transform: translateX(4px);
 }
 
 .home-action-featured {
   background:
-    linear-gradient(135deg, rgba(12,18,27,0.98), rgba(15,82,143,0.96));
+    linear-gradient(90deg, rgba(8,13,20,0.94) 0%, rgba(11,45,78,0.86) 52%, rgba(12,18,27,0.36) 100%),
+    url('images/bec-stairs-serious.jpeg') center 30%/cover;
   border-color: rgba(240,191,79,0.32);
   grid-column: span 12;
-  min-height: 168px;
+  min-height: 260px;
+}
+
+.home-action-featured::after {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  opacity: 0.2;
 }
 
 .home-action-featured span,
-.home-action-featured strong {
+.home-action-featured strong,
+.home-action-featured b {
   color: #fff;
 }
 
+.home-action-featured span {
+  background: rgba(232,184,75,0.18);
+  color: var(--gold-light);
+}
+
 .home-action-featured em {
+  max-width: 46ch;
   color: rgba(255,255,255,0.72);
 }
 
@@ -1736,7 +1802,7 @@ body .npa-cta-card {
 
 @media (max-width: 900px) {
   .home-actions-wrap {
-    margin-top: 30px;
+    padding: 42px 20px;
   }
 
   .home-actions {
@@ -1746,6 +1812,10 @@ body .npa-cta-card {
   .home-action {
     min-height: auto;
     grid-column: auto;
+  }
+
+  .home-action-featured {
+    min-height: 230px;
   }
 
   .prog-tabs,
@@ -1799,13 +1869,16 @@ body .npa-cta-card {
     font-size: 0.72rem;
   }
 
-  .home-actions {
-    width: calc(100% - 24px);
-  }
-
   .home-action {
     padding: 20px;
-    border-radius: 16px;
+    border-radius: 8px;
+  }
+
+  .home-action-featured {
+    min-height: 250px;
+    background:
+      linear-gradient(180deg, rgba(8,13,20,0.9) 0%, rgba(11,45,78,0.86) 100%),
+      url('images/bec-stairs-serious.jpeg') center 24%/cover;
   }
 }
 
