@@ -1581,6 +1581,42 @@ body .hero h1 em {
   color: rgba(255,255,255,0.72);
 }
 
+.home-action-programmes,
+.home-action-membership {
+  min-height: 250px;
+  border-color: rgba(240,191,79,0.24);
+}
+
+.home-action-programmes {
+  background:
+    linear-gradient(180deg, rgba(8,13,20,0.82) 0%, rgba(11,45,78,0.82) 100%),
+    url('images/home-programmes-card.jpg') center 48%/cover;
+}
+
+.home-action-membership {
+  background:
+    linear-gradient(180deg, rgba(8,13,20,0.76) 0%, rgba(11,45,78,0.84) 100%),
+    url('images/home-membership-card.jpg') center 48%/cover;
+}
+
+.home-action-programmes span,
+.home-action-membership span {
+  background: rgba(232,184,75,0.2);
+  color: var(--gold-light);
+}
+
+.home-action-programmes strong,
+.home-action-programmes b,
+.home-action-membership strong,
+.home-action-membership b {
+  color: #fff;
+}
+
+.home-action-programmes em,
+.home-action-membership em {
+  color: rgba(255,255,255,0.76);
+}
+
 .about-split {
   position: relative;
   margin-top: -1px;
