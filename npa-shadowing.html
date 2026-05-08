@@ -392,10 +392,20 @@
     Object.entries(payload).forEach(([key, value]) => {
       url.searchParams.set(key, value == null ? '' : String(value));
     });
-    const response = await fetch(url.href, {
-      method: 'GET',
-      cache: 'no-store'
-    });
+    let response;
+    try {
+      response = await fetch(url.href, {
+        method: 'GET',
+        cache: 'no-store'
+      });
+    } catch (err) {
+      const message = String(err && err.message ? err.message : '');
+      const normalized = message.toLowerCase();
+      if (normalized.includes('failed to fetch') || normalized.includes('load failed') || normalized.includes('networkerror')) {
+        throw new Error('Application API could not be reached. Redeploy the Apps Script Web App as /exec and set access to "Anyone with the link", then update data-code-api-url if the deployment URL changed.');
+      }
+      throw err;
+    }
     const raw = await response.text();
     let data = null;
     try {
@@ -408,7 +418,7 @@
         throw new Error('Application API access is not authorized (401). Update Apps Script Web App access to "Anyone with the link" and redeploy.');
       }
       if (!data && response.status === 200) {
-        throw new Error('API returned non-JSON content. Redeploy the Apps Script Web App and confirm the URL is the latest /exec deployment.');
+        throw new Error('API returned non-JSON content (usually a Google permission page). Set Apps Script Web App access to "Anyone with the link", redeploy, and confirm data-code-api-url uses the latest /exec deployment.');
       }
       throw new Error((data && data.error) || `API request failed (${response.status}).`);
     }
