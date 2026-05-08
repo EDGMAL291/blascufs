@@ -299,31 +299,32 @@
   const WEEK_CAPACITY = 15;
   const steps = ['Overview', 'Declaration', 'Eligibility', 'Date Selection', 'Form'];
   const weekDefinitions = [
-    { id: 'w1', number: 1, label: 'Week 1', dateRange: '11–15 May 2026' },
-    { id: 'w2', number: 2, label: 'Week 2', dateRange: '18–22 May 2026' },
-    { id: 'w3', number: 3, label: 'Week 3', dateRange: '25–29 May 2026' },
-    { id: 'w4', number: 4, label: 'Week 4', dateRange: '29 June–3 July 2026' },
-    { id: 'w5', number: 5, label: 'Week 5', dateRange: '6–10 July 2026' },
-    { id: 'w6', number: 6, label: 'Week 6', dateRange: '13–17 July 2026' },
-    { id: 'w7', number: 7, label: 'Week 7', dateRange: '20–24 July 2026' },
-    { id: 'w8', number: 8, label: 'Week 8', dateRange: '27–31 July 2026' },
-    { id: 'w9', number: 9, label: 'Week 9', dateRange: '3–7 August 2026' },
-    { id: 'w10', number: 10, label: 'Week 10', dateRange: '17–21 August 2026' },
-    { id: 'w11', number: 11, label: 'Week 11', dateRange: '24–28 August 2026' },
-    { id: 'w12', number: 12, label: 'Week 12', dateRange: '31 August–4 September 2026' },
-    { id: 'w13', number: 13, label: 'Week 13', dateRange: '7–11 September 2026' },
-    { id: 'w14', number: 14, label: 'Week 14', dateRange: '14–18 September 2026' },
-    { id: 'w15', number: 15, label: 'Week 15', dateRange: '21–25 September 2026' },
-    { id: 'w16', number: 16, label: 'Week 16', dateRange: '28 September–2 October 2026' },
-    { id: 'w17', number: 17, label: 'Week 17', dateRange: '5–9 October 2026' },
-    { id: 'w18', number: 18, label: 'Week 18', dateRange: '12–16 October 2026' },
-    { id: 'w19', number: 19, label: 'Week 19', dateRange: '19–23 October 2026' }
+    { id: 'w1', number: 1, label: 'Week 1', dateRange: 'Mon 11 May to Fri 15 May 2026' },
+    { id: 'w2', number: 2, label: 'Week 2', dateRange: 'Mon 18 May to Fri 22 May 2026' },
+    { id: 'w3', number: 3, label: 'Week 3', dateRange: 'Mon 25 May to Fri 29 May 2026' },
+    { id: 'w4', number: 4, label: 'Week 4', dateRange: 'Mon 29 June to Fri 3 July 2026' },
+    { id: 'w5', number: 5, label: 'Week 5', dateRange: 'Mon 6 July to Fri 10 July 2026' },
+    { id: 'w6', number: 6, label: 'Week 6', dateRange: 'Mon 13 July to Fri 17 July 2026' },
+    { id: 'w7', number: 7, label: 'Week 7', dateRange: 'Mon 20 July to Fri 24 July 2026' },
+    { id: 'w8', number: 8, label: 'Week 8', dateRange: 'Mon 27 July to Fri 31 July 2026' },
+    { id: 'w9', number: 9, label: 'Week 9', dateRange: 'Mon 3 August to Fri 7 August 2026' },
+    { id: 'w10', number: 10, label: 'Week 10', dateRange: 'Mon 17 August to Fri 21 August 2026' },
+    { id: 'w11', number: 11, label: 'Week 11', dateRange: 'Mon 24 August to Fri 28 August 2026' },
+    { id: 'w12', number: 12, label: 'Week 12', dateRange: 'Mon 31 August to Fri 4 September 2026' },
+    { id: 'w13', number: 13, label: 'Week 13', dateRange: 'Mon 7 September to Fri 11 September 2026' },
+    { id: 'w14', number: 14, label: 'Week 14', dateRange: 'Mon 14 September to Fri 18 September 2026' },
+    { id: 'w15', number: 15, label: 'Week 15', dateRange: 'Mon 21 September to Fri 25 September 2026' },
+    { id: 'w16', number: 16, label: 'Week 16', dateRange: 'Mon 28 September to Fri 2 October 2026' },
+    { id: 'w17', number: 17, label: 'Week 17', dateRange: 'Mon 5 October to Fri 9 October 2026' },
+    { id: 'w18', number: 18, label: 'Week 18', dateRange: 'Mon 12 October to Fri 16 October 2026' },
+    { id: 'w19', number: 19, label: 'Week 19', dateRange: 'Mon 19 October to Fri 23 October 2026' }
   ];
   const state = {
     stepIndex: 0,
     introConsent: false,
     declarationConsent: false,
     yearOfStudy: 'final',
+    transportNeeded: '',
     selectedWeekId: '',
     selectedWeekLabel: '',
     referenceCode: '',
@@ -383,6 +384,7 @@
     const record = {
       reference_code: state.referenceCode,
       year_of_study: state.yearOfStudy,
+      transport_needed: state.transportNeeded,
       criminal_procedure_status: '',
       selected_week: state.selectedWeekId,
       selected_week_label: state.selectedWeekLabel,
@@ -400,6 +402,7 @@
     action: 'createPreApplication',
       referenceCode: state.referenceCode,
       yearOfStudy: state.yearOfStudy,
+      transportNeeded: state.transportNeeded,
       selectedWeekId: state.selectedWeekId,
       selectedWeekLabel: state.selectedWeekLabel
   });
@@ -565,9 +568,15 @@
       return;
     }
     if (state.stepIndex === 2) {
-      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">Applications are open to final-year students only for now. Personal details are not collected on this website.</p><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">Applications are open to final-year students only for now. Personal details are not collected on this website.</p><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div><div class="field"><label>Do you need transport?</label><select id="transportNeededSelect" aria-label="Transport needed"><option value="">Select option</option><option value="yes please" ${state.transportNeeded === 'yes please' ? 'selected' : ''}>Yes please</option><option value="no thank you" ${state.transportNeeded === 'no thank you' ? 'selected' : ''}>No thank you</option></select><p class="npa-note">Subject to availability.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
       if (typeof window.blascEnhanceAnimatedSelects === 'function') window.blascEnhanceAnimatedSelects(c);
       state.yearOfStudy = 'final';
+      const transportSelect = c.querySelector('#transportNeededSelect');
+      if (transportSelect) {
+        transportSelect.onchange = (e) => {
+          state.transportNeeded = String(e.target.value || '');
+        };
+      }
       c.querySelector('#backEligibility').onclick = () => { state.stepIndex = 1; render(); };
       c.querySelector('#nextEligibility').onclick = () => {
         state.stepIndex = 3;
@@ -584,7 +593,7 @@
           .finally(() => {
             if (state.stepIndex === 3) render();
           });
-        c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-step-sub">${guidance}</p><p class="npa-warning">Reference-code generation reserves one of the 15 places for that week. Complete the separate form with the same code so BLASC can match your application.</p><p class="npa-note">${state.weekStatusLoading ? 'Checking live week availability. Please wait...' : 'Live week availability could not be loaded.'}</p>${state.weekStatusError ? `<p class="npa-warning">${state.weekStatusError}</p>` : ''}<div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-outline-dark" id="retryWeekStatus" ${state.weekStatusLoading ? 'disabled' : ''}>${state.weekStatusLoading ? 'Checking...' : 'Retry Availability Check'}</button></div>`;
+        c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-step-sub">${guidance}</p><p class="npa-warning">Reference-code generation reserves one of the 15 places for that week. Complete the separate form with the same code so BLASC can match your application.</p><p class="npa-note">${state.weekStatusLoading ? 'Checking live week availability. Please wait...' : 'Live week availability could not be loaded.'}</p>${state.weekStatusError ? `<p class="npa-warning">${state.weekStatusError}</p><p class="npa-note">If this error continues, use the backup form link below.</p><p><a class="btn btn-outline-dark" href="${FORM_URL}" target="_blank" rel="noopener noreferrer">Open Form (Backup Link)</a></p>` : ''}<div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-outline-dark" id="retryWeekStatus" ${state.weekStatusLoading ? 'disabled' : ''}>${state.weekStatusLoading ? 'Checking...' : 'Retry Availability Check'}</button></div>`;
         c.querySelector('#back3').onclick = () => { state.stepIndex = 2; render(); };
         const retryBtn = c.querySelector('#retryWeekStatus');
         if (retryBtn) {
@@ -649,6 +658,21 @@
         error.className = 'npa-warning';
         error.textContent = state.saveError;
         c.appendChild(error);
+
+        const note = document.createElement('p');
+        note.className = 'npa-note';
+        note.textContent = 'Code generation failed. You can still open the private form using this backup link.';
+        c.appendChild(note);
+
+        const backupWrap = document.createElement('p');
+        const backupLink = document.createElement('a');
+        backupLink.className = 'btn btn-outline-dark';
+        backupLink.href = FORM_URL;
+        backupLink.target = '_blank';
+        backupLink.rel = 'noopener noreferrer';
+        backupLink.textContent = 'Open Form (Backup Link)';
+        backupWrap.appendChild(backupLink);
+        c.appendChild(backupWrap);
       }
       return;
     }
