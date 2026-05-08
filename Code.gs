@@ -433,6 +433,67 @@ function countReservedForWeek_(rows, headerIndex, selectedWeekId, skipRow) {
   return total;
 }
 
+function enforceWeeklyCapacity() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var sheet = getValidCodeSheet_();
+    ensureValidCodeHeaders_(sheet);
+    var rows = sheet.getDataRange().getValues();
+    if (rows.length < 2) return { ok: true, reassigned: 0, weeks: {} };
+
+    var index = buildHeaderIndex_(rows[0] || []);
+    var weekIdx = (index['selected week id'] || 5) - 1;
+    var statusIdx = (index['status'] || 8) - 1;
+    var createdAtIdx = (index['created at'] || 7) - 1;
+    var waitlistReasonIdx = (index['waitlist_reason'] || 11) - 1;
+    var adminNotesIdx = (index['admin_notes'] || 12) - 1;
+    var byWeek = {};
+
+    for (var i = 1; i < rows.length; i++) {
+      var weekId = String(rows[i][weekIdx] || '').trim().toLowerCase();
+      var status = String(rows[i][statusIdx] || '').trim().toLowerCase();
+      if (!weekId || !RESERVED_STATUSES[status]) continue;
+      if (!byWeek[weekId]) byWeek[weekId] = [];
+      byWeek[weekId].push({
+        rowNumber: i + 1,
+        status: status,
+        createdAt: rows[i][createdAtIdx]
+      });
+    }
+
+    var summary = {};
+    var reassigned = 0;
+    var weekIds = Object.keys(byWeek);
+    for (var w = 0; w < weekIds.length; w++) {
+      var id = weekIds[w];
+      var reservations = byWeek[id].sort(compareReservationPriority_);
+      summary[id] = { kept: Math.min(reservations.length, WEEK_CAPACITY), reassigned: 0 };
+      for (var r = WEEK_CAPACITY; r < reservations.length; r++) {
+        var rowNumber = reservations[r].rowNumber;
+        sheet.getRange(rowNumber, statusIdx + 1).setValue('needs_reassignment');
+        sheet.getRange(rowNumber, waitlistReasonIdx + 1).setValue('Week capacity is limited to 15 students.');
+        sheet.getRange(rowNumber, adminNotesIdx + 1).setValue('Set by enforceWeeklyCapacity: over weekly capacity.');
+        summary[id].reassigned += 1;
+        reassigned += 1;
+      }
+    }
+    SpreadsheetApp.flush();
+    return { ok: true, reassigned: reassigned, weeks: summary };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function compareReservationPriority_(a, b) {
+  if (a.status === 'confirmed' && b.status !== 'confirmed') return -1;
+  if (a.status !== 'confirmed' && b.status === 'confirmed') return 1;
+  var aTime = a.createdAt instanceof Date ? a.createdAt.getTime() : 0;
+  var bTime = b.createdAt instanceof Date ? b.createdAt.getTime() : 0;
+  if (aTime !== bTime) return aTime - bTime;
+  return a.rowNumber - b.rowNumber;
+}
+
 function buildWeekStatusMap_(sheet) {
   var rows = sheet.getDataRange().getValues();
   var result = buildDefaultWeekStatusMap_();
