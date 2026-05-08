@@ -2,6 +2,21 @@
  * BLASC UFS - UFS/NPA ITSOAP Programme Google Form + code verification script.
  */
 
+var WEEK_CAPACITY = 15;
+var WEEK_CONFIG = [
+  { id: 'w1', label: 'Week 1 (11-15 May 2026)', closed: false },
+  { id: 'w2', label: 'Week 2 (18-22 May 2026)', closed: false },
+  { id: 'w3', label: 'Week 3 (25-29 May 2026)', closed: false },
+  { id: 'w4', label: 'Week 4 (1-5 June 2026)', closed: false },
+  { id: 'w5', label: 'Week 5 (8-12 June 2026)', closed: false },
+  { id: 'w6', label: 'Week 6 (15-19 June 2026)', closed: false }
+];
+var RESERVED_STATUSES = {
+  pending_google_form: true,
+  pending: true,
+  confirmed: true
+};
+
 function createUfsNpaPrivateApplicationForm() {
   try {
     var form = FormApp.create('UFS/NPA ITSOAP Programme - Private Application Form');
@@ -43,7 +58,7 @@ function createUfsNpaPrivateApplicationForm() {
     form.addMultipleChoiceItem()
       .setTitle('Year of Study')
       .setRequired(true)
-      .setChoiceValues(['Final Year', '3rd Year', '2nd Year', '1st Year']);
+      .setChoiceValues(['Final Year']);
 
     var emailValidation = FormApp.createTextValidation()
       .requireTextIsEmail()
@@ -52,21 +67,6 @@ function createUfsNpaPrivateApplicationForm() {
 
     form.addTextItem().setTitle('Email Address').setRequired(true).setValidation(emailValidation);
     form.addTextItem().setTitle('Contact Number').setRequired(true);
-
-    form.addPageBreakItem().setTitle('Logistics and Academic Status');
-    form.addMultipleChoiceItem()
-      .setTitle('Will you need transport?')
-      .setRequired(true)
-      .setChoiceValues(['No, I have my own transport', 'Yes, I will need transport']);
-
-    form.addMultipleChoiceItem()
-      .setTitle('Have you completed or are you currently completing Criminal Procedure?')
-      .setRequired(true)
-      .setChoiceValues([
-        'Yes, I have completed Criminal Procedure',
-        'Yes, I am currently completing Criminal Procedure',
-        'No, I have not yet done Criminal Procedure'
-      ]);
 
     form.addPageBreakItem().setTitle('Declaration and Confirmation');
     form.addSectionHeaderItem().setTitle(
@@ -113,7 +113,7 @@ function logPrefilledReferenceCodeTemplate_(form, refCodeItem) {
 /**
  * Web app endpoint.
  * POST request body JSON, or GET query parameters:
- * {"action":"createPreApplication","referenceCode":"BLASC-NPA-2026-7F3K2Q","yearOfStudy":"third","criminalProcedureStatus":"yes","transportNeeded":"no","selectedWeekId":"w6","selectedWeekLabel":"Week 6 (9-13 Jun 2026)"}
+ * {"action":"createPreApplication","referenceCode":"BLASC-NPA-2026-7F3K2Q","yearOfStudy":"final","selectedWeekId":"w6","selectedWeekLabel":"Week 6 (15-19 June 2026)"}
  * {"action":"getWeekStatus"}
  */
 function doPost(e) {
@@ -150,51 +150,68 @@ function doGet(e) {
 }
 
 function createPreApplication_(payload) {
-  var referenceCode = normalizeReferenceCodeForStorage_(payload.referenceCode);
-  var yearOfStudy = String(payload.yearOfStudy || '').trim().toLowerCase();
-  var criminalProcedureStatus = String(payload.criminalProcedureStatus || '').trim().toLowerCase();
-  var transportNeeded = String(payload.transportNeeded || '').trim().toLowerCase();
-  var selectedWeekId = String(payload.selectedWeekId || '').trim().toLowerCase();
-  var selectedWeekLabel = String(payload.selectedWeekLabel || '').trim();
-
-  if (!isValidReferenceCode_(referenceCode)) return jsonResponse_({ ok: false, error: 'Invalid reference code format.' });
-  if (!selectedWeekId) return jsonResponse_({ ok: false, error: 'Selected week is required.' });
-  if (!selectedWeekLabel) return jsonResponse_({ ok: false, error: 'Selected week label is required.' });
-
-  var sheet = getValidCodeSheet_();
-  ensureValidCodeHeaders_(sheet);
-  var rows = sheet.getDataRange().getValues();
-  var index = buildHeaderIndex_(rows[0] || []);
-  var referenceCodeIdx = (index['reference code'] || 1) - 1;
-  var statusIdx = (index['status'] || 7) - 1;
-
-  for (var i = 1; i < rows.length; i++) {
-    if (normalizeReferenceCodeForCompare_(rows[i][referenceCodeIdx]) === normalizeReferenceCodeForCompare_(referenceCode)) {
-      return jsonResponse_({ ok: false, error: 'Duplicate reference code.' });
-    }
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+  } catch (err) {
+    return jsonResponse_({ ok: false, error: 'The application system is busy. Please try again.' });
   }
 
-  sheet.appendRow([
-    referenceCode,
-    yearOfStudy,
-    criminalProcedureStatus,
-    transportNeeded,
-    selectedWeekId,
-    selectedWeekLabel,
-    new Date(),
-    'pending_google_form',
-    '',
-    '',
-    '',
-    ''
-  ]);
+  try {
+    var referenceCode = normalizeReferenceCodeForStorage_(payload.referenceCode);
+    var yearOfStudy = String(payload.yearOfStudy || '').trim().toLowerCase();
+    var selectedWeekId = String(payload.selectedWeekId || '').trim().toLowerCase();
+    var selectedWeekLabel = String(payload.selectedWeekLabel || '').trim();
 
-  return jsonResponse_({
-    ok: true,
-    referenceCode: referenceCode,
-    status: 'pending_google_form',
-    weekStatus: buildWeekStatusMap_(sheet)
-  });
+    if (!isValidReferenceCode_(referenceCode)) return jsonResponse_({ ok: false, error: 'Invalid reference code format.' });
+    if (!selectedWeekId) return jsonResponse_({ ok: false, error: 'Selected week is required.' });
+    if (!selectedWeekLabel) return jsonResponse_({ ok: false, error: 'Selected week label is required.' });
+
+    var sheet = getValidCodeSheet_();
+    ensureValidCodeHeaders_(sheet);
+    var rows = sheet.getDataRange().getValues();
+    var index = buildHeaderIndex_(rows[0] || []);
+    var referenceCodeIdx = (index['reference code'] || 1) - 1;
+
+    if (isWeekManuallyClosed_(selectedWeekId)) {
+      return jsonResponse_({ ok: false, error: 'This programme week is closed.', weekStatus: buildWeekStatusMap_(sheet) });
+    }
+
+    if (countReservedForWeek_(rows, index, selectedWeekId, 0) >= WEEK_CAPACITY) {
+      return jsonResponse_({ ok: false, error: 'This programme week is full.', weekStatus: buildWeekStatusMap_(sheet) });
+    }
+
+    for (var i = 1; i < rows.length; i++) {
+      if (normalizeReferenceCodeForCompare_(rows[i][referenceCodeIdx]) === normalizeReferenceCodeForCompare_(referenceCode)) {
+        return jsonResponse_({ ok: false, error: 'Duplicate reference code.' });
+      }
+    }
+
+    sheet.appendRow([
+      referenceCode,
+      yearOfStudy,
+      '',
+      '',
+      selectedWeekId,
+      selectedWeekLabel,
+      new Date(),
+      'pending_google_form',
+      '',
+      '',
+      '',
+      ''
+    ]);
+    SpreadsheetApp.flush();
+
+    return jsonResponse_({
+      ok: true,
+      referenceCode: referenceCode,
+      status: 'pending_google_form',
+      weekStatus: buildWeekStatusMap_(sheet)
+    });
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 function getWeekStatusResponse_() {
@@ -301,7 +318,20 @@ function onFormSubmit(e) {
   var now = new Date();
   validSheet.getRange(matchRow, formSubmittedAtIdx + 1).setValue(now);
 
-  if (weekConfirmedCount >= 15) {
+  if (isWeekManuallyClosed_(selectedWeekId)) {
+    validSheet.getRange(matchRow, statusIdx + 1).setValue('needs_reassignment');
+    validSheet.getRange(matchRow, waitlistReasonIdx + 1).setValue('Week closed before form submission.');
+    validSheet.getRange(matchRow, adminNotesIdx + 1).setValue('Set by trigger: selected week is closed.');
+
+    responsesSheet.getRange(row, codeCheckCol).setValue('Waitlist');
+    responsesSheet.getRange(row, matchedDateCol).setValue(selectedWeekLabel);
+    responsesSheet.getRange(row, adminNotesCol).setValue('Selected week is closed. Record marked needs_reassignment for admin review.');
+    responsesSheet.getRange(row, matchedStatusCol).setValue('needs_reassignment');
+    responsesSheet.getRange(row, confirmedAtCol).setValue('');
+    return;
+  }
+
+  if (weekConfirmedCount >= WEEK_CAPACITY) {
     validSheet.getRange(matchRow, statusIdx + 1).setValue('needs_reassignment');
     validSheet.getRange(matchRow, waitlistReasonIdx + 1).setValue('Week full at form submission time.');
     validSheet.getRange(matchRow, adminNotesIdx + 1).setValue('Set by trigger: capacity reached before confirmation.');
@@ -377,28 +407,64 @@ function countConfirmedForWeek_(rows, headerIndex, selectedWeekId, skipRow) {
   return total;
 }
 
+function countReservedForWeek_(rows, headerIndex, selectedWeekId, skipRow) {
+  var weekIdx = (headerIndex['selected week id'] || 5) - 1;
+  var statusIdx = (headerIndex['status'] || 8) - 1;
+  var total = 0;
+  for (var i = 1; i < rows.length; i++) {
+    if (skipRow && i + 1 === skipRow) continue;
+    var weekValue = String(rows[i][weekIdx] || '').trim().toLowerCase();
+    var statusValue = String(rows[i][statusIdx] || '').trim().toLowerCase();
+    if (weekValue === selectedWeekId && RESERVED_STATUSES[statusValue]) total += 1;
+  }
+  return total;
+}
+
 function buildWeekStatusMap_(sheet) {
   var rows = sheet.getDataRange().getValues();
-  if (rows.length < 2) return {};
+  var result = buildDefaultWeekStatusMap_();
+  if (rows.length < 2) return result;
   var headerIndex = buildHeaderIndex_(rows[0] || []);
   var weekIdx = (headerIndex['selected week id'] || 5) - 1;
   var statusIdx = (headerIndex['status'] || 8) - 1;
-  var result = {};
 
   for (var i = 1; i < rows.length; i++) {
     var weekId = String(rows[i][weekIdx] || '').trim().toLowerCase();
     var status = String(rows[i][statusIdx] || '').trim().toLowerCase();
     if (!weekId) continue;
-    if (!result[weekId]) result[weekId] = { confirmed_count: 0, closed: false };
+    if (!result[weekId]) result[weekId] = { capacity: WEEK_CAPACITY, confirmed_count: 0, reserved_count: 0, closed: false };
+    if (RESERVED_STATUSES[status]) result[weekId].reserved_count += 1;
     if (status === 'confirmed') result[weekId].confirmed_count += 1;
   }
 
   var keys = Object.keys(result);
   for (var j = 0; j < keys.length; j++) {
     var key = keys[j];
-    result[key].closed = result[key].confirmed_count >= 15;
+    result[key].closed = isWeekManuallyClosed_(key) || result[key].reserved_count >= WEEK_CAPACITY;
   }
   return result;
+}
+
+function buildDefaultWeekStatusMap_() {
+  var result = {};
+  for (var i = 0; i < WEEK_CONFIG.length; i++) {
+    var week = WEEK_CONFIG[i];
+    result[week.id] = {
+      label: week.label,
+      capacity: WEEK_CAPACITY,
+      confirmed_count: 0,
+      reserved_count: 0,
+      closed: Boolean(week.closed)
+    };
+  }
+  return result;
+}
+
+function isWeekManuallyClosed_(weekId) {
+  for (var i = 0; i < WEEK_CONFIG.length; i++) {
+    if (WEEK_CONFIG[i].id === weekId) return Boolean(WEEK_CONFIG[i].closed);
+  }
+  return false;
 }
 
 function ensureResponseColumn_(sheet, cachedHeaders, headerName) {
@@ -447,8 +513,6 @@ function payloadFromRequestParameters_(params) {
     action: String(params.action || ''),
     referenceCode: String(params.referenceCode || ''),
     yearOfStudy: String(params.yearOfStudy || ''),
-    criminalProcedureStatus: String(params.criminalProcedureStatus || ''),
-    transportNeeded: String(params.transportNeeded || ''),
     selectedWeekId: String(params.selectedWeekId || ''),
     selectedWeekLabel: String(params.selectedWeekLabel || '')
   };

@@ -206,8 +206,8 @@
         <h3>Application Details</h3>
         <ul>
           <li>Applications open: 7 May 2026</li>
-          <li>This week's intake: final-year students only</li>
-          <li>Applicants must have completed Criminal Procedure</li>
+          <li>Current intake: final-year students only for now</li>
+          <li>Programme weeks run Monday to Friday</li>
           <li>Maximum: 15 students per week</li>
           <li>Submission does not guarantee placement</li>
         </ul>
@@ -299,10 +299,14 @@
   const WEEK_CAPACITY = 15;
   const steps = ['Overview', 'Declaration', 'Eligibility', 'Date Selection', 'Form'];
   const weekDefinitions = [
-    { id: 'w1', number: 1, label: 'Week 1', dateRange: '5–9 May 2026' },
-    { id: 'w2', number: 2, label: 'Week 2', dateRange: '12–16 May 2026' }
+    { id: 'w1', number: 1, label: 'Week 1', dateRange: '11–15 May 2026' },
+    { id: 'w2', number: 2, label: 'Week 2', dateRange: '18–22 May 2026' },
+    { id: 'w3', number: 3, label: 'Week 3', dateRange: '25–29 May 2026' },
+    { id: 'w4', number: 4, label: 'Week 4', dateRange: '1–5 June 2026' },
+    { id: 'w5', number: 5, label: 'Week 5', dateRange: '8–12 June 2026' },
+    { id: 'w6', number: 6, label: 'Week 6', dateRange: '15–19 June 2026' }
   ];
-  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, criminalModule: '', yearOfStudy: 'final', transportNeeded: '', selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '', weekStatus: {} };
+  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, yearOfStudy: 'final', selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '', weekStatus: {} };
   const getWeekById = (id) => weekDefinitions.find((w) => w.id === id);
   const isCodeApiConfigured = () => Boolean(CODE_API_URL && !CODE_API_URL.includes('REPLACE_WITH_WEB_APP_DEPLOYMENT_ID'));
   const readPreApplications = () => {
@@ -329,17 +333,20 @@
     }
     return generateReferenceCode();
   };
-  const getConfirmedWeekCount = (weekId) => readPreApplications().filter((record) => record.selected_week === weekId && record.status === 'confirmed').length;
+  const getLocalWeekReservationCount = (weekId) => readPreApplications().filter((record) => record.selected_week === weekId && ['pending_google_form', 'confirmed'].includes(record.status)).length;
   const getRemoteWeekStatus = (weekId) => state.weekStatus[weekId] || null;
   const isWeekClosed = (weekId) => {
+    const week = getWeekById(weekId);
+    if (week && week.closed) return true;
     const remote = getRemoteWeekStatus(weekId);
     if (remote) return Boolean(remote.closed);
-    return getConfirmedWeekCount(weekId) >= WEEK_CAPACITY;
+    return getLocalWeekReservationCount(weekId) >= WEEK_CAPACITY;
   };
-  const getWeekConfirmedCount = (weekId) => {
+  const getWeekReservationCount = (weekId) => {
     const remote = getRemoteWeekStatus(weekId);
+    if (remote && Number.isFinite(remote.reserved_count)) return remote.reserved_count;
     if (remote && Number.isFinite(remote.confirmed_count)) return remote.confirmed_count;
-    return getConfirmedWeekCount(weekId);
+    return getLocalWeekReservationCount(weekId);
   };
   const savePendingPreApplication = () => {
     const records = readPreApplications();
@@ -347,7 +354,7 @@
     const record = {
       reference_code: state.referenceCode,
       year_of_study: state.yearOfStudy,
-      criminal_procedure_status: state.criminalModule,
+      criminal_procedure_status: '',
       selected_week: state.selectedWeekId,
       selected_week_label: state.selectedWeekLabel,
       created_at: new Date().toISOString(),
@@ -364,8 +371,6 @@
     action: 'createPreApplication',
       referenceCode: state.referenceCode,
       yearOfStudy: state.yearOfStudy,
-      criminalProcedureStatus: state.criminalModule,
-      transportNeeded: state.transportNeeded,
       selectedWeekId: state.selectedWeekId,
       selectedWeekLabel: state.selectedWeekLabel
   });
@@ -430,11 +435,10 @@
     }
     throw lastErr;
   };
-  const hasProgress = () => state.stepIndex > 0 || state.introConsent || state.declarationConsent || state.criminalModule || state.yearOfStudy || state.transportNeeded || state.selectedWeekId || state.referenceCode;
-  const hasCriminalProcedure = () => state.criminalModule === 'yes';
+  const hasProgress = () => state.stepIndex > 0 || state.introConsent || state.declarationConsent || state.yearOfStudy || state.selectedWeekId || state.referenceCode;
   const getDateOptionsForState = () => {
     let allowedWeeks = [];
-    if (hasCriminalProcedure() && state.yearOfStudy === 'final') allowedWeeks = [1, 2];
+    if (state.yearOfStudy === 'final') allowedWeeks = weekDefinitions.map((week) => week.number);
     return weekDefinitions
       .filter((week) => allowedWeeks.includes(week.number))
       .sort((a, b) => a.number - b.number);
@@ -460,7 +464,7 @@
       el.classList.remove('npa-invalid', 'npa-invalid-label', 'npa-shake');
     };
     if (state.stepIndex === 0) {
-      c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications open on <strong>7 May 2026</strong>. For this week's intake, applications are limited to final-year students who have completed Criminal Procedure.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Eligibility and date selection</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private form submission</span></div></div><p class="npa-step-sub">This website only handles eligibility answers, selected date, and reference-code data. Personal details are collected only in the separate form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Apply: In the Shadow of the Prosecutor</h3><p class="npa-step-sub">Applications are open to final-year students only for now.</p><div class="npa-part-grid"><div class="npa-part-item"><strong>Part 1</strong><span>Declaration</span></div><div class="npa-part-item"><strong>Part 2</strong><span>Eligibility and date selection</span></div><div class="npa-part-item"><strong>Part 3</strong><span>Private form submission</span></div></div><p class="npa-step-sub">This website only handles eligibility answers, selected date, and reference-code data. Personal details are collected only in the separate form.</p><label class="check-label"><input type="checkbox" id="introConsent" ${state.introConsent?'checked':''}/> I understand the application process and wish to continue.</label><div class="npa-actions"><span></span><button type="button" class="btn btn-blue" id="next0">Next</button></div>`;
       const introConsentInput = c.querySelector('#introConsent');
       const introConsentLabel = introConsentInput && introConsentInput.closest('label');
       introConsentInput.onchange = (e) => { state.introConsent = e.target.checked; if (state.introConsent) clearInvalid(introConsentLabel); };
@@ -498,18 +502,11 @@
       return;
     }
     if (state.stepIndex === 2) {
-      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">For this week's intake, applications are limited to final-year students who have completed Criminal Procedure. Personal details are not collected on this website.</p><div class="npa-row"><div class="field"><label>Have you completed Criminal Procedure?</label><select id="criminalModule"><option value="">Select</option><option value="yes" ${state.criminalModule==='yes'?'selected':''}>Yes</option><option value="no" ${state.criminalModule==='no'?'selected':''}>No</option></select></div><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div></div><p class="npa-note">Students who have not completed Criminal Procedure are not eligible for this intake. BLASC will revisit the criteria for later intakes.</p><div class="field" style="margin-top:12px"><label>Will you need transport?</label><select id="transportNeeded"><option value=\"\">Select</option><option value=\"no\" ${state.transportNeeded==='no'?'selected':''}>No, I have my own transport</option><option value=\"yes\" ${state.transportNeeded==='yes'?'selected':''}>Yes, I will need transport (subject to BLASC confirmation)</option></select><p class="npa-note">Transport is subject to availability and is captured for planning only at this stage.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">Applications are open to final-year students only for now. Personal details are not collected on this website.</p><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
       if (typeof window.blascEnhanceAnimatedSelects === 'function') window.blascEnhanceAnimatedSelects(c);
-      const criminalModuleSelect = c.querySelector('#criminalModule');
-      const transportSelect = c.querySelector('#transportNeeded');
       state.yearOfStudy = 'final';
-      criminalModuleSelect.onchange = (e) => { state.criminalModule = e.target.value; state.selectedWeekId = ''; clearInvalid(criminalModuleSelect); };
-      transportSelect.onchange = (e) => { state.transportNeeded = e.target.value; state.selectedWeekId = ''; clearInvalid(transportSelect); };
       c.querySelector('#backEligibility').onclick = () => { state.stepIndex = 1; render(); };
       c.querySelector('#nextEligibility').onclick = () => {
-        let hasError = false;
-        if (state.criminalModule !== 'yes') { flagInvalid(criminalModuleSelect); hasError = true; }
-        if (hasError) return;
         state.stepIndex = 3;
         render();
       };
@@ -517,21 +514,21 @@
     }
     if (state.stepIndex === 3) {
       const eligible = getDateOptionsForState();
-      const guidance = 'Based on your answers, you may select a preferred eligible programme week. The first intake available through this application flow starts next week.';
+      const guidance = 'Based on your answers, you may select any open programme week. Applications are open to final-year students only for now.';
       if (isCodeApiConfigured() && Object.keys(state.weekStatus).length === 0) {
         syncWeekStatusFromApi().finally(() => {
           if (state.stepIndex === 3) render();
         });
       }
-      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-step-sub">${guidance}</p><p class="npa-warning">Your selected week is not finally secured at this stage. It will only be confirmed after the separate form is submitted and matched with your reference code.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Generate Reference Code</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-step-sub">${guidance}</p><p class="npa-warning">Reference-code generation reserves one of the 15 places for that week. Complete the separate form with the same code so BLASC can match your application.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Generate Reference Code</button></div>`;
       const wg = c.querySelector('#wg');
       eligible.forEach((w) => {
-        const confirmedCount = getWeekConfirmedCount(w.id);
+        const reservedCount = getWeekReservationCount(w.id);
         const closed = isWeekClosed(w.id);
         const b = document.createElement('button');
         b.type = 'button'; b.className = `week-choice ${closed ? 'disabled' : 'available'} ${state.selectedWeekId === w.id ? 'selected' : ''}`;
         b.disabled = closed;
-        b.innerHTML = `<strong>${w.label}</strong><span>${w.dateRange}</span><span class="meta">${closed ? 'Closed' : `${confirmedCount}/${WEEK_CAPACITY} confirmed`}</span>`;
+        b.innerHTML = `<strong>${w.label}</strong><span>${w.dateRange}</span><span class="meta">${closed ? 'Closed' : `${reservedCount}/${WEEK_CAPACITY} reserved`}</span>`;
         b.onclick = () => {
           if (closed) return;
           state.selectedWeekId = w.id;
