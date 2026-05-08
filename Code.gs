@@ -7,9 +7,22 @@ var WEEK_CONFIG = [
   { id: 'w1', label: 'Week 1 (11-15 May 2026)', closed: false },
   { id: 'w2', label: 'Week 2 (18-22 May 2026)', closed: false },
   { id: 'w3', label: 'Week 3 (25-29 May 2026)', closed: false },
-  { id: 'w4', label: 'Week 4 (1-5 June 2026)', closed: false },
-  { id: 'w5', label: 'Week 5 (8-12 June 2026)', closed: false },
-  { id: 'w6', label: 'Week 6 (15-19 June 2026)', closed: false }
+  { id: 'w4', label: 'Week 4 (29 June-3 July 2026)', closed: false },
+  { id: 'w5', label: 'Week 5 (6-10 July 2026)', closed: false },
+  { id: 'w6', label: 'Week 6 (13-17 July 2026)', closed: false },
+  { id: 'w7', label: 'Week 7 (20-24 July 2026)', closed: false },
+  { id: 'w8', label: 'Week 8 (27-31 July 2026)', closed: false },
+  { id: 'w9', label: 'Week 9 (3-7 August 2026)', closed: false },
+  { id: 'w10', label: 'Week 10 (17-21 August 2026)', closed: false },
+  { id: 'w11', label: 'Week 11 (24-28 August 2026)', closed: false },
+  { id: 'w12', label: 'Week 12 (31 August-4 September 2026)', closed: false },
+  { id: 'w13', label: 'Week 13 (7-11 September 2026)', closed: false },
+  { id: 'w14', label: 'Week 14 (14-18 September 2026)', closed: false },
+  { id: 'w15', label: 'Week 15 (21-25 September 2026)', closed: false },
+  { id: 'w16', label: 'Week 16 (28 September-2 October 2026)', closed: false },
+  { id: 'w17', label: 'Week 17 (5-9 October 2026)', closed: false },
+  { id: 'w18', label: 'Week 18 (12-16 October 2026)', closed: false },
+  { id: 'w19', label: 'Week 19 (19-23 October 2026)', closed: false }
 ];
 var RESERVED_STATUSES = {
   pending_google_form: true,
