@@ -324,7 +324,6 @@
     introConsent: false,
     declarationConsent: false,
     yearOfStudy: 'final',
-    transportNeeded: '',
     selectedWeekId: '',
     selectedWeekLabel: '',
     referenceCode: '',
@@ -384,7 +383,6 @@
     const record = {
       reference_code: state.referenceCode,
       year_of_study: state.yearOfStudy,
-      transport_needed: state.transportNeeded,
       criminal_procedure_status: '',
       selected_week: state.selectedWeekId,
       selected_week_label: state.selectedWeekLabel,
@@ -402,7 +400,6 @@
     action: 'createPreApplication',
       referenceCode: state.referenceCode,
       yearOfStudy: state.yearOfStudy,
-      transportNeeded: state.transportNeeded,
       selectedWeekId: state.selectedWeekId,
       selectedWeekLabel: state.selectedWeekLabel
   });
@@ -568,15 +565,9 @@
       return;
     }
     if (state.stepIndex === 2) {
-      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">Applications are open to final-year students only for now. Personal details are not collected on this website.</p><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div><div class="field"><label>Do you need transport?</label><select id="transportNeededSelect" aria-label="Transport needed"><option value="">Select option</option><option value="yes please" ${state.transportNeeded === 'yes please' ? 'selected' : ''}>Yes please</option><option value="no thank you" ${state.transportNeeded === 'no thank you' ? 'selected' : ''}>No thank you</option></select><p class="npa-note">Subject to availability.</p></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
+      c.innerHTML = `<h3 class="npa-step-title">Eligibility</h3><p class="npa-step-sub">Applications are open to final-year students only for now. Personal details are not collected on this website.</p><div class="field"><label>Current intake</label><input type="text" value="Final-year students only" readonly aria-readonly="true"/></div><div class="npa-actions"><button class="btn btn-outline-dark" id="backEligibility">Back</button><button class="btn btn-blue" id="nextEligibility">Continue</button></div>`;
       if (typeof window.blascEnhanceAnimatedSelects === 'function') window.blascEnhanceAnimatedSelects(c);
       state.yearOfStudy = 'final';
-      const transportSelect = c.querySelector('#transportNeededSelect');
-      if (transportSelect) {
-        transportSelect.onchange = (e) => {
-          state.transportNeeded = String(e.target.value || '');
-        };
-      }
       c.querySelector('#backEligibility').onclick = () => { state.stepIndex = 1; render(); };
       c.querySelector('#nextEligibility').onclick = () => {
         state.stepIndex = 3;
