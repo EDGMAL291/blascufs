@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
   <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
-<link rel="stylesheet" href="assets/style.css?v=20260507-cache-refresh"/>
+<link rel="stylesheet" href="assets/style.css?v=20260508-hard-refresh"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -284,7 +284,7 @@
   <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
 </footer>
 
-<script src="assets/main.js?v=20260507-cache-refresh"></script>
+<script src="assets/main.js?v=20260508-hard-refresh"></script>
 <script>
 (() => {
   const modal = document.getElementById('npaModal');
@@ -319,7 +319,22 @@
     { id: 'w18', number: 18, label: 'Week 18', dateRange: '12–16 October 2026' },
     { id: 'w19', number: 19, label: 'Week 19', dateRange: '19–23 October 2026' }
   ];
-  const state = { stepIndex: 0, introConsent: false, declarationConsent: false, yearOfStudy: 'final', selectedWeekId: '', selectedWeekLabel: '', referenceCode: '', savingCode: false, saveError: '', weekStatus: {} };
+  const state = {
+    stepIndex: 0,
+    introConsent: false,
+    declarationConsent: false,
+    yearOfStudy: 'final',
+    selectedWeekId: '',
+    selectedWeekLabel: '',
+    referenceCode: '',
+    savingCode: false,
+    saveError: '',
+    weekStatus: {},
+    weekStatusLoaded: false,
+    weekStatusLoading: false,
+    weekStatusError: '',
+    weekStatusPromise: null
+  };
   const getWeekById = (id) => weekDefinitions.find((w) => w.id === id);
   const isCodeApiConfigured = () => Boolean(CODE_API_URL && !CODE_API_URL.includes('REPLACE_WITH_WEB_APP_DEPLOYMENT_ID'));
   const readPreApplications = () => {
@@ -349,6 +364,7 @@
   const getLocalWeekReservationCount = (weekId) => readPreApplications().filter((record) => record.selected_week === weekId && ['pending_google_form', 'confirmed'].includes(record.status)).length;
   const getRemoteWeekStatus = (weekId) => state.weekStatus[weekId] || null;
   const isWeekClosed = (weekId) => {
+    if (isCodeApiConfigured() && !state.weekStatusLoaded) return true;
     const week = getWeekById(weekId);
     if (week && week.closed) return true;
     const remote = getRemoteWeekStatus(weekId);
@@ -428,13 +444,35 @@
     return data;
   };
   const syncWeekStatusFromApi = async () => {
-    if (!isCodeApiConfigured()) return;
-    try {
-      const data = await requestCodeApi({ action: 'getWeekStatus' });
-      if (data && data.weekStatus && typeof data.weekStatus === 'object') {
-        state.weekStatus = data.weekStatus;
-      }
-    } catch (_) {}
+    if (!isCodeApiConfigured()) {
+      state.weekStatusLoaded = true;
+      state.weekStatusLoading = false;
+      state.weekStatusError = '';
+      return null;
+    }
+    if (state.weekStatusLoaded) return state.weekStatus;
+    if (state.weekStatusPromise) return state.weekStatusPromise;
+
+    state.weekStatusLoading = true;
+    state.weekStatusError = '';
+    state.weekStatusPromise = requestCodeApi({ action: 'getWeekStatus' })
+      .then((data) => {
+        if (data && data.weekStatus && typeof data.weekStatus === 'object') {
+          state.weekStatus = data.weekStatus;
+        }
+        state.weekStatusLoaded = true;
+        return state.weekStatus;
+      })
+      .catch((err) => {
+        state.weekStatusLoaded = false;
+        state.weekStatusError = String(err && err.message ? err.message : 'Could not load week availability.');
+        throw err;
+      })
+      .finally(() => {
+        state.weekStatusLoading = false;
+        state.weekStatusPromise = null;
+      });
+    return state.weekStatusPromise;
   };
   const reservePreApplicationRemotely = async () => {
     if (!isCodeApiConfigured()) {
@@ -448,6 +486,8 @@
         state.referenceCode = String(data.referenceCode || state.referenceCode);
         if (data.weekStatus && typeof data.weekStatus === 'object') {
           state.weekStatus = data.weekStatus;
+          state.weekStatusLoaded = true;
+          state.weekStatusError = '';
         }
         return;
       } catch (err) {
@@ -538,10 +578,27 @@
     if (state.stepIndex === 3) {
       const eligible = getDateOptionsForState();
       const guidance = 'Based on your answers, you may select any open programme week. Applications are open to final-year students only for now.';
-      if (isCodeApiConfigured() && Object.keys(state.weekStatus).length === 0) {
-        syncWeekStatusFromApi().finally(() => {
-          if (state.stepIndex === 3) render();
-        });
+      if (isCodeApiConfigured() && !state.weekStatusLoaded) {
+        syncWeekStatusFromApi()
+          .catch(() => null)
+          .finally(() => {
+            if (state.stepIndex === 3) render();
+          });
+        c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-step-sub">${guidance}</p><p class="npa-warning">Reference-code generation reserves one of the 15 places for that week. Complete the separate form with the same code so BLASC can match your application.</p><p class="npa-note">${state.weekStatusLoading ? 'Checking live week availability. Please wait...' : 'Live week availability could not be loaded.'}</p>${state.weekStatusError ? `<p class="npa-warning">${state.weekStatusError}</p>` : ''}<div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-outline-dark" id="retryWeekStatus" ${state.weekStatusLoading ? 'disabled' : ''}>${state.weekStatusLoading ? 'Checking...' : 'Retry Availability Check'}</button></div>`;
+        c.querySelector('#back3').onclick = () => { state.stepIndex = 2; render(); };
+        const retryBtn = c.querySelector('#retryWeekStatus');
+        if (retryBtn) {
+          retryBtn.onclick = () => {
+            state.weekStatusError = '';
+            syncWeekStatusFromApi()
+              .catch(() => null)
+              .finally(() => {
+                if (state.stepIndex === 3) render();
+              });
+            render();
+          };
+        }
+        return;
       }
       c.innerHTML = `<h3 class="npa-step-title">Date Selection</h3><p class="npa-step-sub">${guidance}</p><p class="npa-warning">Reference-code generation reserves one of the 15 places for that week. Complete the separate form with the same code so BLASC can match your application.</p><div class="week-pick-grid" id="wg"></div><div class="npa-actions"><button class="btn btn-outline-dark" id="back3">Back</button><button class="btn btn-blue" id="next3">Generate Reference Code</button></div>`;
       const wg = c.querySelector('#wg');
@@ -668,7 +725,19 @@
     }
   }
   const applyNowBtnBottom = document.getElementById('npaApplyNowBtnBottom');
-  const openApplicationModal = () => { modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.classList.add('no-scroll'); render(); };
+  const openApplicationModal = () => {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('no-scroll');
+    render();
+    if (isCodeApiConfigured() && !state.weekStatusLoaded) {
+      syncWeekStatusFromApi()
+        .catch(() => null)
+        .finally(() => {
+          if (modal.classList.contains('open') && state.stepIndex === 3) render();
+        });
+    }
+  };
   applyNowBtn.addEventListener('click', openApplicationModal);
   if (applyNowBtnBottom) applyNowBtnBottom.addEventListener('click', openApplicationModal);
   modalCloseBtn.addEventListener('click', attemptCloseModal);
