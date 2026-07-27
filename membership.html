@@ -48,12 +48,40 @@
     .steps-list li::before{content:counter(steps);min-width:28px;height:28px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;margin-top:1px}
     .form-panel{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px}
     .form-panel h2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Arial,sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:4px}
-    .form-panel .sub{color:var(--muted);font-size:.88rem;margin-bottom:28px}
+    .form-panel .sub{color:var(--muted);font-size:.88rem;margin-bottom:16px}
     .banking-box{background:var(--off-black);border-radius:var(--radius-md);padding:22px 26px;margin-top:24px}
     .banking-box h4{color:var(--gold-light);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
     .banking-box p{color:rgba(255,255,255,.55);font-size:.88rem;line-height:1.75}
     .banking-box strong{color:#fff}
+
+    .auth-mode{display:grid;gap:16px;margin:20px 0 26px}
+    .auth-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fff;border:1px solid var(--border);padding:8px;border-radius:12px}
+    .auth-tab{padding:10px 14px;border-radius:8px;font-size:.9rem;font-weight:700;color:var(--muted);border:1px solid transparent;transition:.2s background,.2s color,.2s border-color}
+    .auth-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .auth-pane{display:none}
+    .auth-pane.active{display:block}
+    .auth-grid{display:grid;gap:12px}
+    .auth-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .auth-actions{display:flex;gap:10px;justify-content:space-between;margin-top:8px}
+    .wizard-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:16px}
+    .wizard-step{font-size:.74rem;font-weight:700;text-align:center;padding:8px 6px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--grey)}
+    .wizard-step.active{background:var(--blue);border-color:var(--blue);color:#fff}
+    .wizard-panel{display:none}
+    .wizard-panel.active{display:block}
+    .wizard-panel h3{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:12px}
+    .helper-link{display:inline-block;font-size:.82rem;color:var(--blue-mid);text-decoration:underline;text-underline-offset:2px;margin-top:2px}
+    .auth-status{display:none;margin-top:12px;padding:10px 12px;background:#e8f5ee;color:#136f3b;border:1px solid #bde4cb;border-radius:10px;font-size:.84rem;line-height:1.5}
+    .auth-status.show{display:block}
+    .auth-status.error{background:#fff1f2;color:#9f1239;border-color:#fecdd3}
+    .auth-status.pending{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+    .account-note{font-size:.8rem;color:var(--grey);line-height:1.6;margin-top:8px}
+    .verification-box{display:grid;gap:8px;background:#fff;border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:12px;padding:14px 16px;color:var(--muted);font-size:.84rem;line-height:1.55}
+    .verification-box strong{color:var(--ink)}
+    .status-info{display:grid;gap:10px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-top:16px}
+    .status-info h4{font-size:.92rem;font-weight:700;color:var(--ink)}
+    .status-info p{font-size:.83rem;line-height:1.55;color:var(--muted)}
     @media(max-width:900px){.membership-layout{grid-template-columns:1fr}}
+    @media(max-width:560px){.auth-row{grid-template-columns:1fr}.auth-actions{flex-direction:column}.auth-actions .btn{width:100%;justify-content:center}}
   </style>
 </head>
 <body>
@@ -104,9 +132,9 @@
         <div style="margin-top:40px" class="fade-up">
           <p class="section-label">How to Join</p>
           <ol class="steps-list">
-            <li>Complete the membership application form.</li>
-            <li>Submit your details for review by the BEC.</li>
-            <li>Await confirmation from chapter leadership via email.</li>
+            <li>Create an account or sign in with a verified UFS student email address.</li>
+            <li>Complete the membership profile form.</li>
+            <li>Submit your student number and academic details for BEC review.</li>
             <li>Pay the annual membership fee of <strong>R50</strong> using the banking details provided on confirmation.</li>
           </ol>
         </div>
@@ -118,50 +146,113 @@
       </div>
 
       <div class="form-panel fade-up">
-        <h2>Membership Application</h2>
-        <p class="sub">Fill in the form to apply for membership.</p>
-        <p class="sub">All fields marked * are required. You must be a registered UFS law student.</p>
-        <form id="membershipForm">
-          <fieldset class="fieldset-block">
-            <legend>Personal Details</legend>
-            <div class="form-grid" style="margin-top:12px">
-              <div class="field"><label>First Name *</label><input type="text" required placeholder="Your first name"/></div>
-              <div class="field"><label>Surname *</label><input type="text" required placeholder="Your surname"/></div>
-            </div>
-            <div class="field"><label>Student Number *</label><input type="text" required placeholder="e.g. 2022123456"/></div>
-          </fieldset>
-          <fieldset class="fieldset-block">
-            <legend>Contact Information</legend>
-            <div class="form-grid" style="margin-top:12px">
-              <div class="field"><label>Email Address *</label><input type="email" required placeholder="your@ufs.ac.za"/></div>
-              <div class="field"><label>Phone Number</label><input type="tel" placeholder="+27 00 000 0000"/></div>
-            </div>
-          </fieldset>
-          <fieldset class="fieldset-block">
-            <legend>Academic Information</legend>
-            <div class="form-grid" style="margin-top:12px">
-              <div class="field"><label>Degree / Programme *</label><input type="text" required placeholder="e.g. LLB, BA Law"/></div>
-              <div class="field">
-                <label>Year of Study *</label>
-                <select required>
-                  <option value="">Select year</option>
-                  <option>1st Year</option><option>2nd Year</option><option>3rd Year</option>
-                  <option>4th Year</option><option>Postgraduate</option>
-                </select>
+        <h2>Membership Account & Application</h2>
+        <p class="sub">Create your account first. Your membership will be reviewed by the BEC after your details and payment reference are submitted.</p>
+        <p class="sub">After submitting your details, the BEC will review your application and confirm your membership once payment is verified.</p>
+
+        <div class="verification-box">
+          <strong>Student access only</strong>
+          <span>Accepted login emails must use a UFS student domain. Personal Gmail, iCloud, and other public email addresses should not be accepted for membership accounts.</span>
+        </div>
+
+        <div class="auth-mode" aria-label="Membership account access">
+          <div class="auth-toggle" role="tablist" aria-label="Account mode">
+            <button type="button" class="auth-tab active" id="auth-signin-tab" role="tab" aria-controls="auth-signin-pane" aria-selected="true">Sign In</button>
+            <button type="button" class="auth-tab" id="auth-create-tab" role="tab" aria-controls="auth-create-pane" aria-selected="false">Create Account</button>
+          </div>
+
+          <div class="auth-pane active" id="auth-signin-pane" role="tabpanel" aria-labelledby="auth-signin-tab">
+            <form id="signinForm" class="auth-grid">
+              <div class="field"><label for="signin-identifier">Email or Student Number *</label><input id="signin-identifier" name="identifier" type="text" required autocomplete="username" placeholder="studentnumber@ufs4life.ac.za or 2022123456"/></div>
+              <div class="field"><label for="signin-password">Password *</label><input id="signin-password" name="password" type="password" required minlength="8" placeholder="Enter your password"/></div>
+              <p class="account-note">Use your UFS student email or student number.</p>
+              <a href="#" class="helper-link">Forgot password?</a>
+              <p class="account-note">Not a member yet? Create an account below.</p>
+              <button type="submit" class="btn btn-blue" style="width:100%;border-radius:12px;justify-content:center">Sign In</button>
+            </form>
+          </div>
+
+          <div class="auth-pane" id="auth-create-pane" role="tabpanel" aria-labelledby="auth-create-tab">
+            <form id="createAccountForm" class="auth-grid">
+              <div class="wizard-progress" aria-label="Application steps">
+                <div class="wizard-step active" data-wizard-marker="0">Account</div>
+                <div class="wizard-step" data-wizard-marker="1">Student Details</div>
+                <div class="wizard-step" data-wizard-marker="2">Payment</div>
+                <div class="wizard-step" data-wizard-marker="3">Declaration</div>
               </div>
-            </div>
-          </fieldset>
-          <fieldset class="fieldset-block">
-            <legend>Declaration</legend>
-            <div style="margin-top:12px">
-              <label class="check-label">
-                <input type="checkbox" required/>
-                I solemnly declare that I will abide by the aims and objectives of BLASC as set out in its Constitution. I am joining voluntarily, without expectation of material gain, and will participate as a loyal, active, and disciplined member.
-              </label>
-            </div>
-          </fieldset>
-          <button type="submit" class="btn btn-blue" style="width:100%;border-radius:12px;justify-content:center;margin-top:4px">Submit Membership Application</button>
-        </form>
+
+              <div class="wizard-panel active" data-wizard-panel="0">
+                <h3>Step 1: Account</h3>
+                <div class="auth-row">
+                  <div class="field"><label for="create-firstname">First Name *</label><input id="create-firstname" name="firstName" type="text" required placeholder="Your first name"/></div>
+                  <div class="field"><label for="create-surname">Surname *</label><input id="create-surname" name="surname" type="text" required placeholder="Your surname"/></div>
+                </div>
+                <div class="field"><label for="create-email">UFS Student Email *</label><input id="create-email" name="email" type="email" required inputmode="email" autocomplete="email" placeholder="studentnumber@ufs4life.ac.za"/></div>
+                <div class="auth-row">
+                  <div class="field"><label for="create-password">Password *</label><input id="create-password" name="password" type="password" required minlength="8" placeholder="Minimum 8 characters"/></div>
+                  <div class="field"><label for="create-password-confirm">Confirm Password *</label><input id="create-password-confirm" name="confirmPassword" type="password" required minlength="8" placeholder="Re-enter password"/></div>
+                </div>
+              </div>
+
+              <div class="wizard-panel" data-wizard-panel="1">
+                <h3>Step 2: Student Details</h3>
+                <div class="auth-row">
+                  <div class="field"><label for="create-student-number">Student Number *</label><input id="create-student-number" name="studentNumber" type="text" required inputmode="numeric" placeholder="e.g. 2022123456"/></div>
+                  <div class="field"><label for="create-phone">Phone Number *</label><input id="create-phone" name="phone" type="tel" required placeholder="+27 00 000 0000"/></div>
+                </div>
+                <div class="auth-row">
+                  <div class="field"><label for="create-programme">Degree / Programme *</label><input id="create-programme" name="programme" type="text" required placeholder="e.g. LLB, BA Law"/></div>
+                  <div class="field">
+                    <label for="create-year">Year of Study *</label>
+                    <select id="create-year" name="yearOfStudy" required>
+                      <option value="">Select year</option>
+                      <option>1st Year</option><option>2nd Year</option><option>3rd Year</option>
+                      <option>4th Year</option><option>Postgraduate</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="wizard-panel" data-wizard-panel="2">
+                <h3>Step 3: Membership Fee</h3>
+                <div class="auth-row">
+                  <div class="field"><label for="create-payment-reference">Payment Reference *</label><input id="create-payment-reference" name="paymentReference" type="text" required readonly/></div>
+                  <div class="field"><label for="create-payment-proof">Payment Proof Reference *</label><input id="create-payment-proof" name="paymentProofReference" type="text" required placeholder="Receipt number / transfer ID"/></div>
+                </div>
+                <p class="account-note">Use your student number as the payment reference when paying the R50 membership fee.</p>
+              </div>
+
+              <div class="wizard-panel" data-wizard-panel="3">
+                <h3>Step 4: Declaration</h3>
+                <fieldset class="fieldset-block">
+                  <legend>Declaration</legend>
+                  <div style="margin-top:12px">
+                    <label class="check-label">
+                      <input id="create-declaration" name="declarationAccepted" type="checkbox" required/>
+                      I solemnly declare that I will abide by the aims and objectives of BLASC as set out in its Constitution. I am joining voluntarily, without expectation of material gain, and will participate as a loyal, active, and disciplined member.
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="auth-actions">
+                <button type="button" id="wizardBack" class="btn" style="border:1px solid var(--border);border-radius:12px;background:#fff">Back</button>
+                <button type="button" id="wizardNext" class="btn btn-blue" style="border-radius:12px">Next</button>
+                <button type="submit" id="wizardSubmit" class="btn btn-blue" style="display:none;border-radius:12px">Submit Application</button>
+              </div>
+            </form>
+          </div>
+          <p id="authStatus" class="auth-status" role="status" aria-live="polite"></p>
+          <p class="account-note">Use only your student email or student number with your password to access membership.</p>
+        </div>
+
+        <div class="status-info">
+          <h4>Application Status Guide</h4>
+          <p><strong>Pending Review:</strong> BEC is reviewing your application.</p>
+          <p><strong>Awaiting Payment:</strong> Your details are approved and payment is needed.</p>
+          <p><strong>Payment Submitted:</strong> Payment details are being checked.</p>
+          <p><strong>Active Member:</strong> Membership confirmed.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -193,5 +284,264 @@
   <div class="footer-bottom"><span>© 2026 Black Lawyers Association Student Chapter, UFS.</span></div>
 </footer>
 <script src="assets/main.js?v=20260508-hard-refresh"></script>
+<script>
+  (function () {
+    var tabs = Array.from(document.querySelectorAll('.auth-tab'));
+    var panes = Array.from(document.querySelectorAll('.auth-pane'));
+    var statusNode = document.getElementById('authStatus');
+    var createPaymentReferenceInput = document.getElementById('create-payment-reference');
+    var wizardPanels = Array.from(document.querySelectorAll('[data-wizard-panel]'));
+    var wizardMarkers = Array.from(document.querySelectorAll('[data-wizard-marker]'));
+    var wizardBack = document.getElementById('wizardBack');
+    var wizardNext = document.getElementById('wizardNext');
+    var wizardSubmit = document.getElementById('wizardSubmit');
+    var wizardStep = 0;
+    var allowedStudentDomains = ['ufs4life.ac.za', 'ufs.ac.za'];
+    var accountsStorageKey = 'blasc_membership_accounts_v1';
+
+    function setStatus(message, type) {
+      if (!statusNode) return;
+      statusNode.textContent = message;
+      statusNode.className = 'auth-status show';
+      if (type) statusNode.classList.add(type);
+    }
+
+    function getAccounts() {
+      try {
+        var raw = window.localStorage.getItem(accountsStorageKey);
+        return raw ? JSON.parse(raw) : [];
+      } catch (_error) {
+        return [];
+      }
+    }
+
+    function saveAccounts(accounts) {
+      window.localStorage.setItem(accountsStorageKey, JSON.stringify(accounts));
+    }
+
+    function getEmailDomain(email) {
+      return String(email || '').trim().toLowerCase().split('@').pop();
+    }
+
+    function isAllowedStudentEmail(email) {
+      return allowedStudentDomains.indexOf(getEmailDomain(email)) !== -1;
+    }
+
+    function isValidStudentNumber(value) {
+      return /^\d{8,12}$/.test(String(value || '').trim());
+    }
+
+    function normalizeStudentNumber(value) {
+      return String(value || '').trim();
+    }
+
+    function buildAccountFromForm(createAccountForm) {
+      var firstName = createAccountForm.querySelector('input[name="firstName"]').value.trim();
+      var surname = createAccountForm.querySelector('input[name="surname"]').value.trim();
+      var phone = createAccountForm.querySelector('input[name="phone"]').value.trim();
+      var studentNumber = normalizeStudentNumber(createAccountForm.querySelector('input[name="studentNumber"]').value);
+      var email = createAccountForm.querySelector('input[name="email"]').value.trim().toLowerCase();
+      var password = createAccountForm.querySelector('input[name="password"]').value;
+      var programme = createAccountForm.querySelector('input[name="programme"]').value.trim();
+      var yearOfStudy = createAccountForm.querySelector('select[name="yearOfStudy"]').value;
+      var paymentProofReference = createAccountForm.querySelector('input[name="paymentProofReference"]').value.trim();
+      return {
+        firstName: firstName,
+        surname: surname,
+        phone: phone,
+        studentNumber: studentNumber,
+        email: email,
+        password: password,
+        programme: programme,
+        yearOfStudy: yearOfStudy,
+        paymentProofReference: paymentProofReference,
+        paymentReference: studentNumber,
+        accountStatus: 'processing',
+        applicationStatus: 'processing',
+        applicationStatusLabel: 'Processing'
+      };
+    }
+
+    function findAccount(identifier) {
+      var value = String(identifier || '').trim().toLowerCase();
+      return getAccounts().find(function (account) {
+        return account.email.toLowerCase() === value || account.studentNumber.toLowerCase() === value;
+      });
+    }
+
+    function clearStatus() {
+      if (!statusNode) return;
+      statusNode.textContent = '';
+      statusNode.className = 'auth-status';
+    }
+
+    function activateAuthTab(targetId) {
+      tabs.forEach(function (tab) {
+        var isActive = tab.getAttribute('aria-controls') === targetId;
+        tab.classList.toggle('active', isActive);
+        tab.setAttribute('aria-selected', String(isActive));
+      });
+      panes.forEach(function (pane) {
+        pane.classList.toggle('active', pane.id === targetId);
+      });
+    }
+
+    function syncWizard() {
+      wizardPanels.forEach(function (panel, index) {
+        panel.classList.toggle('active', index === wizardStep);
+      });
+      wizardMarkers.forEach(function (marker, index) {
+        marker.classList.toggle('active', index === wizardStep);
+      });
+      if (wizardBack) wizardBack.style.display = wizardStep === 0 ? 'none' : 'inline-flex';
+      if (wizardNext) wizardNext.style.display = wizardStep === wizardPanels.length - 1 ? 'none' : 'inline-flex';
+      if (wizardSubmit) wizardSubmit.style.display = wizardStep === wizardPanels.length - 1 ? 'inline-flex' : 'none';
+    }
+
+    function validateStep(step, form) {
+      if (step === 0) {
+        var firstName = form.querySelector('input[name="firstName"]');
+        var surname = form.querySelector('input[name="surname"]');
+        var email = form.querySelector('input[name="email"]');
+        var password = form.querySelector('input[name="password"]');
+        var confirm = form.querySelector('input[name="confirmPassword"]');
+        if (!firstName.value.trim() || !surname.value.trim()) {
+          setStatus('Please complete your first name and surname.', 'error');
+          return false;
+        }
+        if (email && !isAllowedStudentEmail(email.value)) {
+          setStatus('Please use your UFS student email address.', 'error');
+          email.focus();
+          return false;
+        }
+        if (!password || !confirm || password.value !== confirm.value) {
+          setStatus('Please confirm your password.', 'error');
+          if (confirm) confirm.focus();
+          return false;
+        }
+      }
+      if (step === 1) {
+        var studentNumberInput = form.querySelector('input[name="studentNumber"]');
+        var phoneInput = form.querySelector('input[name="phone"]');
+        var programmeInput = form.querySelector('input[name="programme"]');
+        var yearInput = form.querySelector('select[name="yearOfStudy"]');
+        if (!studentNumberInput || !isValidStudentNumber(studentNumberInput.value)) {
+          setStatus('Please enter a valid student number.', 'error');
+          if (studentNumberInput) studentNumberInput.focus();
+          return false;
+        }
+        if (!phoneInput.value.trim() || !programmeInput.value.trim() || !yearInput.value) {
+          setStatus('Please complete all student details.', 'error');
+          return false;
+        }
+      }
+      if (step === 2) {
+        var paymentProof = form.querySelector('input[name="paymentProofReference"]');
+        if (!paymentProof || !paymentProof.value.trim()) {
+          setStatus('Please enter your payment proof reference.', 'error');
+          if (paymentProof) paymentProof.focus();
+          return false;
+        }
+      }
+      if (step === 3) {
+        var declaration = form.querySelector('input[name="declarationAccepted"]');
+        if (!declaration || !declaration.checked) {
+          setStatus('Please accept the declaration before submitting.', 'error');
+          if (declaration) declaration.focus();
+          return false;
+        }
+      }
+      clearStatus();
+      return true;
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        activateAuthTab(tab.getAttribute('aria-controls'));
+      });
+    });
+
+    var createAccountForm = document.getElementById('createAccountForm');
+    if (createAccountForm) {
+      var createStudentNumberInput = createAccountForm.querySelector('input[name="studentNumber"]');
+      if (createStudentNumberInput && createPaymentReferenceInput) {
+        createStudentNumberInput.addEventListener('input', function () {
+          createPaymentReferenceInput.value = normalizeStudentNumber(createStudentNumberInput.value);
+        });
+      }
+      if (wizardBack) {
+        wizardBack.addEventListener('click', function () {
+          if (wizardStep > 0) {
+            wizardStep -= 1;
+            clearStatus();
+            syncWizard();
+          }
+        });
+      }
+      if (wizardNext) {
+        wizardNext.addEventListener('click', function () {
+          if (!validateStep(wizardStep, createAccountForm)) return;
+          if (wizardStep < wizardPanels.length - 1) {
+            wizardStep += 1;
+            syncWizard();
+          }
+        });
+      }
+      createAccountForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        if (!validateStep(3, createAccountForm)) return;
+        var newAccount = buildAccountFromForm(createAccountForm);
+        var accounts = getAccounts();
+        var exists = accounts.some(function (account) {
+          return account.email === newAccount.email || account.studentNumber === newAccount.studentNumber;
+        });
+        if (exists) {
+          setStatus('An account already exists with that email or student number. Sign in instead.', 'error');
+          return;
+        }
+        accounts.push(newAccount);
+        saveAccounts(accounts);
+        setStatus('Application submitted successfully. The BEC will review your details and payment reference.', 'pending');
+        createAccountForm.reset();
+        if (createPaymentReferenceInput) createPaymentReferenceInput.value = '';
+        wizardStep = 0;
+        syncWizard();
+        activateAuthTab('auth-signin-pane');
+      }, true);
+      createAccountForm.querySelectorAll('input[name="password"], input[name="confirmPassword"]').forEach(function (input) {
+        input.addEventListener('input', function () {
+          var confirmInput = createAccountForm.querySelector('input[name="confirmPassword"]');
+          if (confirmInput) confirmInput.setCustomValidity('');
+          clearStatus();
+        });
+      });
+    }
+
+    var signinForm = document.getElementById('signinForm');
+    if (signinForm) {
+      signinForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        var identifierInput = signinForm.querySelector('input[name="identifier"]');
+        var passwordInput = signinForm.querySelector('input[name="password"]');
+        var identifier = identifierInput ? identifierInput.value : '';
+        var account = findAccount(identifier);
+        if (!account || account.password !== (passwordInput ? passwordInput.value : '')) {
+          setStatus('Incorrect login credentials. Check your email/student number and password.', 'error');
+          if (identifierInput) identifierInput.focus();
+          return;
+        }
+        if (account.accountStatus === 'processing') {
+          setStatus('Your account is still being processed. Please wait for confirmation from BLASC.', 'pending');
+          return;
+        }
+        setStatus('Signed in successfully.', 'pending');
+      }, true);
+    }
+
+    syncWizard();
+  })();
+</script>
 </body>
 </html>
